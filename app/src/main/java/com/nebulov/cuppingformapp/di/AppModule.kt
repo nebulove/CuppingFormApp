@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.nebulov.cuppingformapp.feautere_cup.data.data_source.CupDatabase
 import com.nebulov.cuppingformapp.feautere_cup.data.repository.CupRepositoryImpl
 import com.nebulov.cuppingformapp.feautere_cup.domain.repository.CupRepository
+import com.nebulov.cuppingformapp.feautere_cup.domain.use_case.AddCup
 import com.nebulov.cuppingformapp.feautere_cup.domain.use_case.CupUseCases
 import com.nebulov.cuppingformapp.feautere_cup.domain.use_case.DeleteCup
 import com.nebulov.cuppingformapp.feautere_cup.domain.use_case.GetCups
@@ -39,7 +40,8 @@ object AppModule {
     fun provideCupUseCases(repository: CupRepository): CupUseCases{
         return CupUseCases(
             getCups = GetCups(repository),
-            deleteCup = DeleteCup(repository)
+            deleteCup = DeleteCup(repository),
+            addCup = AddCup(repository)
         )
     }
 }
