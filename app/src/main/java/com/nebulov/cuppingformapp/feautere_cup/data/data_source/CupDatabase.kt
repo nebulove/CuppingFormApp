@@ -15,4 +15,9 @@ import com.nebulov.cuppingformapp.feautere_cup.domain.model.Cup
 abstract class CupDatabase: RoomDatabase() {
 
     abstract val cupDao: CupDao
+
+    companion object{
+
+        const val DATABASE_NAME = "cups_db"
+    }
 }
