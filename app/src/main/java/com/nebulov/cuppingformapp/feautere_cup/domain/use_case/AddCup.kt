@@ -7,8 +7,8 @@ class AddCup(
     private val repository: CupRepository
 ) {
 
-    suspend  operator fun invoke(cup: Cup){
-        if (cup.name.isBlank()){
+    suspend operator fun invoke( cup: Cup) {
+        if (cup.name.isBlank()) {
             val sampleCup = cup.copy(name = "Sample #${cup.id}")
             repository.insertCup(sampleCup)
         }

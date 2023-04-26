@@ -1,4 +1,4 @@
-package com.nebulov.cuppingformapp.feautere_cup.presentation.cups.components
+package com.nebulov.cuppingformapp.feautere_cup.presentation.cups
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
@@ -8,8 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarResult
@@ -20,19 +20,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.nebulov.cuppingformapp.feautere_cup.presentation.cups.CupEvent
-import com.nebulov.cuppingformapp.feautere_cup.presentation.cups.CupsViewModel
+import com.nebulov.cuppingformapp.feautere_cup.presentation.add_edit_cup.AddEditCupEvent
+import com.nebulov.cuppingformapp.feautere_cup.presentation.add_edit_cup.AddEditCupViewModel
+import com.nebulov.cuppingformapp.feautere_cup.presentation.cups.components.AddCupTextField
+import com.nebulov.cuppingformapp.feautere_cup.presentation.cups.components.CupItem
+import com.nebulov.cuppingformapp.feautere_cup.presentation.cups.components.OrderSection
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun CupsScreen(
     navController: NavController,
-    viewModel: CupsViewModel = hiltViewModel()
+    viewModel: CupsViewModel = hiltViewModel(),
+    addEditCupViewModel: AddEditCupViewModel = hiltViewModel(),
 ) {
     val state = viewModel.state.value
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
+
+    val nameState = addEditCupViewModel.cupName.value
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -50,9 +56,11 @@ fun CupsScreen(
                 }
             )
             Spacer(modifier = Modifier.height(16.dp))
-//            AddCupTextField(name = , onValueChange = , addNewCup = ) {
-//
-//            }
+            AddCupTextField(
+                name = nameState,
+                onValueChange = { addEditCupViewModel.onEvent(AddEditCupEvent.EnteredName(it)) },
+                addNewCup = { addEditCupViewModel.onEvent(AddEditCupEvent.SaveCup) }
+            )
             Spacer(modifier = Modifier.height(16.dp))
 
             LazyColumn(modifier = Modifier.fillMaxSize()) {

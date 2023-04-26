@@ -37,9 +37,9 @@ class AddEditCupViewModel @Inject constructor(
 
     private var currentNoteId: Int? = null
 
-    init{
+    init {
         savedStateHandle.get<Int>("cupId")?.let { cupId ->
-            if (cupId != -1){
+            if (cupId != -1) {
                 viewModelScope.launch {
                     cupUseCases.getCup(cupId)?.also { cup ->
                         currentNoteId = cup.id
@@ -48,7 +48,6 @@ class AddEditCupViewModel @Inject constructor(
                     }
                 }
             }
-
         }
     }
 
@@ -64,7 +63,7 @@ class AddEditCupViewModel @Inject constructor(
 
             }
 
-            is AddEditCupEvent.SaveNote -> {
+            is AddEditCupEvent.SaveCup -> {
                 viewModelScope.launch {
                     try {
                         cupUseCases.addCup(

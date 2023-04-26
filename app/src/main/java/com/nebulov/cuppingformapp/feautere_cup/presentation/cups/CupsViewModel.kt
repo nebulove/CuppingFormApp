@@ -30,7 +30,6 @@ class CupsViewModel @Inject constructor(
 
     init {
         getCups(CupOrder.Date(OrderType.Descending))
-
     }
 
     fun onEvent(event: CupEvent) {
@@ -41,7 +40,6 @@ class CupsViewModel @Inject constructor(
                 ) {
                     return
                 }
-
             }
 
             is CupEvent.DeleteCup -> {
@@ -49,7 +47,6 @@ class CupsViewModel @Inject constructor(
                     cupUseCases.deleteCup(event.cup)
                     recentlyDeletedCup = event.cup
                 }
-
             }
 
             is CupEvent.RestoreCup -> {
@@ -58,7 +55,6 @@ class CupsViewModel @Inject constructor(
                     recentlyDeletedCup = null
                 }
             }
-
         }
     }
 
@@ -73,5 +69,4 @@ class CupsViewModel @Inject constructor(
             }
             .launchIn(viewModelScope)
     }
-
 }

@@ -10,6 +10,7 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
@@ -25,17 +26,53 @@ private val LightColorScheme = lightColorScheme(
     primary = Purple40,
     secondary = PurpleGrey40,
     tertiary = Pink40
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
 )
+
+private val LightCuppingPalette = lightColorScheme(
+    primary = Blue200,
+//    primaryVariant = Blue600,
+    secondary = Coral200,
+    background = White,
+    surface = White,
+    onPrimary = White,
+    onSecondary = BlackNight,
+    onBackground = BlackNight,
+    onSurface = BlackNight,
+)
+
+private val DarkCuppingPalette = darkColorScheme(
+    primary = Blue200Dark,
+//    primaryVariant = Blue600Dark,
+    secondary = Coral200Dark,
+    background = BlackNight,
+    surface = BlackNight,
+    onPrimary = WhiteNight,
+    onSecondary = WhiteNight,
+    onBackground = WhiteNight,
+    onSurface = WhiteNight,
+)
+
+//
+//val GradientCuppingPalette = lightColors(
+//    primary = when (totalScore.value) {
+//        100f -> VeryDark
+//        in 90f..100f -> Dark
+//        in 88f..90f -> Medium2
+//        in 85f..88f -> Medium1
+//        in 80f..85f -> Medium0
+//        in 75f..80f -> Light
+//        else -> VeryLight
+//    },
+/* Other default colors to override
+background = Color(0xFFFFFBFE),
+surface = Color(0xFFFFFBFE),
+onPrimary = Color.White,
+onSecondary = Color.White,
+onTertiary = Color.White,
+onBackground = Color(0xFF1C1B1F),
+onSurface = Color(0xFF1C1B1F),
+*/
+
 
 @Composable
 fun CuppingFormAppTheme(
@@ -50,8 +87,8 @@ fun CuppingFormAppTheme(
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
 
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+        darkTheme -> DarkCuppingPalette
+        else -> LightCuppingPalette
     }
     val view = LocalView.current
     if (!view.isInEditMode) {

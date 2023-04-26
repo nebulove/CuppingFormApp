@@ -5,5 +5,5 @@ sealed class AddEditCupEvent {
 
     data class ChangeFragrance(val value: Float) : AddEditCupEvent()
 
-    object SaveNote : AddEditCupEvent()
+    object SaveCup : AddEditCupEvent()
 }
