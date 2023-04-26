@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "cup")
 data class Cup(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    val id: Int? = null,
 
     val name: String,
 
@@ -71,3 +71,5 @@ data class Cup(
 
     var favorite: Boolean = false,
 )
+
+class InvalidNoteException(message: String): Exception(message)

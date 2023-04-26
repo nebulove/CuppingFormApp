@@ -8,4 +8,11 @@ sealed class CupOrder(val orderType: OrderType){
 
     class Value(orderType: OrderType) : CupOrder(orderType)
 
+    fun copy(orderType: OrderType): CupOrder {
+        return when (this) {
+            is Title -> Title(orderType)
+            is Date -> Date(orderType)
+            is Value -> Value(orderType)
+        }
+    }
 }

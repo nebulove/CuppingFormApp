@@ -4,5 +4,6 @@ data class CupUseCases(
     val getCups: GetCups,
     val deleteCup: DeleteCup,
     val addCup: AddCup,
+    val getCup: GetCup
 
 )

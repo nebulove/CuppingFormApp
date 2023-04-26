@@ -8,6 +8,7 @@ import com.nebulov.cuppingformapp.feautere_cup.domain.repository.CupRepository
 import com.nebulov.cuppingformapp.feautere_cup.domain.use_case.AddCup
 import com.nebulov.cuppingformapp.feautere_cup.domain.use_case.CupUseCases
 import com.nebulov.cuppingformapp.feautere_cup.domain.use_case.DeleteCup
+import com.nebulov.cuppingformapp.feautere_cup.domain.use_case.GetCup
 import com.nebulov.cuppingformapp.feautere_cup.domain.use_case.GetCups
 import dagger.Module
 import dagger.Provides
@@ -41,7 +42,8 @@ object AppModule {
         return CupUseCases(
             getCups = GetCups(repository),
             deleteCup = DeleteCup(repository),
-            addCup = AddCup(repository)
+            addCup = AddCup(repository),
+            getCup = GetCup(repository)
         )
     }
 }
