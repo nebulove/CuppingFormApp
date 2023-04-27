@@ -13,8 +13,8 @@ class CupRepositoryImpl(
         return dao.getCupList()
     }
 
-    override suspend fun getCupById(id: Int): Cup? {
-        return dao.getCup(id)
+    override suspend fun getCupById(cupId: Int): Cup? {
+        return dao.getCup(cupId)
     }
 
     override suspend fun insertCup(cup: Cup) {

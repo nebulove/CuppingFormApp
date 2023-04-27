@@ -8,7 +8,7 @@ interface CupRepository {
 
     fun getCups(): Flow<List<Cup>>
 
-    suspend fun getCupById(id: Int): Cup?
+    suspend fun getCupById(cupId: Int): Cup?
 
     suspend fun insertCup(cup: Cup)
 

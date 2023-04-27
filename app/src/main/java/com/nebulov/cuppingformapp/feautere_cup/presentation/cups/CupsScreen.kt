@@ -17,37 +17,45 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.nebulov.cuppingformapp.feautere_cup.presentation.add_edit_cup.AddEditCupEvent
-import com.nebulov.cuppingformapp.feautere_cup.presentation.add_edit_cup.AddEditCupViewModel
-import com.nebulov.cuppingformapp.feautere_cup.presentation.cups.components.AddCupTextField
+import androidx.navigation.compose.rememberNavController
+import com.nebulov.cuppingformapp.R
 import com.nebulov.cuppingformapp.feautere_cup.presentation.cups.components.CupItem
+import com.nebulov.cuppingformapp.feautere_cup.presentation.cups.components.DefaultFloatingActionButton
 import com.nebulov.cuppingformapp.feautere_cup.presentation.cups.components.OrderSection
+import com.nebulov.cuppingformapp.feautere_cup.presentation.util.Screen
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun CupsScreen(
+    modifier: Modifier = Modifier,
     navController: NavController,
     viewModel: CupsViewModel = hiltViewModel(),
-    addEditCupViewModel: AddEditCupViewModel = hiltViewModel(),
 ) {
     val state = viewModel.state.value
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
 
-    val nameState = addEditCupViewModel.cupName.value
 
     Scaffold(
+        modifier = modifier,
         scaffoldState = scaffoldState,
-        backgroundColor = MaterialTheme.colors.primary
+        backgroundColor = MaterialTheme.colors.primary,
+        floatingActionButton = {
+            DefaultFloatingActionButton(
+                icon = R.drawable.drop_plus_2_24dp,
+                actionOn = { navController.navigate(Screen.AddEditCupScreen.route) },
+                contentDescription = "Add cup"
+            )
+        }
     ) {
-        Column(modifier = Modifier)
-        {
+        Column(modifier = modifier) {
             OrderSection(
-                modifier = Modifier
+                modifier = modifier
                     .fillMaxWidth()
                     .padding(vertical = 16.dp),
                 cupOrder = state.cupOrder,
@@ -55,24 +63,17 @@ fun CupsScreen(
                     viewModel.onEvent(CupEvent.Order(it))
                 }
             )
-            Spacer(modifier = Modifier.height(16.dp))
-            AddCupTextField(
-                name = nameState,
-                onValueChange = { addEditCupViewModel.onEvent(AddEditCupEvent.EnteredName(it)) },
-                addNewCup = { addEditCupViewModel.onEvent(AddEditCupEvent.SaveCup) }
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(state.cups) { cup ->
-                    CupItem(cup = cup,
-                        modifier = Modifier
-                            .fillMaxWidth()
+            Spacer(modifier = modifier.height(16.dp))
+            LazyColumn(modifier = modifier.fillMaxSize()) {
+                items(items = state.cups) { cup ->
+                    CupItem(
+                        cup = cup,
+                        modifier = modifier
                             .clickable {
-//                                navController.navigate(
-//                                    Screen.AddEditNoteScreen.route +
-//                                            "?noteId=${cup.id}"
-//                                )
+                                navController.navigate(
+                                    Screen.AddEditCupScreen.route +
+                                            "?cupId=${cup.id}"
+                                )
                             },
                         onDeleteClick = {
                             viewModel.onEvent(CupEvent.DeleteCup(cup))
@@ -86,9 +87,16 @@ fun CupsScreen(
                                 }
                             }
                         })
-                    Spacer(modifier = Modifier.height(16.dp))
                 }
             }
+            Spacer(modifier = Modifier.height(16.dp))
         }
     }
+}
+
+@Preview
+@Composable
+fun Preview() {
+    val navController = rememberNavController()
+    CupsScreen(navController = navController)
 }

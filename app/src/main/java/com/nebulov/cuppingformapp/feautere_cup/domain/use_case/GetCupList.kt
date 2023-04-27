@@ -7,7 +7,7 @@ import com.nebulov.cuppingformapp.feautere_cup.domain.util.OrderType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class GetCups(
+class GetCupList(
     private val repository: CupRepository
 ) {
 

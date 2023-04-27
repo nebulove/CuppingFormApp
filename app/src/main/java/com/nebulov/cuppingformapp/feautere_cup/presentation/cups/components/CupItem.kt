@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import com.nebulov.cuppingformapp.R
 import com.nebulov.cuppingformapp.feautere_cup.domain.model.Cup
 
+
 @Composable
 fun CupItem(
     cup: Cup,
@@ -37,16 +38,7 @@ fun CupItem(
 
     val iconColor = rememberSaveable { mutableStateOf(true) }
 
-    @Composable
-    fun changeIconColor(): Color {
-        val color: Color
-        if (iconColor.value) {
-            color = MaterialTheme.colors.primary
-        } else {
-            color = MaterialTheme.colors.secondary
-        }
-        return color
-    }
+
 
     Surface(
         shape = RoundedCornerShape(8.dp),
@@ -57,7 +49,8 @@ fun CupItem(
                 end = 10.dp,
                 bottom = 3.dp
             )
-    ) {
+    )
+    {
         Row(
             modifier = modifier
                 .fillMaxWidth()
@@ -76,7 +69,7 @@ fun CupItem(
                     .clickable(onClick = { iconColor.value = !iconColor.value }),
                 painter = painterResource(id = R.drawable.outline_water_drop_black_24dp),
                 contentDescription = " ",
-                tint = changeIconColor()
+                tint = changeIconColor(iconColor.value)
             )
             Spacer(modifier = modifier.width(6.dp))
             Text(
@@ -108,5 +101,14 @@ fun CupItem(
             Spacer(modifier = modifier.width(6.dp))
         }
     }
+}
 
+@Composable
+fun changeIconColor(state: Boolean): Color {
+    val color: Color = if (state) {
+        MaterialTheme.colors.primary
+    } else {
+        MaterialTheme.colors.secondary
+    }
+    return color
 }

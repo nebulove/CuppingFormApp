@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "cup")
 data class Cup(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     val id: Int? = null,
 
     val name: String,

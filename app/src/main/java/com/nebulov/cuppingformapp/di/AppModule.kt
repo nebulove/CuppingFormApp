@@ -9,7 +9,7 @@ import com.nebulov.cuppingformapp.feautere_cup.domain.use_case.AddCup
 import com.nebulov.cuppingformapp.feautere_cup.domain.use_case.CupUseCases
 import com.nebulov.cuppingformapp.feautere_cup.domain.use_case.DeleteCup
 import com.nebulov.cuppingformapp.feautere_cup.domain.use_case.GetCup
-import com.nebulov.cuppingformapp.feautere_cup.domain.use_case.GetCups
+import com.nebulov.cuppingformapp.feautere_cup.domain.use_case.GetCupList
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,25 +22,26 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideCupDataBase(app: Application): CupDatabase{
+    fun provideCupDataBase(app: Application): CupDatabase {
         return Room.databaseBuilder(
             app,
             CupDatabase::class.java,
             CupDatabase.DATABASE_NAME
-        ).build()
+        ).fallbackToDestructiveMigration()
+            .build()
     }
 
     @Provides
     @Singleton
-    fun provideCupRepository(db: CupDatabase) : CupRepository{
+    fun provideCupRepository(db: CupDatabase): CupRepository {
         return CupRepositoryImpl(db.cupDao)
     }
 
     @Provides
     @Singleton
-    fun provideCupUseCases(repository: CupRepository): CupUseCases{
+    fun provideCupUseCases(repository: CupRepository): CupUseCases {
         return CupUseCases(
-            getCups = GetCups(repository),
+            getCupList = GetCupList(repository),
             deleteCup = DeleteCup(repository),
             addCup = AddCup(repository),
             getCup = GetCup(repository)

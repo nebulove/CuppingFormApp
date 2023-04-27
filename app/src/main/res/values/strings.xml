@@ -1,4 +1,5 @@
 <resources>
+    <string name="app_name">CuppingFormApp</string>
     <string name="Fragrance">"Fragrance/Aroma "</string>
     <string name="Flavor">"Flavor "</string>
     <string name="Aftertaste">"Aftertaste "</string>

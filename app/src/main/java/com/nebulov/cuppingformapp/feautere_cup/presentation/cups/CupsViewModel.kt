@@ -29,7 +29,7 @@ class CupsViewModel @Inject constructor(
     private var getCupJob: Job? = null
 
     init {
-        getCups(CupOrder.Date(OrderType.Descending))
+        getCupList(CupOrder.Date(OrderType.Descending))
     }
 
     fun onEvent(event: CupEvent) {
@@ -40,6 +40,7 @@ class CupsViewModel @Inject constructor(
                 ) {
                     return
                 }
+                getCupList(event.cupOrder)
             }
 
             is CupEvent.DeleteCup -> {
@@ -58,9 +59,9 @@ class CupsViewModel @Inject constructor(
         }
     }
 
-    private fun getCups(cupOrder: CupOrder) {
+    private fun getCupList(cupOrder: CupOrder) {
         getCupJob?.cancel()
-        getCupJob = cupUseCases.getCups(cupOrder)
+        getCupJob = cupUseCases.getCupList(cupOrder)
             .onEach { cups ->
                 _state.value = state.value.copy(
                     cups = cups,

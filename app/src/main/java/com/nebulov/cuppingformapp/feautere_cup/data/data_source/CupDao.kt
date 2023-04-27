@@ -19,6 +19,6 @@ interface CupDao {
     @Delete
     suspend fun deleteCup(cup: Cup)
 
-    @Query("SELECT * FROM cup WHERE id=:cupId LIMIT 1")
-    suspend fun getCup(cupId: Int): Cup?
+    @Query("SELECT * FROM cup WHERE id = :id")
+    suspend fun getCup(id: Int): Cup?
 }

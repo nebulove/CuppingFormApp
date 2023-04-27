@@ -7,7 +7,7 @@ import com.nebulov.cuppingformapp.feautere_cup.domain.model.Cup
 @Database
     (
     entities = [Cup::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 

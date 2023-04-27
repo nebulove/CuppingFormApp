@@ -1,16 +1,18 @@
 package com.nebulov.cuppingformapp.feautere_cup.domain.use_case
 
 import com.nebulov.cuppingformapp.feautere_cup.domain.model.Cup
+import com.nebulov.cuppingformapp.feautere_cup.domain.model.InvalidNoteException
 import com.nebulov.cuppingformapp.feautere_cup.domain.repository.CupRepository
+import kotlin.jvm.Throws
 
 class AddCup(
     private val repository: CupRepository
 ) {
 
+    @Throws(InvalidNoteException::class)
     suspend operator fun invoke( cup: Cup) {
         if (cup.name.isBlank()) {
-            val sampleCup = cup.copy(name = "Sample #${cup.id}")
-            repository.insertCup(sampleCup)
+            throw InvalidNoteException("The name of the cup can't be empty.")
         }
         repository.insertCup(cup)
     }

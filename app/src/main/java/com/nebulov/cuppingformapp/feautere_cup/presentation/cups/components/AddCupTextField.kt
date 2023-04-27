@@ -30,7 +30,8 @@ fun AddCupTextField(
             .fillMaxWidth(),
         value = name,
         colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = MaterialTheme.colors.onPrimary
+            backgroundColor = MaterialTheme.colors.onPrimary,
+            textColor = MaterialTheme.colors.primary
         ),
         singleLine = true,
         maxLines = 1,

@@ -7,7 +7,7 @@ class GetCup(
     private val repository: CupRepository
 ) {
 
-    suspend operator fun invoke(id: Int): Cup?{
-        return repository.getCupById(id)
+    suspend operator fun invoke(cupId: Int): Cup?{
+        return repository.getCupById(cupId)
     }
 }
