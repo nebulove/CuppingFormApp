@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.nebulov.cuppingform.ui.components.DefectsForm
 import com.nebulov.cuppingformapp.R
 import com.nebulov.cuppingformapp.feautere_cup.presentation.add_edit_cup.components.AnimatedTextField
 import com.nebulov.cuppingformapp.feautere_cup.presentation.add_edit_cup.components.CheckBoxForm
@@ -68,6 +69,10 @@ fun AddEditCupScreen(
     val sCup3 = viewModel.sCup3.value
     val sCup4 = viewModel.sCup4.value
     val sCup5 = viewModel.sCup5.value
+
+    val defects = viewModel.defects.value
+    val taintDefects = viewModel.taintDefects.value
+    val faultDefects = viewModel.faultDefects.value
 
     val scaffoldState = rememberScaffoldState()
 
@@ -243,6 +248,21 @@ fun AddEditCupScreen(
                 onCheckedChange3 = { viewModel.onEvent(AddEditCupEvent.ChangeSweetnessCup3(it)) },
                 onCheckedChange4 = { viewModel.onEvent(AddEditCupEvent.ChangeSweetnessCup4(it)) },
                 onCheckedChange5 = { viewModel.onEvent(AddEditCupEvent.ChangeSweetnessCup5(it)) },
+            )
+            DefectsForm(
+                text = R.string.Defects,
+//                textDescriptors = notesDefects,
+                defectsResult = defects,
+                defectsValue1 = taintDefects,
+                defectsValue2 = faultDefects,
+                onValueDec1 = { viewModel.onEvent(AddEditCupEvent.ChangeTaintDec(0)) },
+                onValueInc1 = { viewModel.onEvent(AddEditCupEvent.ChangeTaintInc(0)) },
+                onValueDec2 = { viewModel.onEvent(AddEditCupEvent.ChangeFaultDec(0)) },
+                onValueInc2 = { viewModel.onEvent(AddEditCupEvent.ChangeFaultInc(0)) },
+//                scaffoldState = scaffoldState,
+//                coroutineScope = coroutineScope,
+//                context = context,
+//                textInfo = R.string.DefectsInfo,
             )
             Spacer(Modifier.height(85.dp))
         }

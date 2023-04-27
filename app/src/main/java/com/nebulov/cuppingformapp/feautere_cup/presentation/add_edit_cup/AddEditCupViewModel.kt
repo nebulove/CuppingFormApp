@@ -9,7 +9,6 @@ import com.nebulov.cuppingform.core.Constants.Companion.EIGHTY_SIX_F
 import com.nebulov.cuppingform.core.Constants.Companion.EIGHT_F
 import com.nebulov.cuppingform.core.Constants.Companion.EMPTY_STRING
 import com.nebulov.cuppingform.core.Constants.Companion.TEN
-import com.nebulov.cuppingform.core.Constants.Companion.UNDEFINED_ID
 import com.nebulov.cuppingform.core.Constants.Companion.ZERO_F
 import com.nebulov.cuppingformapp.feautere_cup.domain.model.Cup
 import com.nebulov.cuppingformapp.feautere_cup.domain.model.InvalidNoteException
@@ -117,6 +116,14 @@ class AddEditCupViewModel @Inject constructor(
     private val _sCup5 = mutableStateOf(false)
     val sCup5: State<Boolean> = _sCup5
 
+    private val _defects = mutableStateOf(0)
+    val defects: State<Int> = _defects
+
+    private val _taintDefects = mutableStateOf(0)
+    val taintDefects: State<Int> = _taintDefects
+
+    private val _faultDefects = mutableStateOf(0)
+    val faultDefects: State<Int> = _faultDefects
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
@@ -170,6 +177,11 @@ class AddEditCupViewModel @Inject constructor(
                         _sCup3.value = cup.sCup3
                         _sCup4.value = cup.sCup4
                         _sCup5.value = cup.sCup5
+
+                        _taintDefects.value = cup.taintDefects
+                        _faultDefects.value = cup.faultDefects
+                        _defects.value = cup.defects
+
                     }
                 }
             }
@@ -374,6 +386,26 @@ class AddEditCupViewModel @Inject constructor(
                 }
             }
 
+            is AddEditCupEvent.ChangeTaintInc -> {
+                _taintDefects.value++
+                _defects.value -= 2
+            }
+
+            is AddEditCupEvent.ChangeTaintDec -> {
+                _taintDefects.value--
+                _defects.value += 2
+            }
+
+            is AddEditCupEvent.ChangeFaultDec -> {
+                _faultDefects.value--
+                _defects.value += 4
+            }
+
+            is AddEditCupEvent.ChangeFaultInc -> {
+                _faultDefects.value++
+                _defects.value -= 4
+            }
+
 
             is AddEditCupEvent.SaveCup -> {
                 viewModelScope.launch {
@@ -422,9 +454,9 @@ class AddEditCupViewModel @Inject constructor(
                                 sCup4 = sCup4.value,
                                 sCup5 = sCup5.value,
                                 notesSweetness = EMPTY_STRING,
-                                defects = TEN,
-                                taintDefects = UNDEFINED_ID,
-                                faultDefects = UNDEFINED_ID,
+                                defects = defects.value,
+                                taintDefects = taintDefects.value,
+                                faultDefects = faultDefects.value,
                                 notesDefects = EMPTY_STRING,
                                 overall = EIGHT_F,
                                 notesOverall = EMPTY_STRING,

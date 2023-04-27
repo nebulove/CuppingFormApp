@@ -32,5 +32,10 @@ sealed class AddEditCupEvent {
     data class ChangeSweetnessCup4(val value: Boolean) : AddEditCupEvent()
     data class ChangeSweetnessCup5(val value: Boolean) : AddEditCupEvent()
 
+    data class ChangeTaintInc(val value: Int) : AddEditCupEvent()
+    data class ChangeTaintDec(val value: Int) : AddEditCupEvent()
+    data class ChangeFaultInc(val value: Int) : AddEditCupEvent()
+    data class ChangeFaultDec(val value: Int) : AddEditCupEvent()
+
     object SaveCup : AddEditCupEvent()
 }
