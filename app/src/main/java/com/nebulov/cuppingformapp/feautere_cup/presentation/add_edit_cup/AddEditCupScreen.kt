@@ -74,6 +74,14 @@ fun AddEditCupScreen(
     val taintDefects = viewModel.taintDefects.value
     val faultDefects = viewModel.faultDefects.value
 
+    val overall = viewModel.overall.value
+
+    val finalScore = viewModel.finalScore.value
+//    (((fragrance + flavor + aftertaste
+//            + acidity + body + balance
+//            + overall + uniformity + cleanCup
+//            + sweetness + defects)))
+
     val scaffoldState = rememberScaffoldState()
 
     var editMessageShown by remember { mutableStateOf(false) }
@@ -99,7 +107,7 @@ fun AddEditCupScreen(
         topBar = {
             TopAppBarCuppingForm(
                 name = nameState,
-                finalScore = 86f,
+                finalScore = finalScore,
                 showOff = { editMessageShown = !editMessageShown })
         },
         floatingActionButton = {
@@ -263,6 +271,18 @@ fun AddEditCupScreen(
 //                coroutineScope = coroutineScope,
 //                context = context,
 //                textInfo = R.string.DefectsInfo,
+            )
+            VerticalSlider(
+                text = R.string.Overall,
+                sliderValue = overall,
+                onValueChange = { viewModel.onEvent(AddEditCupEvent.ChangeOverall(it)) },
+                onValueChange2 = {},
+                onValueChange3 = {},
+//                textDescriptors = notesOverall,
+//                scaffoldState = scaffoldState,
+//                coroutineScope = coroutineScope,
+//                context = context,
+//                textInfo = R.string.OverallInfo,
             )
             Spacer(Modifier.height(85.dp))
         }

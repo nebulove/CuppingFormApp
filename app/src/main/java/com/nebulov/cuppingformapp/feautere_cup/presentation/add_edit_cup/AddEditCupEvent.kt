@@ -36,6 +36,7 @@ sealed class AddEditCupEvent {
     data class ChangeTaintDec(val value: Int) : AddEditCupEvent()
     data class ChangeFaultInc(val value: Int) : AddEditCupEvent()
     data class ChangeFaultDec(val value: Int) : AddEditCupEvent()
+    data class ChangeOverall(val value: Float) : AddEditCupEvent()
 
     object SaveCup : AddEditCupEvent()
 }

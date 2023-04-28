@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.nebulov.cuppingform.core.Constants.Companion.EIGHTY_SIX_F
 import com.nebulov.cuppingform.core.Constants.Companion.EIGHT_F
 import com.nebulov.cuppingform.core.Constants.Companion.EMPTY_STRING
 import com.nebulov.cuppingform.core.Constants.Companion.TEN
@@ -70,7 +69,6 @@ class AddEditCupViewModel @Inject constructor(
     private val _sweetness = mutableStateOf(TEN)
     val sweetness: State<Int> = _sweetness
 
-
     private val _uCup1 = mutableStateOf(false)
     val uCup1: State<Boolean> = _uCup1
 
@@ -124,6 +122,21 @@ class AddEditCupViewModel @Inject constructor(
 
     private val _faultDefects = mutableStateOf(0)
     val faultDefects: State<Int> = _faultDefects
+
+    private val _overall = mutableStateOf(EIGHT_F)
+    val overall: State<Float> = _overall
+
+    private val _finalScore = mutableStateOf(86f)
+    val finalScore: State<Float> = _finalScore
+
+    private fun updateFinalScore() {
+        viewModelScope.launch {
+            _finalScore.value = (fragrance.value + flavor.value + aftertaste.value
+                    + acidity.value + body.value + balance.value
+                    + overall.value + uniformity.value + cleanCup.value
+                    + sweetness.value + defects.value)
+        }
+    }
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
@@ -182,6 +195,8 @@ class AddEditCupViewModel @Inject constructor(
                         _faultDefects.value = cup.faultDefects
                         _defects.value = cup.defects
 
+                        _overall.value = cup.overall
+                        _finalScore.value = cup.finalScore
                     }
                 }
             }
@@ -202,12 +217,13 @@ class AddEditCupViewModel @Inject constructor(
 
             is AddEditCupEvent.ChangeFragrance -> {
                 _fragrance.value = event.value
+                updateFinalScore()
+
 
             }
 
             is AddEditCupEvent.ChangeDry -> {
                 _dry.value = event.value
-
             }
 
             is AddEditCupEvent.ChangeBreakAroma -> {
@@ -217,17 +233,17 @@ class AddEditCupViewModel @Inject constructor(
 
             is AddEditCupEvent.ChangeFlavor -> {
                 _flavor.value = event.value
-
+                updateFinalScore()
             }
 
             is AddEditCupEvent.ChangeAftertaste -> {
                 _aftertaste.value = event.value
-
+                updateFinalScore()
             }
 
             is AddEditCupEvent.ChangeAcidity -> {
                 _acidity.value = event.value
-
+                updateFinalScore()
             }
 
             is AddEditCupEvent.ChangeIntensity -> {
@@ -237,7 +253,7 @@ class AddEditCupViewModel @Inject constructor(
 
             is AddEditCupEvent.ChangeBody -> {
                 _body.value = event.value
-
+                updateFinalScore()
             }
 
             is AddEditCupEvent.ChangeLevelOfBody -> {
@@ -247,7 +263,7 @@ class AddEditCupViewModel @Inject constructor(
 
             is AddEditCupEvent.ChangeBalance -> {
                 _balance.value = event.value
-
+                updateFinalScore()
             }
 
             is AddEditCupEvent.ChangeUniformityCup1 -> {
@@ -257,7 +273,7 @@ class AddEditCupViewModel @Inject constructor(
                 } else {
                     _uniformity.value += 2
                 }
-
+                updateFinalScore()
             }
 
             is AddEditCupEvent.ChangeUniformityCup2 -> {
@@ -267,6 +283,7 @@ class AddEditCupViewModel @Inject constructor(
                 } else {
                     _uniformity.value += 2
                 }
+                updateFinalScore()
             }
 
             is AddEditCupEvent.ChangeUniformityCup3 -> {
@@ -276,6 +293,7 @@ class AddEditCupViewModel @Inject constructor(
                 } else {
                     _uniformity.value += 2
                 }
+                updateFinalScore()
             }
 
             is AddEditCupEvent.ChangeUniformityCup4 -> {
@@ -285,6 +303,7 @@ class AddEditCupViewModel @Inject constructor(
                 } else {
                     _uniformity.value += 2
                 }
+                updateFinalScore()
             }
 
             is AddEditCupEvent.ChangeUniformityCup5 -> {
@@ -294,6 +313,7 @@ class AddEditCupViewModel @Inject constructor(
                 } else {
                     _uniformity.value += 2
                 }
+                updateFinalScore()
             }
 
             is AddEditCupEvent.ChangeCleanCup1 -> {
@@ -303,6 +323,7 @@ class AddEditCupViewModel @Inject constructor(
                 } else {
                     _cleanCup.value += 2
                 }
+                updateFinalScore()
             }
 
             is AddEditCupEvent.ChangeCleanCup2 -> {
@@ -312,6 +333,7 @@ class AddEditCupViewModel @Inject constructor(
                 } else {
                     _cleanCup.value += 2
                 }
+                updateFinalScore()
             }
 
             is AddEditCupEvent.ChangeCleanCup3 -> {
@@ -321,6 +343,7 @@ class AddEditCupViewModel @Inject constructor(
                 } else {
                     _cleanCup.value += 2
                 }
+                updateFinalScore()
             }
 
             is AddEditCupEvent.ChangeCleanCup4 -> {
@@ -330,6 +353,7 @@ class AddEditCupViewModel @Inject constructor(
                 } else {
                     _cleanCup.value += 2
                 }
+                updateFinalScore()
             }
 
             is AddEditCupEvent.ChangeCleanCup5 -> {
@@ -339,6 +363,7 @@ class AddEditCupViewModel @Inject constructor(
                 } else {
                     _cleanCup.value += 2
                 }
+                updateFinalScore()
             }
 
             is AddEditCupEvent.ChangeSweetnessCup1 -> {
@@ -348,6 +373,7 @@ class AddEditCupViewModel @Inject constructor(
                 } else {
                     _sweetness.value += 2
                 }
+                updateFinalScore()
             }
 
             is AddEditCupEvent.ChangeSweetnessCup2 -> {
@@ -357,6 +383,7 @@ class AddEditCupViewModel @Inject constructor(
                 } else {
                     _sweetness.value += 2
                 }
+                updateFinalScore()
             }
 
             is AddEditCupEvent.ChangeSweetnessCup3 -> {
@@ -366,6 +393,7 @@ class AddEditCupViewModel @Inject constructor(
                 } else {
                     _sweetness.value += 2
                 }
+                updateFinalScore()
             }
 
             is AddEditCupEvent.ChangeSweetnessCup4 -> {
@@ -375,6 +403,7 @@ class AddEditCupViewModel @Inject constructor(
                 } else {
                     _sweetness.value += 2
                 }
+                updateFinalScore()
             }
 
             is AddEditCupEvent.ChangeSweetnessCup5 -> {
@@ -384,26 +413,36 @@ class AddEditCupViewModel @Inject constructor(
                 } else {
                     _sweetness.value += 2
                 }
+                updateFinalScore()
             }
 
             is AddEditCupEvent.ChangeTaintInc -> {
                 _taintDefects.value++
                 _defects.value -= 2
+                updateFinalScore()
             }
 
             is AddEditCupEvent.ChangeTaintDec -> {
                 _taintDefects.value--
                 _defects.value += 2
+                updateFinalScore()
             }
 
             is AddEditCupEvent.ChangeFaultDec -> {
                 _faultDefects.value--
                 _defects.value += 4
+                updateFinalScore()
             }
 
             is AddEditCupEvent.ChangeFaultInc -> {
                 _faultDefects.value++
                 _defects.value -= 4
+                updateFinalScore()
+            }
+
+            is AddEditCupEvent.ChangeOverall -> {
+                _overall.value = event.value
+                updateFinalScore()
             }
 
 
@@ -458,9 +497,9 @@ class AddEditCupViewModel @Inject constructor(
                                 taintDefects = taintDefects.value,
                                 faultDefects = faultDefects.value,
                                 notesDefects = EMPTY_STRING,
-                                overall = EIGHT_F,
+                                overall = overall.value,
                                 notesOverall = EMPTY_STRING,
-                                finalScore = EIGHTY_SIX_F,
+                                finalScore = finalScore.value,
                                 timestamp = System.currentTimeMillis(),
                                 id = currentNoteId,
                             )
