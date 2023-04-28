@@ -1,5 +1,6 @@
 package com.nebulov.cuppingformapp.feautere_cup.presentation.add_edit_cup.components
 
+import android.content.Context
 import androidx.annotation.StringRes
 import androidx.compose.animation.*
 import androidx.compose.animation.core.Spring
@@ -8,17 +9,21 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 
 @Composable
 fun CheckBoxForm(
     modifier: Modifier = Modifier,
     @StringRes text: Int,
-//    textDescriptors: MutableState<String>,
+    textDescriptors: String,
+    onTextChange: (String) -> Unit,
     checkboxValue: Int,
     cup1: Boolean,
     cup2: Boolean,
@@ -30,20 +35,20 @@ fun CheckBoxForm(
     onCheckedChange3: (Boolean) -> Unit,
     onCheckedChange4: (Boolean) -> Unit,
     onCheckedChange5: (Boolean) -> Unit,
-//    scaffoldState: ScaffoldState,
-//    coroutineScope: CoroutineScope,
-//    context: Context,
-//    textInfo: Int,
+    scaffoldState: ScaffoldState,
+    coroutineScope: CoroutineScope,
+    context: Context,
+    textInfo: Int,
 ) {
 
-//    fun onClickInfo(textInfo: Int) {
-//        coroutineScope.launch {
-//            scaffoldState.snackbarHostState.showSnackbar(
-//                message = context.getString(textInfo),
-//                duration = SnackbarDuration.Short
-//            )
-//        }
-//    }
+    fun onClickInfo(textInfo: Int) {
+        coroutineScope.launch {
+            scaffoldState.snackbarHostState.showSnackbar(
+                message = context.getString(textInfo),
+                duration = SnackbarDuration.Short
+            )
+        }
+    }
 
     Surface(
         shape = RoundedCornerShape(8.dp),
@@ -75,9 +80,9 @@ fun CheckBoxForm(
                 stringResource(id = text)
             )
             Spacer(modifier = modifier.size(2.dp))
-//            InfoIcon(
-//                modifier = modifier.align(Alignment.CenterVertically),
-//                onClickInfo = { onClickInfo(textInfo) })
+            InfoIcon(
+                modifier = modifier.align(Alignment.CenterVertically),
+                onClickInfo = { onClickInfo(textInfo) })
             Spacer(modifier = modifier.weight(1f, true))
             AnimatedValue(checkboxValue)
 
@@ -101,7 +106,10 @@ fun CheckBoxForm(
                 OneCheckBox(cup = cup4, onCheckedChange = { onCheckedChange4(it) })
                 OneCheckBox(cup = cup5, onCheckedChange = { onCheckedChange5(it) })
             }
-//            NotesForm(modifier, textDescriptors)
+            NotesForm(
+                modifier,
+                textDescriptors = textDescriptors,
+                onValueChange = { onTextChange(it) })
         }
     }
 }

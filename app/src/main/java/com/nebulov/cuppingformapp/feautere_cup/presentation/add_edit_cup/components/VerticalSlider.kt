@@ -1,5 +1,6 @@
 package com.nebulov.cuppingformapp.feautere_cup.presentation.add_edit_cup.components
 
+import android.content.Context
 import androidx.annotation.StringRes
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
@@ -11,8 +12,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Slider
 import androidx.compose.material.SliderDefaults
+import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.contentColorFor
@@ -39,6 +42,8 @@ import com.nebulov.cuppingformapp.ui.theme.VeryDark
 import com.nebulov.cuppingformapp.ui.theme.VeryDarkNight
 import com.nebulov.cuppingformapp.ui.theme.VeryLight
 import com.nebulov.cuppingformapp.ui.theme.VeryLightNight
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 
 @Composable
@@ -54,21 +59,22 @@ fun VerticalSlider(
     onValueChange: (Float) -> Unit,
     onValueChange2: (Float) -> Unit,
     onValueChange3: (Float) -> Unit,
-//    textDescriptors: MutableState<String>,
-//    scaffoldState: ScaffoldState,
-//    coroutineScope: CoroutineScope,
-//    context: Context,
-//    textInfo: Int,
+    textDescriptors: String,
+    onTextChange: (String) -> Unit,
+    scaffoldState: ScaffoldState,
+    coroutineScope: CoroutineScope,
+    context: Context,
+    textInfo: Int,
 ) {
 
-//    fun onClickInfo(textInfo: Int) {
-//        coroutineScope.launch {
-//            scaffoldState.snackbarHostState.showSnackbar(
-//                message = context.getString(textInfo),
-//                duration = SnackbarDuration.Short
-//            )
-//        }
-//    }
+    fun onClickInfo(textInfo: Int) {
+        coroutineScope.launch {
+            scaffoldState.snackbarHostState.showSnackbar(
+                message = context.getString(textInfo),
+                duration = SnackbarDuration.Short
+            )
+        }
+    }
 
 //    fun sliderValueCut(value: MutableState<Float>): Float {
 //        val cut = when (value.value) {
@@ -118,9 +124,9 @@ fun VerticalSlider(
             Text(
                 stringResource(id = text)
             )
-//            InfoIcon(
-//                modifier = modifier.align(Alignment.CenterVertically),
-//                onClickInfo = { onClickInfo(textInfo) })
+            InfoIcon(
+                modifier = modifier.align(Alignment.CenterVertically),
+                onClickInfo = { onClickInfo(textInfo) })
             Spacer(modifier = modifier.weight(1f, true))
             Text(
                 text = String.format("%.2f", sliderValue),
@@ -186,7 +192,10 @@ fun VerticalSlider(
                         onValueChange = { onValueChange2(it) }
                     )
                 }
-//            NotesForm(modifier, textDescriptors)
+            NotesForm(
+                modifier,
+                textDescriptors = textDescriptors,
+                onValueChange = { onTextChange(it) })
         }
     }
 }

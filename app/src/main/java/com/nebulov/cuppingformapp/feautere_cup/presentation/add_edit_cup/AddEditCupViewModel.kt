@@ -129,6 +129,40 @@ class AddEditCupViewModel @Inject constructor(
     private val _finalScore = mutableStateOf(86f)
     val finalScore: State<Float> = _finalScore
 
+    private val _notesFragrance = mutableStateOf(EMPTY_STRING)
+    val notesFragrance: State<String> = _notesFragrance
+
+    private val _notesAftertaste = mutableStateOf(EMPTY_STRING)
+    val notesAftertaste: State<String> = _notesAftertaste
+
+    private val _notesAcidity = mutableStateOf(EMPTY_STRING)
+    val notesAcidity: State<String> = _notesAcidity
+
+    private val _notesFlavor = mutableStateOf(EMPTY_STRING)
+    val notesFlavor: State<String> = _notesFlavor
+
+    private val _notesBody = mutableStateOf(EMPTY_STRING)
+    val notesBody: State<String> = _notesBody
+
+    private val _notesBalance = mutableStateOf(EMPTY_STRING)
+    val notesBalance: State<String> = _notesBalance
+
+    private val _notesUniformity = mutableStateOf(EMPTY_STRING)
+    val notesUniformity: State<String> = _notesUniformity
+
+    private val _notesCleanCup = mutableStateOf(EMPTY_STRING)
+    val notesCleanCup: State<String> = _notesCleanCup
+
+    private val _notesSweetness = mutableStateOf(EMPTY_STRING)
+    val notesSweetness: State<String> = _notesSweetness
+
+    private val _notesDefects = mutableStateOf(EMPTY_STRING)
+    val notesDefects: State<String> = _notesDefects
+
+    private val _notesOverall = mutableStateOf(EMPTY_STRING)
+    val notesOverall: State<String> = _notesOverall
+
+
     private fun updateFinalScore() {
         viewModelScope.launch {
             _finalScore.value = (fragrance.value + flavor.value + aftertaste.value
@@ -197,6 +231,18 @@ class AddEditCupViewModel @Inject constructor(
 
                         _overall.value = cup.overall
                         _finalScore.value = cup.finalScore
+
+                        _notesFragrance.value = cup.notesFragrance
+                        _notesFlavor.value = cup.notesFlavor
+                        _notesAftertaste.value = cup.notesAftertaste
+                        _notesAcidity.value = cup.notesAcidity
+                        _notesBody.value = cup.notesBody
+                        _notesBalance.value = cup.notesBalance
+                        _notesUniformity.value = cup.notesUniformity
+                        _notesCleanCup.value = cup.notesCleanCup
+                        _notesSweetness.value = cup.notesSweetness
+                        _notesDefects.value = cup.notesDefects
+                        _notesOverall.value = cup.notesOverall
                     }
                 }
             }
@@ -218,7 +264,6 @@ class AddEditCupViewModel @Inject constructor(
             is AddEditCupEvent.ChangeFragrance -> {
                 _fragrance.value = event.value
                 updateFinalScore()
-
 
             }
 
@@ -445,6 +490,61 @@ class AddEditCupViewModel @Inject constructor(
                 updateFinalScore()
             }
 
+            is AddEditCupEvent.ChangeNotesFragrance -> {
+                _notesFragrance.value = event.value
+
+            }
+
+            is AddEditCupEvent.ChangeNotesFlavor -> {
+                _notesFlavor.value = event.value
+
+            }
+
+            is AddEditCupEvent.ChangeNotesAftertaste -> {
+                _notesAftertaste.value = event.value
+
+            }
+
+            is AddEditCupEvent.ChangeNotesAcidity -> {
+                _notesAcidity.value = event.value
+
+            }
+
+            is AddEditCupEvent.ChangeNotesBody -> {
+                _notesBody.value = event.value
+
+            }
+
+            is AddEditCupEvent.ChangeNotesBalance -> {
+                _notesBalance.value = event.value
+
+            }
+
+            is AddEditCupEvent.ChangeNotesUniformity -> {
+                _notesUniformity.value = event.value
+
+            }
+
+            is AddEditCupEvent.ChangeNotesCleanCup -> {
+                _notesCleanCup.value = event.value
+
+            }
+
+            is AddEditCupEvent.ChangeNotesSweetness -> {
+                _notesSweetness.value = event.value
+
+            }
+
+            is AddEditCupEvent.ChangeNotesDefect -> {
+                _notesDefects.value = event.value
+
+            }
+
+            is AddEditCupEvent.ChangeNotesOverall -> {
+                _notesOverall.value = event.value
+
+            }
+
 
             is AddEditCupEvent.SaveCup -> {
                 viewModelScope.launch {
@@ -459,46 +559,46 @@ class AddEditCupViewModel @Inject constructor(
                                 dry = dry.value,
                                 breakAroma = breakAroma.value,
 
-                                notesFragrance = EMPTY_STRING,
+                                notesFragrance = notesFragrance.value,
                                 flavor = flavor.value,
-                                notesFlavor = EMPTY_STRING,
+                                notesFlavor = notesFlavor.value,
                                 aftertaste = aftertaste.value,
-                                notesAftertaste = EMPTY_STRING,
+                                notesAftertaste = notesAftertaste.value,
                                 acidity = acidity.value,
                                 intensity = intensity.value,
-                                notesAcidity = EMPTY_STRING,
+                                notesAcidity = notesAcidity.value,
                                 body = body.value,
                                 levelOfBody = levelOfBody.value,
-                                notesBody = EMPTY_STRING,
+                                notesBody = notesBody.value,
                                 balance = balance.value,
-                                notesBalance = EMPTY_STRING,
+                                notesBalance = notesBalance.value,
                                 uniformity = uniformity.value,
                                 uCup1 = uCup1.value,
                                 uCup2 = uCup2.value,
                                 uCup3 = uCup3.value,
                                 uCup4 = uCup4.value,
                                 uCup5 = uCup5.value,
-                                notesUniformity = EMPTY_STRING,
+                                notesUniformity = notesUniformity.value,
                                 cleanCup = cleanCup.value,
                                 cCup1 = cCup1.value,
                                 cCup2 = cCup2.value,
                                 cCup3 = cCup3.value,
                                 cCup4 = cCup4.value,
                                 cCup5 = cCup5.value,
-                                notesCleanCup = EMPTY_STRING,
+                                notesCleanCup = notesCleanCup.value,
                                 sweetness = sweetness.value,
                                 sCup1 = sCup1.value,
                                 sCup2 = sCup2.value,
                                 sCup3 = sCup3.value,
                                 sCup4 = sCup4.value,
                                 sCup5 = sCup5.value,
-                                notesSweetness = EMPTY_STRING,
+                                notesSweetness = notesSweetness.value,
                                 defects = defects.value,
                                 taintDefects = taintDefects.value,
                                 faultDefects = faultDefects.value,
-                                notesDefects = EMPTY_STRING,
+                                notesDefects = notesDefects.value,
                                 overall = overall.value,
-                                notesOverall = EMPTY_STRING,
+                                notesOverall = notesOverall.value,
                                 finalScore = finalScore.value,
                                 timestamp = System.currentTimeMillis(),
                                 id = currentNoteId,

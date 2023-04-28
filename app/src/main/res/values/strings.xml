@@ -1,4 +1,8 @@
 <resources>
+    <string name="home_score">Score</string>
+    <string name="home_update">Update</string>
+    <string name="home_name">Name</string>
+
     <string name="app_name">CuppingFormApp</string>
     <string name="Fragrance">"Fragrance/Aroma "</string>
     <string name="Flavor">"Flavor "</string>

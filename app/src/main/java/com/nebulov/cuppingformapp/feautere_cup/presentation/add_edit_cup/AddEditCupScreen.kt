@@ -16,8 +16,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -29,6 +31,7 @@ import com.nebulov.cuppingformapp.feautere_cup.presentation.add_edit_cup.compone
 import com.nebulov.cuppingformapp.feautere_cup.presentation.add_edit_cup.components.TopAppBarCuppingForm
 import com.nebulov.cuppingformapp.feautere_cup.presentation.add_edit_cup.components.VerticalSlider
 import com.nebulov.cuppingformapp.feautere_cup.presentation.cups.components.DefaultFloatingActionButton
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -55,33 +58,37 @@ fun AddEditCupScreen(
     val uCup3 = viewModel.uCup3.value
     val uCup4 = viewModel.uCup4.value
     val uCup5 = viewModel.uCup5.value
-
     val cleanCup = viewModel.cleanCup.value
     val cCup1 = viewModel.cCup1.value
     val cCup2 = viewModel.cCup2.value
     val cCup3 = viewModel.cCup3.value
     val cCup4 = viewModel.cCup4.value
     val cCup5 = viewModel.cCup5.value
-
     val sweetness = viewModel.sweetness.value
     val sCup1 = viewModel.sCup1.value
     val sCup2 = viewModel.sCup2.value
     val sCup3 = viewModel.sCup3.value
     val sCup4 = viewModel.sCup4.value
     val sCup5 = viewModel.sCup5.value
-
     val defects = viewModel.defects.value
     val taintDefects = viewModel.taintDefects.value
     val faultDefects = viewModel.faultDefects.value
-
     val overall = viewModel.overall.value
-
     val finalScore = viewModel.finalScore.value
-//    (((fragrance + flavor + aftertaste
-//            + acidity + body + balance
-//            + overall + uniformity + cleanCup
-//            + sweetness + defects)))
+    val notesFragrance = viewModel.notesFragrance.value
+    val notesFlavor = viewModel.notesFlavor.value
+    val notesAftertaste = viewModel.notesAftertaste.value
+    val notesAcidity = viewModel.notesAcidity.value
+    val notesBody = viewModel.notesBody.value
+    val notesBalance = viewModel.notesBalance.value
+    val notesUniformity = viewModel.notesUniformity.value
+    val notesCleanCup = viewModel.notesCleanCup.value
+    val notesSweetness = viewModel.notesSweetness.value
+    val notesDefects = viewModel.notesDefects.value
+    val notesOverall = viewModel.notesOverall.value
 
+    val context = LocalContext.current
+    val coroutineScope: CoroutineScope = rememberCoroutineScope()
     val scaffoldState = rememberScaffoldState()
 
     var editMessageShown by remember { mutableStateOf(false) }
@@ -135,11 +142,11 @@ fun AddEditCupScreen(
             RoastForm(
                 R.string.Roast,
                 levelOfRoast = levelOfRoast,
-                onValueChange = { viewModel.onEvent(AddEditCupEvent.ChangeLevelOfRoast(it)) }
-//                scaffoldState = scaffoldState,
-//                coroutineScope = coroutineScope,
-//                context = context,
-//                textInfo = R.string.RoastInfo,
+                onValueChange = { viewModel.onEvent(AddEditCupEvent.ChangeLevelOfRoast(it)) },
+                scaffoldState = scaffoldState,
+                coroutineScope = coroutineScope,
+                context = context,
+                textInfo = R.string.RoastInfo,
             )
             VerticalSlider(
                 text = R.string.Fragrance,
@@ -147,9 +154,15 @@ fun AddEditCupScreen(
                 sliderValue = fragrance,
                 sliderValue2 = dry,
                 sliderValue3 = breakAroma,
+                textDescriptors = notesFragrance,
+                onTextChange = { viewModel.onEvent(AddEditCupEvent.ChangeNotesFragrance(it)) },
                 onValueChange = { viewModel.onEvent(AddEditCupEvent.ChangeFragrance(it)) },
                 onValueChange2 = { viewModel.onEvent(AddEditCupEvent.ChangeDry(it)) },
                 onValueChange3 = { viewModel.onEvent(AddEditCupEvent.ChangeBreakAroma(it)) },
+                scaffoldState = scaffoldState,
+                coroutineScope = coroutineScope,
+                context = context,
+                textInfo = R.string.FragranceInfo,
             )
             VerticalSlider(
                 text = R.string.Flavor,
@@ -157,11 +170,12 @@ fun AddEditCupScreen(
                 onValueChange = { viewModel.onEvent(AddEditCupEvent.ChangeFlavor(it)) },
                 onValueChange2 = { },
                 onValueChange3 = { },
-//                textDescriptors = notesFlavor,
-//                scaffoldState = scaffoldState,
-//                coroutineScope = coroutineScope,
-//                context = context,
-//                textInfo = R.string.FlavorInfo,
+                textDescriptors = notesFlavor,
+                onTextChange = { viewModel.onEvent(AddEditCupEvent.ChangeNotesFlavor(it)) },
+                scaffoldState = scaffoldState,
+                coroutineScope = coroutineScope,
+                context = context,
+                textInfo = R.string.FlavorInfo,
             )
             VerticalSlider(
                 text = R.string.Aftertaste,
@@ -169,11 +183,12 @@ fun AddEditCupScreen(
                 onValueChange = { viewModel.onEvent(AddEditCupEvent.ChangeAftertaste(it)) },
                 onValueChange2 = { },
                 onValueChange3 = { },
-//                textDescriptors = notesAftertaste,
-//                scaffoldState = scaffoldState,
-//                coroutineScope = coroutineScope,
-//                context = context,
-//                textInfo = R.string.AftertasteInfo,
+                textDescriptors = notesAftertaste,
+                onTextChange = { viewModel.onEvent(AddEditCupEvent.ChangeNotesAftertaste(it)) },
+                scaffoldState = scaffoldState,
+                coroutineScope = coroutineScope,
+                context = context,
+                textInfo = R.string.AftertasteInfo,
             )
             VerticalSlider(
                 text = R.string.Acidity,
@@ -183,11 +198,12 @@ fun AddEditCupScreen(
                 onValueChange = { viewModel.onEvent(AddEditCupEvent.ChangeAcidity(it)) },
                 onValueChange2 = { viewModel.onEvent(AddEditCupEvent.ChangeIntensity(it)) },
                 onValueChange3 = { },
-//                textDescriptors = notesAcidity,
-//                scaffoldState = scaffoldState,
-//                coroutineScope = coroutineScope,
-//                context = context,
-//                textInfo = R.string.AcidityInfo,
+                textDescriptors = notesAcidity,
+                onTextChange = { viewModel.onEvent(AddEditCupEvent.ChangeNotesAcidity(it)) },
+                scaffoldState = scaffoldState,
+                coroutineScope = coroutineScope,
+                context = context,
+                textInfo = R.string.AcidityInfo,
             )
             VerticalSlider(
                 text = R.string.Body,
@@ -197,11 +213,12 @@ fun AddEditCupScreen(
                 onValueChange = { viewModel.onEvent(AddEditCupEvent.ChangeBody(it)) },
                 onValueChange2 = { viewModel.onEvent(AddEditCupEvent.ChangeLevelOfBody(it)) },
                 onValueChange3 = { },
-//                textDescriptors = notesBody,
-//                scaffoldState = scaffoldState,
-//                coroutineScope = coroutineScope,
-//                context = context,
-//                textInfo = R.string.BodyInfo,
+                textDescriptors = notesBody,
+                onTextChange = { viewModel.onEvent(AddEditCupEvent.ChangeNotesBody(it)) },
+                scaffoldState = scaffoldState,
+                coroutineScope = coroutineScope,
+                context = context,
+                textInfo = R.string.BodyInfo,
             )
             VerticalSlider(
                 text = R.string.Balance,
@@ -209,15 +226,18 @@ fun AddEditCupScreen(
                 onValueChange = { viewModel.onEvent(AddEditCupEvent.ChangeBalance(it)) },
                 onValueChange2 = {},
                 onValueChange3 = {},
-//                textDescriptors = notesBalance,
-//                scaffoldState = scaffoldState,
-//                coroutineScope = coroutineScope,
-//                context = context,
-//                textInfo = R.string.BalanceInfo,
+                textDescriptors = notesBalance,
+                onTextChange = { viewModel.onEvent(AddEditCupEvent.ChangeNotesBalance(it)) },
+                scaffoldState = scaffoldState,
+                coroutineScope = coroutineScope,
+                context = context,
+                textInfo = R.string.BalanceInfo,
             )
             CheckBoxForm(
                 text = R.string.Uniformity,
                 checkboxValue = uniformity,
+                textDescriptors = notesUniformity,
+                onTextChange = { viewModel.onEvent(AddEditCupEvent.ChangeNotesUniformity(it)) },
                 cup1 = uCup1,
                 cup2 = uCup2,
                 cup3 = uCup3,
@@ -228,10 +248,16 @@ fun AddEditCupScreen(
                 onCheckedChange3 = { viewModel.onEvent(AddEditCupEvent.ChangeUniformityCup3(it)) },
                 onCheckedChange4 = { viewModel.onEvent(AddEditCupEvent.ChangeUniformityCup4(it)) },
                 onCheckedChange5 = { viewModel.onEvent(AddEditCupEvent.ChangeUniformityCup5(it)) },
+                scaffoldState = scaffoldState,
+                coroutineScope = coroutineScope,
+                context = context,
+                textInfo = R.string.UniformityInfo,
             )
             CheckBoxForm(
                 text = R.string.CleanCup,
                 checkboxValue = cleanCup,
+                textDescriptors = notesCleanCup,
+                onTextChange = { viewModel.onEvent(AddEditCupEvent.ChangeNotesCleanCup(it)) },
                 cup1 = cCup1,
                 cup2 = cCup2,
                 cup3 = cCup3,
@@ -242,10 +268,16 @@ fun AddEditCupScreen(
                 onCheckedChange3 = { viewModel.onEvent(AddEditCupEvent.ChangeCleanCup3(it)) },
                 onCheckedChange4 = { viewModel.onEvent(AddEditCupEvent.ChangeCleanCup4(it)) },
                 onCheckedChange5 = { viewModel.onEvent(AddEditCupEvent.ChangeCleanCup5(it)) },
+                scaffoldState = scaffoldState,
+                coroutineScope = coroutineScope,
+                context = context,
+                textInfo = R.string.CleanCupInfo,
             )
             CheckBoxForm(
                 text = R.string.Sweetness,
                 checkboxValue = sweetness,
+                textDescriptors = notesSweetness,
+                onTextChange = { viewModel.onEvent(AddEditCupEvent.ChangeNotesSweetness(it)) },
                 cup1 = sCup1,
                 cup2 = sCup2,
                 cup3 = sCup3,
@@ -256,10 +288,15 @@ fun AddEditCupScreen(
                 onCheckedChange3 = { viewModel.onEvent(AddEditCupEvent.ChangeSweetnessCup3(it)) },
                 onCheckedChange4 = { viewModel.onEvent(AddEditCupEvent.ChangeSweetnessCup4(it)) },
                 onCheckedChange5 = { viewModel.onEvent(AddEditCupEvent.ChangeSweetnessCup5(it)) },
+                scaffoldState = scaffoldState,
+                coroutineScope = coroutineScope,
+                context = context,
+                textInfo = R.string.SweetnessInfo,
             )
             DefectsForm(
                 text = R.string.Defects,
-//                textDescriptors = notesDefects,
+                textDescriptors = notesDefects,
+                onTextChange = { viewModel.onEvent(AddEditCupEvent.ChangeNotesDefect(it)) },
                 defectsResult = defects,
                 defectsValue1 = taintDefects,
                 defectsValue2 = faultDefects,
@@ -267,10 +304,10 @@ fun AddEditCupScreen(
                 onValueInc1 = { viewModel.onEvent(AddEditCupEvent.ChangeTaintInc(0)) },
                 onValueDec2 = { viewModel.onEvent(AddEditCupEvent.ChangeFaultDec(0)) },
                 onValueInc2 = { viewModel.onEvent(AddEditCupEvent.ChangeFaultInc(0)) },
-//                scaffoldState = scaffoldState,
-//                coroutineScope = coroutineScope,
-//                context = context,
-//                textInfo = R.string.DefectsInfo,
+                scaffoldState = scaffoldState,
+                coroutineScope = coroutineScope,
+                context = context,
+                textInfo = R.string.DefectsInfo,
             )
             VerticalSlider(
                 text = R.string.Overall,
@@ -278,11 +315,12 @@ fun AddEditCupScreen(
                 onValueChange = { viewModel.onEvent(AddEditCupEvent.ChangeOverall(it)) },
                 onValueChange2 = {},
                 onValueChange3 = {},
-//                textDescriptors = notesOverall,
-//                scaffoldState = scaffoldState,
-//                coroutineScope = coroutineScope,
-//                context = context,
-//                textInfo = R.string.OverallInfo,
+                textDescriptors = notesOverall,
+                onTextChange = { viewModel.onEvent(AddEditCupEvent.ChangeNotesOverall(it)) },
+                scaffoldState = scaffoldState,
+                coroutineScope = coroutineScope,
+                context = context,
+                textInfo = R.string.OverallInfo,
             )
             Spacer(Modifier.height(85.dp))
         }

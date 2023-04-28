@@ -38,5 +38,17 @@ sealed class AddEditCupEvent {
     data class ChangeFaultDec(val value: Int) : AddEditCupEvent()
     data class ChangeOverall(val value: Float) : AddEditCupEvent()
 
+    data class ChangeNotesFragrance(val value: String) : AddEditCupEvent()
+    data class ChangeNotesFlavor(val value: String) : AddEditCupEvent()
+    data class ChangeNotesAftertaste(val value: String) : AddEditCupEvent()
+    data class ChangeNotesAcidity(val value: String) : AddEditCupEvent()
+    data class ChangeNotesBody(val value: String) : AddEditCupEvent()
+    data class ChangeNotesBalance(val value: String) : AddEditCupEvent()
+    data class ChangeNotesUniformity(val value: String) : AddEditCupEvent()
+    data class ChangeNotesCleanCup(val value: String) : AddEditCupEvent()
+    data class ChangeNotesSweetness(val value: String) : AddEditCupEvent()
+    data class ChangeNotesDefect(val value: String) : AddEditCupEvent()
+    data class ChangeNotesOverall(val value: String) : AddEditCupEvent()
+
     object SaveCup : AddEditCupEvent()
 }

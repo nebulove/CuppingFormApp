@@ -1,19 +1,27 @@
 package com.nebulov.cuppingform.ui.components
 
+import android.content.Context
 import androidx.annotation.StringRes
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ScaffoldState
+import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.nebulov.cuppingformapp.feautere_cup.presentation.add_edit_cup.components.AnimatedValue
 import com.nebulov.cuppingformapp.R
+import com.nebulov.cuppingformapp.feautere_cup.presentation.add_edit_cup.components.InfoIcon
+import com.nebulov.cuppingformapp.feautere_cup.presentation.add_edit_cup.components.NotesForm
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun DefectsForm(
@@ -22,27 +30,27 @@ fun DefectsForm(
     defectsValue1: Int,
     defectsValue2: Int,
     defectsResult: Int,
-    onValueInc1:()-> Unit,
-    onValueDec1:()-> Unit,
-    onValueInc2:()-> Unit,
-    onValueDec2:()-> Unit,
-//    textDescriptors: MutableState<String>,
-//    scaffoldState: ScaffoldState,
-//    coroutineScope: CoroutineScope,
-//    context: Context,
-//    textInfo: Int,
+    onValueInc1: () -> Unit,
+    onValueDec1: () -> Unit,
+    onValueInc2: () -> Unit,
+    onValueDec2: () -> Unit,
+    textDescriptors: String,
+    onTextChange: (String) -> Unit,
+    scaffoldState: ScaffoldState,
+    coroutineScope: CoroutineScope,
+    context: Context,
+    textInfo: Int,
 ) {
 
-//    defectsResult = 0 - (defectsValue1 * 2 + defectsValue2 * 4)
 
-//    fun onClickInfo(textInfo: Int) {
-//        coroutineScope.launch {
-//            scaffoldState.snackbarHostState.showSnackbar(
-//                message = context.getString(textInfo),
-//                duration = SnackbarDuration.Short
-//            )
-//        }
-//    }
+    fun onClickInfo(textInfo: Int) {
+        coroutineScope.launch {
+            scaffoldState.snackbarHostState.showSnackbar(
+                message = context.getString(textInfo),
+                duration = SnackbarDuration.Short
+            )
+        }
+    }
 
     Surface(
         shape = RoundedCornerShape(8.dp),
@@ -74,9 +82,9 @@ fun DefectsForm(
                 stringResource(id = text)
             )
             Spacer(modifier = modifier.size(2.dp))
-//            InfoIcon(
-//                modifier = modifier.align(Alignment.CenterVertically),
-//                onClickInfo = { onClickInfo(textInfo) })
+            InfoIcon(
+                modifier = modifier.align(Alignment.CenterVertically),
+                onClickInfo = { onClickInfo(textInfo) })
             Spacer(modifier = modifier.weight(1f, true))
             AnimatedValue(defectsResult)
         }
@@ -109,7 +117,10 @@ fun DefectsForm(
                     onValueInc = { onValueInc2() },
                 )
             }
-//            NotesForm(modifier, textDescriptors)
+            NotesForm(
+                modifier,
+                textDescriptors = textDescriptors,
+                onValueChange = { onTextChange(it) })
         }
     }
 }
