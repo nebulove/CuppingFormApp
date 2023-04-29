@@ -27,6 +27,7 @@ import com.nebulov.cuppingform.ui.components.DefectsForm
 import com.nebulov.cuppingformapp.R
 import com.nebulov.cuppingformapp.feautere_cup.presentation.add_edit_cup.components.AnimatedTextField
 import com.nebulov.cuppingformapp.feautere_cup.presentation.add_edit_cup.components.CheckBoxForm
+import com.nebulov.cuppingformapp.feautere_cup.presentation.add_edit_cup.components.MainBottomBar
 import com.nebulov.cuppingformapp.feautere_cup.presentation.add_edit_cup.components.RoastForm
 import com.nebulov.cuppingformapp.feautere_cup.presentation.add_edit_cup.components.TopAppBarCuppingForm
 import com.nebulov.cuppingformapp.feautere_cup.presentation.add_edit_cup.components.VerticalSlider
@@ -122,17 +123,15 @@ fun AddEditCupScreen(
                 icon = R.drawable.save48,
                 actionOn = { viewModel.onEvent(AddEditCupEvent.SaveCup) },
                 contentDescription = "Save",
-                shape = RoundedCornerShape(
-                    bottomEnd = 8.dp,
-                    topEnd = 20.dp,
-                    topStart = 8.dp,
-                    bottomStart = 8.dp
-                )
+                shape = RoundedCornerShape(50)
             )
         },
         floatingActionButtonPosition = FabPosition.Center,
         isFloatingActionButtonDocked = true,
         backgroundColor = MaterialTheme.colors.primary,
+        bottomBar = {
+            MainBottomBar(navController = navController)
+        }
     ) {
         Column(
             modifier = Modifier.verticalScroll(

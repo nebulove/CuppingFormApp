@@ -41,4 +41,5 @@
     <string name="FragranceInfo">The aromatic aspects include Fragrance (defined as the smell of the ground coffee when still dry) and Aroma (the smell of the coffee when infused with hot water). One can evaluate this at three distinct steps in the cupping process: \n(1) sniffing the grounds placed into the cup before pouring water onto the coffee; \n(2) sniffing the aromas released while breaking the crust; \n(3) sniffing the aromas released as the coffee steeps. Specific aromas can be noted under \"qualities\" and the intensity of the dry, break, and wet aroma aspects noted on the 5-point vertical scales. The score finally given should reflect the preference of all three aspects of a samples Fragrance/Aroma.</string>
     <string name="Delete">Delete cup</string>
     <string name="ListofCups">List of cups</string>
+    <string name="favorite">Favorite</string>
 </resources>

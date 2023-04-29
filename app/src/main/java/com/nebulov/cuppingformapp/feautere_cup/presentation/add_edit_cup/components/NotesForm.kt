@@ -15,7 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nebulov.cuppingformapp.R
-import com.nebulov.cuppingform.core.Constants.Companion.EMPTY_STRING
+import com.nebulov.cuppingformapp.core.Constants.Companion.EMPTY_STRING
 
 @Composable
 fun NotesForm(

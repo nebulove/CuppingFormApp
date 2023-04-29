@@ -26,7 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.nebulov.cuppingform.core.Constants.Companion.ZERO_F
+import com.nebulov.cuppingformapp.core.Constants.Companion.ZERO_F
 import com.nebulov.cuppingformapp.R
 import com.nebulov.cuppingformapp.ui.theme.Dark
 import com.nebulov.cuppingformapp.ui.theme.DarkNight

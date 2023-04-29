@@ -56,6 +56,12 @@ class CupsViewModel @Inject constructor(
                     recentlyDeletedCup = null
                 }
             }
+            is CupEvent.ChangeFavorite ->{
+                viewModelScope.launch {
+                    val newItem = event.cup.copy(favorite = !event.cup.favorite)
+                    cupUseCases.addCup(newItem)
+                }
+            }
         }
     }
 

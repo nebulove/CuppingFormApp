@@ -28,12 +28,13 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.nebulov.cuppingform.core.Constants.Companion.EMPTY_STRING
+import com.nebulov.cuppingformapp.core.Constants.Companion.EMPTY_STRING
 import com.nebulov.cuppingformapp.R
 
 @Composable
@@ -101,9 +102,9 @@ fun TopAppBarCuppingForm(
             Spacer(modifier = modifier.weight(1f, true))
 
             Surface(
-                shape = RoundedCornerShape(8.dp),
+//                shape = RoundedCornerShape(8.dp),
                 color = MaterialTheme.colors.primary,
-                modifier = modifier
+                modifier = modifier.clip(RoundedCornerShape(8.dp))
                     .width(69.dp)
                     .clickable(onClick = { isVisible = !isVisible })
             ) {

@@ -5,10 +5,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.nebulov.cuppingform.core.Constants.Companion.EIGHT_F
-import com.nebulov.cuppingform.core.Constants.Companion.EMPTY_STRING
-import com.nebulov.cuppingform.core.Constants.Companion.TEN
-import com.nebulov.cuppingform.core.Constants.Companion.ZERO_F
+import com.nebulov.cuppingformapp.core.Constants.Companion.EIGHT_F
+import com.nebulov.cuppingformapp.core.Constants.Companion.EMPTY_STRING
+import com.nebulov.cuppingformapp.core.Constants.Companion.TEN
+import com.nebulov.cuppingformapp.core.Constants.Companion.ZERO_F
 import com.nebulov.cuppingformapp.feautere_cup.domain.model.Cup
 import com.nebulov.cuppingformapp.feautere_cup.domain.model.InvalidNoteException
 import com.nebulov.cuppingformapp.feautere_cup.domain.use_case.CupUseCases
@@ -552,6 +552,80 @@ class AddEditCupViewModel @Inject constructor(
                         cupUseCases.addCup(
                             Cup(
                                 name = cupName.value,
+
+                                levelOfRoast = levelOfRoast.value,
+
+                                fragrance = fragrance.value,
+                                dry = dry.value,
+                                breakAroma = breakAroma.value,
+
+                                notesFragrance = notesFragrance.value,
+                                flavor = flavor.value,
+                                notesFlavor = notesFlavor.value,
+                                aftertaste = aftertaste.value,
+                                notesAftertaste = notesAftertaste.value,
+                                acidity = acidity.value,
+                                intensity = intensity.value,
+                                notesAcidity = notesAcidity.value,
+                                body = body.value,
+                                levelOfBody = levelOfBody.value,
+                                notesBody = notesBody.value,
+                                balance = balance.value,
+                                notesBalance = notesBalance.value,
+                                uniformity = uniformity.value,
+                                uCup1 = uCup1.value,
+                                uCup2 = uCup2.value,
+                                uCup3 = uCup3.value,
+                                uCup4 = uCup4.value,
+                                uCup5 = uCup5.value,
+                                notesUniformity = notesUniformity.value,
+                                cleanCup = cleanCup.value,
+                                cCup1 = cCup1.value,
+                                cCup2 = cCup2.value,
+                                cCup3 = cCup3.value,
+                                cCup4 = cCup4.value,
+                                cCup5 = cCup5.value,
+                                notesCleanCup = notesCleanCup.value,
+                                sweetness = sweetness.value,
+                                sCup1 = sCup1.value,
+                                sCup2 = sCup2.value,
+                                sCup3 = sCup3.value,
+                                sCup4 = sCup4.value,
+                                sCup5 = sCup5.value,
+                                notesSweetness = notesSweetness.value,
+                                defects = defects.value,
+                                taintDefects = taintDefects.value,
+                                faultDefects = faultDefects.value,
+                                notesDefects = notesDefects.value,
+                                overall = overall.value,
+                                notesOverall = notesOverall.value,
+                                finalScore = finalScore.value,
+                                timestamp = System.currentTimeMillis(),
+                                id = currentNoteId,
+                            )
+                        )
+                        _eventFlow.emit(UiEvent.SaveCup)
+                    } catch (e: InvalidNoteException) {
+                        _eventFlow.emit(
+                            UiEvent.ShowSnackBar(
+                                message = e.message ?: "Couldn't save cup"
+                            )
+                        )
+                    }
+                }
+            }
+
+            is AddEditCupEvent.SaveCupWithName -> {
+                viewModelScope.launch {
+                    try {
+                        val name = if (event.value == EMPTY_STRING) {
+                            "Sample #${event.count + 1}"
+                        } else {
+                            event.value
+                        }
+                        cupUseCases.addCup(
+                            Cup(
+                                name = name,
 
                                 levelOfRoast = levelOfRoast.value,
 

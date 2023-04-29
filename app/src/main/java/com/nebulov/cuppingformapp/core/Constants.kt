@@ -1,4 +1,4 @@
-package com.nebulov.cuppingform.core
+package com.nebulov.cuppingformapp.core
 
 class Constants {
     companion object {
@@ -14,6 +14,7 @@ class Constants {
         const val CUP_ID = "cupId"
 
         const val LIST_OF_CUP = "list_of_cup"
+        const val CUP_SCREEN = "cups_screen"
         const val CUPPING_FORM = "cupping_form"
     }
 }
