@@ -95,7 +95,7 @@ fun DefaultFloatingActionButton(
     )
 ) {
     FloatingActionButton(
-        modifier = modifier,
+
         shape = shape,
         content = {
             Icon(
@@ -113,6 +113,7 @@ fun DefaultFloatingActionButton(
             pressedElevation = 0.dp,
             hoveredElevation = 0.dp,
             focusedElevation = 0.dp
+        ),
+        modifier = modifier,
         )
-    )
 }

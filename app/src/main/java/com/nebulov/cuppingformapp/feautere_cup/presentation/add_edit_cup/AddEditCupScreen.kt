@@ -1,6 +1,7 @@
 package com.nebulov.cuppingformapp.feautere_cup.presentation.add_edit_cup
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -41,6 +42,10 @@ fun AddEditCupScreen(
     navController: NavController,
     viewModel: AddEditCupViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
+    val coroutineScope: CoroutineScope = rememberCoroutineScope()
+    val scaffoldState = rememberScaffoldState()
+
     val nameState = viewModel.cupName.value
     val levelOfRoast = viewModel.levelOfRoast.value
     val fragrance = viewModel.fragrance.value
@@ -88,9 +93,6 @@ fun AddEditCupScreen(
     val notesDefects = viewModel.notesDefects.value
     val notesOverall = viewModel.notesOverall.value
 
-    val context = LocalContext.current
-    val coroutineScope: CoroutineScope = rememberCoroutineScope()
-    val scaffoldState = rememberScaffoldState()
 
     var editMessageShown by remember { mutableStateOf(false) }
 
@@ -103,9 +105,7 @@ fun AddEditCupScreen(
                     )
                 }
 
-                is AddEditCupViewModel.UiEvent.SaveCup -> {
-                    navController.navigateUp()
-                }
+                is AddEditCupViewModel.UiEvent.SaveCup -> {}
             }
         }
     }
@@ -121,7 +121,8 @@ fun AddEditCupScreen(
         floatingActionButton = {
             DefaultFloatingActionButton(
                 icon = R.drawable.save48,
-                actionOn = { viewModel.onEvent(AddEditCupEvent.SaveCup) },
+                actionOn = { viewModel.onEvent(AddEditCupEvent.SaveCup)
+                    Toast.makeText(context, "$nameState saved", Toast.LENGTH_SHORT).show()},
                 contentDescription = "Save",
                 shape = RoundedCornerShape(50)
             )

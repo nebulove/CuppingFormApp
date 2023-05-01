@@ -22,6 +22,8 @@ class GetCupList(
                         is CupOrder.Title -> cups.sortedBy { it.name.lowercase() }
                         is CupOrder.Date -> cups.sortedBy { it.timestamp }
                         is CupOrder.Value -> cups.sortedBy { it.finalScore }
+                        is CupOrder.Favorite -> cups.sortedBy { it.favorite }
+
                     }
                 }
                 is OrderType.Descending -> {
@@ -29,6 +31,7 @@ class GetCupList(
                         is CupOrder.Title -> cups.sortedByDescending { it.name.lowercase() }
                         is CupOrder.Date -> cups.sortedByDescending { it.timestamp }
                         is CupOrder.Value -> cups.sortedByDescending { it.finalScore }
+                        is CupOrder.Favorite -> cups.sortedByDescending { it.favorite }
                     }
 
                 }

@@ -12,7 +12,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.nebulov.cuppingformapp.core.Constants
 import com.nebulov.cuppingformapp.R
 
 @Composable
@@ -28,7 +27,7 @@ fun MainBottomBar(
     ) {
         IconButton(
             onClick = {
-                navController.navigate(Constants.CUP_SCREEN)
+                navController.navigateUp()
             },
         ) {
             Icon(

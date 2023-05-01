@@ -23,11 +23,10 @@ class MainActivity : ComponentActivity() {
             CuppingFormTheme {
                 Surface(
                     modifier = Modifier,
-                    color = MaterialTheme.colors.background
+                    color = MaterialTheme.colors.primary
                 ) {
 
                     MainScreen()
-//                    NavScreen()
                 }
             }
         }

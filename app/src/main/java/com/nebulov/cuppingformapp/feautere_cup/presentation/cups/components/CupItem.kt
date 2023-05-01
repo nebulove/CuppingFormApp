@@ -39,13 +39,11 @@ fun CupItem(
     modifier: Modifier = Modifier,
     onDeleteClick: () -> Unit,
     onFavoriteChange: () -> Unit,
+
 ) {
 
     val iconColor = cup.favorite
-
     val scrollState = rememberScrollState()
-
-
 
     Surface(
         shape = RoundedCornerShape(8.dp),
@@ -55,18 +53,10 @@ fun CupItem(
                 start = 10.dp,
                 end = 10.dp,
                 bottom = 3.dp
-            )
-
-    )
+            ) )
     {
         Row(
-            modifier = modifier
-                .fillMaxWidth()
-//                .padding(
-//                    top = 10.dp,
-//                    bottom = 10.dp
-//                )
-            ,
+            modifier = modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -77,33 +67,28 @@ fun CupItem(
                 text = R.string.favorite,
                 start = 8.dp, end = 8.dp
             )
-//            Icon(
-//                modifier = modifier
-//                    .size(19.dp)
-//                    .offset(y = 1.dp)
-//                    .clickable(onClick = { onFavoriteChange() }),
-//                painter = painterResource(id = R.drawable.outline_water_drop_black_24dp),
-//                contentDescription = " ",
-//                tint = changeIconColor(iconColor)
-//            )
             Spacer(modifier = modifier.width(6.dp))
             Text(
                 maxLines = 1,
                 modifier = modifier
                     .fillMaxWidth(0.7f)
-                    .horizontalScroll(scrollState),
+                    .horizontalScroll(scrollState).padding(
+                        top = 9.dp,
+                        bottom = 10.dp),
                 text = cup.name,
             )
             Spacer(modifier = modifier.weight(1f, true))
-            Spacer(modifier = modifier.width(6.dp))
+            Spacer(modifier = modifier.width(1.dp))
             Text(
                 modifier = modifier
-                    .fillMaxWidth(0.6f),
+                    .fillMaxWidth(0.6f).padding(
+                        top = 9.dp,
+                        bottom = 10.dp),
                 text = cup.finalScore.toString(),
                 fontWeight = FontWeight.W600,
                 textAlign = TextAlign.Center
             )
-            Spacer(modifier = modifier.width(6.dp))
+            Spacer(modifier = modifier.weight(1f, true))
             DeleteIcon(
                 modifier = modifier.clickable(onClick = onDeleteClick),
                 R.drawable.delete48,
@@ -112,16 +97,6 @@ fun CupItem(
                 start = 4.dp,
                 end = 8.dp
             )
-//            Icon(
-//                modifier = modifier
-//                    .clickable(onClick = onDeleteClick)
-//                    .size(19.dp),
-//                painter = painterResource(
-//                    R.drawable.delete48
-//                ),
-//                contentDescription = stringResource(R.string.Delete),
-//                tint = MaterialTheme.colors.primary
-//            )
         }
     }
 }
@@ -136,7 +111,7 @@ fun DeleteIcon(
     end: Dp
 ) {
     Surface(
-        color = MaterialTheme.colors.onPrimary, modifier = modifier
+        color = MaterialTheme.colors.background, modifier = modifier
             .wrapContentSize()
             .clip(RoundedCornerShape(8.dp))
     ) {

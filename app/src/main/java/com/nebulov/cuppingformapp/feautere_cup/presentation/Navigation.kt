@@ -1,5 +1,8 @@
 package com.nebulov.cuppingformapp.feautere_cup.presentation
 
+import android.annotation.SuppressLint
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -10,27 +13,35 @@ import com.nebulov.cuppingformapp.feautere_cup.presentation.add_edit_cup.AddEdit
 import com.nebulov.cuppingformapp.feautere_cup.presentation.cups.CupsScreen
 import com.nebulov.cuppingformapp.feautere_cup.presentation.util.Screen
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun NavScreen(
 ) {
     val navController = rememberNavController()
-    NavHost(navController = navController,
-        startDestination = Screen.CupsScreen.route) {
 
-        composable(route = Screen.CupsScreen.route) {
-            CupsScreen(navController = navController)
+
+    Scaffold(backgroundColor = MaterialTheme.colors.primary) {
+        NavHost(
+            navController = navController,
+            startDestination = Screen.CupsScreen.route
+        ) {
+
+            composable(route = Screen.CupsScreen.route) {
+                CupsScreen(navController = navController)
+            }
+            composable(route = Screen.AddEditCupScreen.route + "?cupId={cupId}",
+                arguments = listOf(
+                    navArgument(
+                        name = "cupId"
+                    ) {
+                        type = NavType.IntType
+                        defaultValue = -1
+                    }
+                )) {
+                AddEditCupScreen(navController = navController)
+            }
         }
-        composable(route = Screen.AddEditCupScreen.route + "?cupId={cupId}",
-            arguments = listOf(
-                navArgument(
-                    name = "cupId"
-                ) {
-                    type = NavType.IntType
-                    defaultValue =-1
-                }
-            )) {
-            AddEditCupScreen(navController = navController)
-        }
+
     }
 
 }

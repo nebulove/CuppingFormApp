@@ -43,12 +43,10 @@ fun IconOrderSection(
     AnimatedVisibility(
         visible = shown,
         enter = slideInVertically(
-            // Enters by sliding in from offset -fullHeight to 0.
             initialOffsetY = { fullHeight -> -fullHeight },
             animationSpec = tween(durationMillis = 350, easing = LinearOutSlowInEasing)
         ),
         exit = slideOutVertically(
-            // Exits by sliding out from offset 0 to -fullHeight.
             targetOffsetY = { fullHeight -> -fullHeight },
             animationSpec = tween(durationMillis = 550, easing = FastOutLinearInEasing)
         )
@@ -60,7 +58,7 @@ fun IconOrderSection(
         ) {
             DefaultIcon(
                 icon = R.drawable.outline_south_24,
-                text = "Descending",
+                text = "DESCEND",
                 checked = cupOrder.orderType is OrderType.Descending,
                 onClick = { onOrderChange(cupOrder.copy(OrderType.Descending)) }
             )
@@ -69,6 +67,12 @@ fun IconOrderSection(
                 onClick = { onOrderChange(CupOrder.Value(cupOrder.orderType)) },
                 checked = cupOrder is CupOrder.Value,
                 text = "SCORE"
+            )
+            DefaultIcon(
+                icon = R.drawable.outline_water_drop_black_24dp,
+                onClick = { onOrderChange(CupOrder.Favorite(cupOrder.orderType)) },
+                checked = cupOrder is CupOrder.Favorite,
+                text = "DROP"
             )
             DefaultIcon(
                 icon = R.drawable.outline_update_24,
@@ -84,7 +88,7 @@ fun IconOrderSection(
             )
             DefaultIcon(
                 icon = R.drawable.outline_north_24,
-                text = "Ascending",
+                text = "ASCEND",
                 checked = cupOrder.orderType is OrderType.Ascending,
                 onClick = { onOrderChange(cupOrder.copy(OrderType.Ascending)) }
             )
@@ -111,7 +115,7 @@ fun DefaultIcon(
 
     Box(
         modifier = modifier
-            .width(60.dp)
+            .width(50.dp)
             .height(50.dp)
             .clip(RoundedCornerShape(50))
             .selectable(selected = checked, onClick = {

@@ -34,7 +34,6 @@ import kotlinx.coroutines.delay
 fun LandingScreen(
     onTimeout: () -> Unit,
     modifier: Modifier = Modifier,
-//    navController: NavController,
 ) {
 
     val currentOnTimeout by rememberUpdatedState(onTimeout)
@@ -69,11 +68,6 @@ fun LandingScreen(
             )
         )
         delay(1000L)
-//        navController.navigate(CUP_SCREEN) {
-//            popUpTo(navController.graph.id) {
-//                inclusive = true
-//            }
-//        }
         currentOnTimeout()
     }
 

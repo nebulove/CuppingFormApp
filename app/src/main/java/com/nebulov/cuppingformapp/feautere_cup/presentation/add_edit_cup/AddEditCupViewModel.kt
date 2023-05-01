@@ -250,6 +250,7 @@ class AddEditCupViewModel @Inject constructor(
     }
 
     fun onEvent(event: AddEditCupEvent) {
+
         when (event) {
             is AddEditCupEvent.EnteredName -> {
                 _cupName.value = event.value
@@ -257,14 +258,13 @@ class AddEditCupViewModel @Inject constructor(
             }
 
             is AddEditCupEvent.ChangeLevelOfRoast -> {
-                _levelOfRoast.value = event.value
+                    _levelOfRoast.value = event.value
 
             }
 
             is AddEditCupEvent.ChangeFragrance -> {
                 _fragrance.value = event.value
                 updateFinalScore()
-
             }
 
             is AddEditCupEvent.ChangeDry -> {
