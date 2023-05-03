@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,10 +27,10 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun WallpaperEmptyList(
     modifier: Modifier = Modifier,
-    shown: Boolean
+    shown: State<Boolean>
 ) {
     AnimatedVisibility(
-        visible = shown,
+        visible = shown.value,
         exit =
         shrinkVertically (
             animationSpec = tween(1500)),

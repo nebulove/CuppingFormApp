@@ -12,6 +12,7 @@ import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -27,14 +28,14 @@ import kotlinx.coroutines.launch
 fun DefectsForm(
     @StringRes text: Int,
     modifier: Modifier = Modifier,
-    defectsValue1: Int,
-    defectsValue2: Int,
-    defectsResult: Int,
+    defectsValue1: State<Int>,
+    defectsValue2: State<Int>,
+    defectsResult: State<Int>,
     onValueInc1: () -> Unit,
     onValueDec1: () -> Unit,
     onValueInc2: () -> Unit,
     onValueDec2: () -> Unit,
-    textDescriptors: String,
+    textDescriptors: State<String>,
     onTextChange: (String) -> Unit,
     scaffoldState: ScaffoldState,
     coroutineScope: CoroutineScope,

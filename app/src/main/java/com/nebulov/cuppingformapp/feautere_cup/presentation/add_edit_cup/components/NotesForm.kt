@@ -4,9 +4,22 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,11 +33,11 @@ import com.nebulov.cuppingformapp.core.Constants.Companion.EMPTY_STRING
 @Composable
 fun NotesForm(
     modifier: Modifier = Modifier,
-    textDescriptors: String,
+    textDescriptors: State<String>,
     onValueChange: (String) -> Unit
 ) {
 
-    var expanded by rememberSaveable { mutableStateOf(false) }
+    val expanded = rememberSaveable { mutableStateOf(false) }
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -39,17 +52,17 @@ fun NotesForm(
                 )
             )
     ) {
-        if (!expanded)
+        if (!expanded.value)
             IconButton(
                 modifier = Modifier.size(20.dp),
-                onClick = { expanded = !expanded }) {
+                onClick = { expanded.value = !expanded.value }) {
                 Icon(
                     tint = MaterialTheme.colors.primary,
-                    painter = if (textDescriptors == EMPTY_STRING) {
+                    painter = if (textDescriptors.value == EMPTY_STRING) {
                         painterResource(R.drawable.add_notes48)
                     } else painterResource(R.drawable.edit_note48),
                     modifier = modifier.size(24.dp),
-                    contentDescription = if (expanded) {
+                    contentDescription = if (expanded.value) {
                         stringResource(R.string.show_less)
                     } else {
                         stringResource(R.string.show_more)
@@ -57,25 +70,25 @@ fun NotesForm(
                 )
             }
         Spacer(Modifier.width(6.dp))
-        if (textDescriptors == EMPTY_STRING && !expanded)
+        if (textDescriptors.value == EMPTY_STRING && !expanded.value)
             Text(
                 text = stringResource(R.string.Notes),
                 maxLines = 1,
                 color = MaterialTheme.colors.primary,
                 fontSize = 14.sp,
-                modifier = modifier.clickable(onClick = { expanded = !expanded })
+                modifier = modifier.clickable(onClick = { expanded.value = !expanded.value })
             )
-        if (!expanded && textDescriptors != EMPTY_STRING)
+        if (!expanded.value && textDescriptors.value != EMPTY_STRING)
             Text(
-                text = textDescriptors,
+                text = textDescriptors.value,
                 modifier = modifier.padding(end = 3.dp)
             )
     }
-    if (expanded) {
+    if (expanded.value) {
         TextField(
-            value = textDescriptors,
+            value = textDescriptors.value,
             trailingIcon = {
-                IconButton(onClick = { expanded = !expanded }) {
+                IconButton(onClick = { expanded.value = !expanded.value }) {
                     Icon(
                         painterResource(
                             R.drawable.send_48

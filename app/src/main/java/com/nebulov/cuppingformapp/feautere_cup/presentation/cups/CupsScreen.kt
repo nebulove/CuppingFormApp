@@ -17,12 +17,10 @@ import androidx.compose.material.SnackbarResult
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -57,13 +55,13 @@ fun CupsScreen(
 
     val name = rememberSaveable { mutableStateOf("") }
 
-    var currentOnTimeout by rememberSaveable { mutableStateOf(false) }
-    var showWallpaper by remember { mutableStateOf(false) }
-    showWallpaper = state.cups.isEmpty() && currentOnTimeout
+    val currentOnTimeout = rememberSaveable { mutableStateOf(false) }
+    val showWallpaper = remember { mutableStateOf(false) }
+    showWallpaper.value = state.cups.isEmpty() && currentOnTimeout.value
 
     LaunchedEffect(key1 = true) {
-        delay(1000)
-        currentOnTimeout = true
+        delay(500)
+        currentOnTimeout.value = true
     }
 
 
@@ -76,12 +74,12 @@ fun CupsScreen(
         IconOrderSection(
             onOrderChange = { viewModel.onEvent(CupEvent.Order(it)) },
             cupOrder = state.cupOrder,
-            shown = show.value
+            shown = show
         )
         Column(modifier = modifier.animateContentSize(animationSpec = tween(500))) {
             Spacer(modifier = modifier.height(50.dp))
             AddCupTextField(
-                name = name.value,
+                name = name,
                 onValueChange = { name.value = it },
                 addNewCup = {
                     addEditCupViewModel.onEvent(

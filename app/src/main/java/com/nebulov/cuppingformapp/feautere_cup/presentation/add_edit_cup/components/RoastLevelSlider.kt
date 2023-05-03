@@ -19,6 +19,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.contentColorFor
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -45,14 +46,14 @@ import kotlinx.coroutines.launch
 @Composable
 fun RoastLevelSlider(
     modifier: Modifier = Modifier,
-    levelOfRoast: Float,
+    levelOfRoast: State<Float>,
     onValueChange: (Float) -> Unit
 ) {
 
     @Composable
     fun gradientChose(darkTheme: Boolean = isSystemInDarkTheme()): Color {
         val color = if (darkTheme) {
-            when (levelOfRoast) {
+            when (levelOfRoast.value) {
                 6f -> VeryDarkNight
                 in 5f..6f -> DarkNight
                 in 4f..5f -> Medium2Night
@@ -62,7 +63,7 @@ fun RoastLevelSlider(
                 else -> VeryLightNight
             }
         } else {
-            when (levelOfRoast) {
+            when (levelOfRoast.value) {
                 6f -> VeryDark
                 in 5f..6f -> Dark
                 in 4f..5f -> Medium2
@@ -83,7 +84,7 @@ fun RoastLevelSlider(
 //                in 1f..2f -> CoffeeLight
 //                else -> CoffeeVeryLight
     Slider(
-        value = levelOfRoast,
+        value = levelOfRoast.value,
         onValueChange = { onValueChange(it) },
         valueRange = 0f..6f,
         steps = 5,
@@ -103,8 +104,7 @@ fun RoastLevelSlider(
 fun RoastForm(
     @StringRes text: Int,
     modifier: Modifier = Modifier,
-    levelOfRoast: Float,
-
+    levelOfRoast: State<Float>,
     onValueChange: (Float) -> Unit,
     scaffoldState: ScaffoldState,
     coroutineScope: CoroutineScope,
@@ -145,7 +145,7 @@ fun RoastForm(
                     modifier = modifier
                         .padding(start = 8.dp),
 
-                )
+                    )
                 Spacer(modifier = modifier.size(2.dp))
                 InfoIcon(
                     modifier = modifier.align(Alignment.CenterVertically),

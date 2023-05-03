@@ -21,6 +21,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,10 +39,10 @@ fun IconOrderSection(
     modifier: Modifier = Modifier,
     cupOrder: CupOrder = CupOrder.Date(OrderType.Descending),
     onOrderChange: (CupOrder) -> Unit,
-    shown: Boolean,
+    shown: State<Boolean>,
 ) {
     AnimatedVisibility(
-        visible = shown,
+        visible = shown.value,
         enter = slideInVertically(
             initialOffsetY = { fullHeight -> -fullHeight },
             animationSpec = tween(durationMillis = 350, easing = LinearOutSlowInEasing)

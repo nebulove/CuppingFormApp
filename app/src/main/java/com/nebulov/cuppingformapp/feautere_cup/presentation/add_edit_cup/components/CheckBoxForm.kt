@@ -22,14 +22,14 @@ import kotlinx.coroutines.launch
 fun CheckBoxForm(
     modifier: Modifier = Modifier,
     @StringRes text: Int,
-    textDescriptors: String,
+    textDescriptors: State<String>,
     onTextChange: (String) -> Unit,
-    checkboxValue: Int,
-    cup1: Boolean,
-    cup2: Boolean,
-    cup3: Boolean,
-    cup4: Boolean,
-    cup5: Boolean,
+    checkboxValue: State<Int>,
+    cup1: State<Boolean>,
+    cup2: State<Boolean>,
+    cup3: State<Boolean>,
+    cup4: State<Boolean>,
+    cup5: State<Boolean>,
     onCheckedChange1: (Boolean) -> Unit,
     onCheckedChange2: (Boolean) -> Unit,
     onCheckedChange3: (Boolean) -> Unit,
@@ -116,9 +116,9 @@ fun CheckBoxForm(
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun AnimatedValue(count: Int) {
+fun AnimatedValue(count: State<Int>) {
     AnimatedContent(
-        targetState = count,
+        targetState = count.value,
         transitionSpec = {
             if (targetState > initialState) {
                 slideInVertically { height -> height } + fadeIn() with
@@ -140,7 +140,7 @@ fun AnimatedValue(count: Int) {
 
 @Composable
 fun OneCheckBox(
-    cup: Boolean,
+    cup: State<Boolean>,
     onCheckedChange: (Boolean) -> Unit
 ) {
 
@@ -156,7 +156,7 @@ fun OneCheckBox(
 //    }
 
     Checkbox(
-        checked = cup,
+        checked = cup.value,
         onCheckedChange = { onCheckedChange(it) }
     )
 

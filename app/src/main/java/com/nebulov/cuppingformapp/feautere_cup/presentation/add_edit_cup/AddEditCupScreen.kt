@@ -14,11 +14,9 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -46,55 +44,55 @@ fun AddEditCupScreen(
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
     val scaffoldState = rememberScaffoldState()
 
-    val nameState = viewModel.cupName.value
-    val levelOfRoast = viewModel.levelOfRoast.value
-    val fragrance = viewModel.fragrance.value
-    val dry = viewModel.dry.value
-    val breakAroma = viewModel.breakAroma.value
-    val flavor = viewModel.flavor.value
-    val aftertaste = viewModel.aftertaste.value
-    val acidity = viewModel.acidity.value
-    val intensity = viewModel.intensity.value
-    val body = viewModel.body.value
-    val levelOfBody = viewModel.levelOfBody.value
-    val balance = viewModel.balance.value
-    val uniformity = viewModel.uniformity.value
-    val uCup1 = viewModel.uCup1.value
-    val uCup2 = viewModel.uCup2.value
-    val uCup3 = viewModel.uCup3.value
-    val uCup4 = viewModel.uCup4.value
-    val uCup5 = viewModel.uCup5.value
-    val cleanCup = viewModel.cleanCup.value
-    val cCup1 = viewModel.cCup1.value
-    val cCup2 = viewModel.cCup2.value
-    val cCup3 = viewModel.cCup3.value
-    val cCup4 = viewModel.cCup4.value
-    val cCup5 = viewModel.cCup5.value
-    val sweetness = viewModel.sweetness.value
-    val sCup1 = viewModel.sCup1.value
-    val sCup2 = viewModel.sCup2.value
-    val sCup3 = viewModel.sCup3.value
-    val sCup4 = viewModel.sCup4.value
-    val sCup5 = viewModel.sCup5.value
-    val defects = viewModel.defects.value
-    val taintDefects = viewModel.taintDefects.value
-    val faultDefects = viewModel.faultDefects.value
-    val overall = viewModel.overall.value
-    val finalScore = viewModel.finalScore.value
-    val notesFragrance = viewModel.notesFragrance.value
-    val notesFlavor = viewModel.notesFlavor.value
-    val notesAftertaste = viewModel.notesAftertaste.value
-    val notesAcidity = viewModel.notesAcidity.value
-    val notesBody = viewModel.notesBody.value
-    val notesBalance = viewModel.notesBalance.value
-    val notesUniformity = viewModel.notesUniformity.value
-    val notesCleanCup = viewModel.notesCleanCup.value
-    val notesSweetness = viewModel.notesSweetness.value
-    val notesDefects = viewModel.notesDefects.value
-    val notesOverall = viewModel.notesOverall.value
+    val nameState = viewModel.cupName
+    val levelOfRoast = viewModel.levelOfRoast
+    val fragrance = viewModel.fragrance
+    val dry = viewModel.dry
+    val breakAroma = viewModel.breakAroma
+    val flavor = viewModel.flavor
+    val aftertaste = viewModel.aftertaste
+    val acidity = viewModel.acidity
+    val intensity = viewModel.intensity
+    val body = viewModel.body
+    val levelOfBody = viewModel.levelOfBody
+    val balance = viewModel.balance
+    val uniformity = viewModel.uniformity
+    val uCup1 = viewModel.uCup1
+    val uCup2 = viewModel.uCup2
+    val uCup3 = viewModel.uCup3
+    val uCup4 = viewModel.uCup4
+    val uCup5 = viewModel.uCup5
+    val cleanCup = viewModel.cleanCup
+    val cCup1 = viewModel.cCup1
+    val cCup2 = viewModel.cCup2
+    val cCup3 = viewModel.cCup3
+    val cCup4 = viewModel.cCup4
+    val cCup5 = viewModel.cCup5
+    val sweetness = viewModel.sweetness
+    val sCup1 = viewModel.sCup1
+    val sCup2 = viewModel.sCup2
+    val sCup3 = viewModel.sCup3
+    val sCup4 = viewModel.sCup4
+    val sCup5 = viewModel.sCup5
+    val defects = viewModel.defects
+    val taintDefects = viewModel.taintDefects
+    val faultDefects = viewModel.faultDefects
+    val overall = viewModel.overall
+    val finalScore = viewModel.finalScore
+    val notesFragrance = viewModel.notesFragrance
+    val notesFlavor = viewModel.notesFlavor
+    val notesAftertaste = viewModel.notesAftertaste
+    val notesAcidity = viewModel.notesAcidity
+    val notesBody = viewModel.notesBody
+    val notesBalance = viewModel.notesBalance
+    val notesUniformity = viewModel.notesUniformity
+    val notesCleanCup = viewModel.notesCleanCup
+    val notesSweetness = viewModel.notesSweetness
+    val notesDefects = viewModel.notesDefects
+    val notesOverall = viewModel.notesOverall
 
 
-    var editMessageShown by remember { mutableStateOf(false) }
+    val editMessageShown = remember { mutableStateOf(false) }
 
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
@@ -116,13 +114,13 @@ fun AddEditCupScreen(
             TopAppBarCuppingForm(
                 name = nameState,
                 finalScore = finalScore,
-                showOff = { editMessageShown = !editMessageShown })
+                showOff = { editMessageShown.value = !editMessageShown.value })
         },
         floatingActionButton = {
             DefaultFloatingActionButton(
                 icon = R.drawable.save48,
                 actionOn = { viewModel.onEvent(AddEditCupEvent.SaveCup)
-                    Toast.makeText(context, "$nameState saved", Toast.LENGTH_SHORT).show()},
+                    Toast.makeText(context, "${nameState.value} saved", Toast.LENGTH_SHORT).show()},
                 contentDescription = "Save",
                 shape = RoundedCornerShape(50)
             )
@@ -325,7 +323,7 @@ fun AddEditCupScreen(
             Spacer(Modifier.height(85.dp))
         }
         AnimatedTextField(
-            showOff = { editMessageShown = !editMessageShown },
+            showOff = { editMessageShown.value = !editMessageShown.value },
             sampleName = nameState,
             shown = editMessageShown,
             onTextEdit = { viewModel.onEvent(AddEditCupEvent.EnteredName(it)) }

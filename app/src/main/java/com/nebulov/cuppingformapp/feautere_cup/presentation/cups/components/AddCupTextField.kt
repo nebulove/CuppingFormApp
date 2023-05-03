@@ -17,6 +17,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
@@ -26,7 +27,7 @@ import com.nebulov.cuppingformapp.R
 @Composable
 fun AddCupTextField(
     modifier: Modifier = Modifier,
-    name: String,
+    name: State<String>,
     onValueChange: (String) -> Unit,
     addNewCup: () -> Unit
 ) {
@@ -54,7 +55,7 @@ fun AddCupTextField(
         TextField(
             modifier = modifier
                 .fillMaxWidth(),
-            value = name,
+            value = name.value,
             colors = TextFieldDefaults.textFieldColors(
                 backgroundColor = MaterialTheme.colors.onPrimary,
                 textColor = MaterialTheme.colors.primary

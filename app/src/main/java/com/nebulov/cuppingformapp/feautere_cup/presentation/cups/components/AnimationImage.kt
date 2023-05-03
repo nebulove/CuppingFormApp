@@ -18,24 +18,19 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.nebulov.cuppingformapp.R
-import com.nebulov.cuppingformapp.ui.theme.CuppingFormTheme
 
 @Composable
 fun AnimationImage(
     modifier: Modifier = Modifier,
-    shown: Boolean
+    shown: State<Boolean>
 ) {
 
     Column(
@@ -63,13 +58,14 @@ fun AnimationImage(
 @Composable
 fun AnimationImage01(
     modifier: Modifier = Modifier,
-    shown: Boolean
+    shown: State<Boolean>
 ) {
     AnimatedVisibility(
-        visible = shown,
+        visible = shown.value,
         exit =
-        shrinkVertically (
-            animationSpec = tween(1500)),
+        shrinkVertically(
+            animationSpec = tween(1500)
+        ),
         enter =
         slideInVertically(
             animationSpec = tween(1000)
@@ -92,13 +88,14 @@ fun AnimationImage01(
 @Composable
 fun AnimationImage02(
     modifier: Modifier = Modifier,
-    shown: Boolean
+    shown: State<Boolean>
 ) {
     AnimatedVisibility(
-        visible = shown,
+        visible = shown.value,
         exit =
-        shrinkVertically (
-            animationSpec = tween(1500)),
+        shrinkVertically(
+            animationSpec = tween(1500)
+        ),
         enter = slideInVertically(
             animationSpec = tween(1000),
             initialOffsetY = { it / 2 }
@@ -114,27 +111,31 @@ fun AnimationImage02(
     }
 }
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun AnimationImage03(
     modifier: Modifier = Modifier,
-    shown: Boolean
+    shown: State<Boolean>
 ) {
     val transition = rememberInfiniteTransition()
-    val sizeRatio by transition.animateFloat(
+    val sizeRatio = transition.animateFloat(
         initialValue = 0.5f,
         targetValue = 0.6f,
         animationSpec = infiniteRepeatable(
             animation = tween(3000),
             repeatMode = RepeatMode.Reverse
-        ))
+        )
+    )
 
     AnimatedVisibility(
-        visible = shown,
+        visible = shown.value,
         exit =
-        shrinkVertically (
-            animationSpec = tween(1500)),
+        shrinkVertically(
+            animationSpec = tween(1500)
+        ),
         enter = scaleIn(
-            animationSpec = tween(2000
+            animationSpec = tween(
+                2000
             )
         ),
     )
@@ -143,20 +144,7 @@ fun AnimationImage03(
             painter = painterResource(R.drawable.image03_day),
             contentDescription = "",
             modifier = modifier
-                .fillMaxHeight(sizeRatio),
+                .fillMaxHeight(sizeRatio.value),
         )
-    }
-}
-
-@Preview
-@Composable
-fun AnmPrew() {
-    CuppingFormTheme() {
-        Surface(
-            color = MaterialTheme.colors.primary,
-            modifier = Modifier.fillMaxSize()
-        ) {
-            AnimationImage(shown = true)
-        }
     }
 }

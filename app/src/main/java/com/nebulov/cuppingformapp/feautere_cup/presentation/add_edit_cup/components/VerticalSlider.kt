@@ -20,14 +20,17 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.contentColorFor
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.nebulov.cuppingformapp.core.Constants.Companion.ZERO_F
 import com.nebulov.cuppingformapp.R
+import com.nebulov.cuppingformapp.core.Constants.Companion.ZERO_F
 import com.nebulov.cuppingformapp.ui.theme.Dark
 import com.nebulov.cuppingformapp.ui.theme.DarkNight
 import com.nebulov.cuppingformapp.ui.theme.Light
@@ -53,13 +56,13 @@ fun VerticalSlider(
     fragranceCheckSlider: Boolean = false,
     acidityCheckSlider: Boolean = false,
     bodyCheckSlider: Boolean = false,
-    sliderValue: Float,
-    sliderValue2: Float = ZERO_F,
-    sliderValue3: Float = ZERO_F,
+    sliderValue: State<Float>,
+    sliderValue2: State<Float> = (mutableStateOf(ZERO_F)),
+    sliderValue3: State<Float> = (mutableStateOf(ZERO_F)),
     onValueChange: (Float) -> Unit,
     onValueChange2: (Float) -> Unit,
     onValueChange3: (Float) -> Unit,
-    textDescriptors: String,
+    textDescriptors: State<String>,
     onTextChange: (String) -> Unit,
     scaffoldState: ScaffoldState,
     coroutineScope: CoroutineScope,
@@ -76,30 +79,32 @@ fun VerticalSlider(
         }
     }
 
-//    fun sliderValueCut(value: MutableState<Float>): Float {
-//        val cut = when (value.value) {
-//            10f -> 10f
-//            in 9.75f..10f -> 9.75f
-//            in 9.5f..9.75f -> 9.50f
-//            in 9.25f..9.5f -> 9.25f
-//            in 9.0f..9.25f -> 9.00f
-//            in 8.75f..9.0f -> 8.75f
-//            in 8.5f..8.75f -> 8.50f
-//            in 8.25f..8.5f -> 8.25f
-//            in 8.0f..8.25f -> 8.00f
-//            in 7.75f..8.0f -> 7.75f
-//            in 7.5f..7.75f -> 7.50f
-//            in 7.25f..7.5f -> 7.25f
-//            in 7.0f..7.25f -> 7.00f
-//            in 6.75f..7.0f -> 6.75f
-//            in 6.5f..6.75f -> 6.50f
-//            in 6.25f..6.5f -> 6.25f
-//            in 6.0f..6.25f -> 6.00f
-//            in 5.75f..6.0f -> 6.00f
-//            else -> 6.00f
-//        }
-//        return cut
-//    }
+    fun sliderValueCut(value: State<Float>): State<Float> {
+        val cut: MutableState<Float> = mutableStateOf(0f)
+        cut.value = when (value.value)
+        {
+            10f -> 10f
+            in 9.75f..10f -> 9.75f
+            in 9.5f..9.75f -> 9.50f
+            in 9.25f..9.5f -> 9.25f
+            in 9.0f..9.25f -> 9.00f
+            in 8.75f..9.0f -> 8.75f
+            in 8.5f..8.75f -> 8.50f
+            in 8.25f..8.5f -> 8.25f
+            in 8.0f..8.25f -> 8.00f
+            in 7.75f..8.0f -> 7.75f
+            in 7.5f..7.75f -> 7.50f
+            in 7.25f..7.5f -> 7.25f
+            in 7.0f..7.25f -> 7.00f
+            in 6.75f..7.0f -> 6.75f
+            in 6.5f..6.75f -> 6.50f
+            in 6.25f..6.5f -> 6.25f
+            in 6.0f..6.25f -> 6.00f
+            in 5.75f..6.0f -> 6.00f
+            else -> 6.00f
+        }
+        return cut
+    }
 
     Surface(
         shape = RoundedCornerShape(8.dp),
@@ -129,7 +134,7 @@ fun VerticalSlider(
                 onClickInfo = { onClickInfo(textInfo) })
             Spacer(modifier = modifier.weight(1f, true))
             Text(
-                text = String.format("%.2f", sliderValue),
+                text = String.format("%.2f", sliderValueCut(sliderValue).value),
                 fontSize = 18.sp
             )
         }
@@ -143,7 +148,7 @@ fun VerticalSlider(
                 )
         ) {
             Slider(
-                value = sliderValue,
+                value = sliderValue.value,
                 onValueChange = { onValueChange(it) },
                 valueRange = 6f..10f,
                 steps = 15,
@@ -204,13 +209,13 @@ fun VerticalSlider(
 fun SmallSlider(
     name: String,
     modifier: Modifier = Modifier,
-    sliderValue: Float = ZERO_F,
+    sliderValue: State<Float> = (mutableStateOf(ZERO_F)),
     onValueChange: (Float) -> Unit
 ) {
     @Composable
     fun gradientChose(darkTheme: Boolean = isSystemInDarkTheme()): Color {
         val color = if (darkTheme) {
-            when (sliderValue) {
+            when (sliderValue.value) {
                 5f -> VeryDarkNight
                 in 4.1f..5f -> DarkNight
                 in 3.3f..4.1f -> Medium2Night
@@ -220,7 +225,7 @@ fun SmallSlider(
                 else -> VeryLightNight
             }
         } else {
-            when (sliderValue) {
+            when (sliderValue.value) {
                 5f -> VeryDark
                 in 4.1f..5f -> Dark
                 in 3.3f..4.1f -> Medium2
@@ -240,7 +245,7 @@ fun SmallSlider(
     ) {
         Text(modifier = modifier, text = name)
         Slider(
-            value = sliderValue,
+            value = sliderValue.value,
             onValueChange = { onValueChange(it) },
             steps = 3,
             enabled = true,

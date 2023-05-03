@@ -22,6 +22,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -40,8 +41,8 @@ import com.nebulov.cuppingformapp.R
 @Composable
 fun TopAppBarCuppingForm(
     modifier: Modifier = Modifier,
-    name: String,
-    finalScore: Float,
+    name: State<String>,
+    finalScore: State<Float>,
     showOff: () -> Unit
 ) {
 
@@ -73,7 +74,7 @@ fun TopAppBarCuppingForm(
                     .fillMaxWidth(0.7f)
                     .horizontalScroll(rememberScrollState())
             ) {
-                if (name == EMPTY_STRING) {
+                if (name.value == EMPTY_STRING) {
                     Text(
                         text = "Sample #",
                         fontSize = 20.sp,
@@ -84,9 +85,9 @@ fun TopAppBarCuppingForm(
                             .clickable(onClick = showOff)
                     )
                 }
-                if (name != EMPTY_STRING) {
+                if (name.value != EMPTY_STRING) {
                     Text(
-                        text = name,
+                        text = name.value,
                         fontSize = 20.sp,
                         maxLines = 1,
                         softWrap = false,
@@ -126,7 +127,7 @@ fun TopAppBarCuppingForm(
 
                         Text(
                             text = if (isVisible)
-                                String.format("%.2f", finalScore) else EMPTY_STRING,
+                                String.format("%.2f", finalScore.value) else EMPTY_STRING,
                             fontSize = 22.sp,
                             fontWeight = FontWeight.W400,
                             overflow = TextOverflow.Visible,

@@ -10,6 +10,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -21,7 +22,7 @@ import androidx.compose.ui.unit.sp
 fun Defects(
     @StringRes text: Int,
     modifier: Modifier = Modifier,
-    defectsValue: Int,
+    defectsValue: State<Int>,
     onValueInc:()-> Unit,
     onValueDec:()-> Unit,
 ) {
@@ -40,7 +41,7 @@ fun Defects(
             IconButton(
                 onClick = { onValueDec() },
                 modifier = Modifier.size(15.dp),
-                enabled = defectsValue > 0
+                enabled = defectsValue.value > 0
             ) {
                 Icon(
                     imageVector = Icons.Filled.ArrowBack,
@@ -51,7 +52,7 @@ fun Defects(
             IconButton(
                 onClick = { onValueInc() },
                 modifier = Modifier.size(15.dp),
-                enabled = defectsValue < 5
+                enabled = defectsValue.value < 5
             ) {
                 Icon(
                     imageVector = Icons.Filled.ArrowForward,
@@ -68,9 +69,9 @@ fun Defects(
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun AnimatedDefectsValue(count: Int, modifier: Modifier = Modifier) {
+fun AnimatedDefectsValue(count: State<Int>, modifier: Modifier = Modifier) {
     AnimatedContent(
-        targetState = count,
+        targetState = count.value,
         transitionSpec = {
             if (targetState > initialState) {
                 slideInVertically { height -> height } + fadeIn() with

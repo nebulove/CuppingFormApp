@@ -16,6 +16,7 @@ import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -23,13 +24,13 @@ import com.nebulov.cuppingformapp.R
 
 @Composable
 fun AnimatedTextField(
-    modifier: Modifier = Modifier, shown: Boolean,
-    sampleName: String,
+    modifier: Modifier = Modifier, shown: State<Boolean>,
+    sampleName: State<String>,
     onTextEdit: (String)-> Unit,
     showOff: () -> Unit
 ) {
     AnimatedVisibility(
-        visible = shown,
+        visible = shown.value,
         enter = slideInVertically(
             // Enters by sliding in from offset -fullHeight to 0.
             initialOffsetY = { fullHeight -> -fullHeight },
@@ -49,7 +50,7 @@ fun AnimatedTextField(
             TextField(
                 modifier = modifier,
                 shape = RoundedCornerShape(8.dp),
-                value = sampleName,
+                value = sampleName.value,
                 colors = TextFieldDefaults.textFieldColors(
                     backgroundColor = MaterialTheme.colors.primary.copy(alpha = 0.1f)
                 ),
