@@ -27,8 +27,10 @@ fun AnimatedTextField(
     modifier: Modifier = Modifier, shown: State<Boolean>,
     sampleName: State<String>,
     onTextEdit: (String)-> Unit,
-    showOff: () -> Unit
+    showOff: () -> Unit,
 ) {
+
+
     AnimatedVisibility(
         visible = shown.value,
         enter = slideInVertically(

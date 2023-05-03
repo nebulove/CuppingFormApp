@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun WallpaperEmptyList(
+fun AnimatedWelcomeText(
     modifier: Modifier = Modifier,
     shown: State<Boolean>
 ) {
@@ -33,9 +33,9 @@ fun WallpaperEmptyList(
         visible = shown.value,
         exit =
         shrinkVertically (
-            animationSpec = tween(1500)),
+            animationSpec = tween(350)),
         enter = slideInVertically(
-            animationSpec = tween(1000),
+            animationSpec = tween(700),
             initialOffsetY = { it / 2 }
         ),
     )

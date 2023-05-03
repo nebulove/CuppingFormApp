@@ -12,10 +12,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Slider
 import androidx.compose.material.SliderDefaults
 import androidx.compose.material.SnackbarDuration
+import androidx.compose.material.SnackbarHostState
+import androidx.compose.material.SnackbarResult
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.contentColorFor
@@ -64,25 +65,28 @@ fun VerticalSlider(
     onValueChange3: (Float) -> Unit,
     textDescriptors: State<String>,
     onTextChange: (String) -> Unit,
-    scaffoldState: ScaffoldState,
     coroutineScope: CoroutineScope,
     context: Context,
     textInfo: Int,
+    snackbarHostState: SnackbarHostState
 ) {
 
     fun onClickInfo(textInfo: Int) {
         coroutineScope.launch {
-            scaffoldState.snackbarHostState.showSnackbar(
+            val result = snackbarHostState.showSnackbar(
                 message = context.getString(textInfo),
-                duration = SnackbarDuration.Short
+                duration = SnackbarDuration.Short,
+                actionLabel = "Hide"
             )
+            if (result == SnackbarResult.ActionPerformed) {
+                SnackbarResult.Dismissed
+            }
         }
     }
 
     fun sliderValueCut(value: State<Float>): State<Float> {
         val cut: MutableState<Float> = mutableStateOf(0f)
-        cut.value = when (value.value)
-        {
+        cut.value = when (value.value) {
             10f -> 10f
             in 9.75f..10f -> 9.75f
             in 9.5f..9.75f -> 9.50f

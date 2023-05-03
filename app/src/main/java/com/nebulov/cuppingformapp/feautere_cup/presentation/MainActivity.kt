@@ -6,10 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.nebulov.cuppingformapp.feautere_cup.presentation.cups.LandingScreen
 import com.nebulov.cuppingformapp.ui.theme.CuppingFormTheme
@@ -36,11 +34,11 @@ class MainActivity : ComponentActivity() {
 @Composable
 private fun MainScreen() {
     Surface(color = MaterialTheme.colors.primary) {
-        var showLandingScreen by rememberSaveable{
+        val showLandingScreen = rememberSaveable{
             mutableStateOf(true)
         }
-        if (showLandingScreen) {
-            LandingScreen(onTimeout = { showLandingScreen = false },)
+        if (showLandingScreen.value) {
+            LandingScreen(onTimeout = { showLandingScreen.value = false },)
         } else {
             NavScreen()
         }

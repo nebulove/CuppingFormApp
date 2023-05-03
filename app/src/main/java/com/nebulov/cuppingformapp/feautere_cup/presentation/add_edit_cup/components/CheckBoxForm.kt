@@ -35,18 +35,22 @@ fun CheckBoxForm(
     onCheckedChange3: (Boolean) -> Unit,
     onCheckedChange4: (Boolean) -> Unit,
     onCheckedChange5: (Boolean) -> Unit,
-    scaffoldState: ScaffoldState,
     coroutineScope: CoroutineScope,
     context: Context,
     textInfo: Int,
+    snackbarHostState: SnackbarHostState
 ) {
 
     fun onClickInfo(textInfo: Int) {
         coroutineScope.launch {
-            scaffoldState.snackbarHostState.showSnackbar(
+            val result = snackbarHostState.showSnackbar(
                 message = context.getString(textInfo),
-                duration = SnackbarDuration.Short
+                duration = SnackbarDuration.Short,
+                actionLabel = "Hide"
             )
+            if (result == SnackbarResult.ActionPerformed) {
+                SnackbarResult.Dismissed
+            }
         }
     }
 

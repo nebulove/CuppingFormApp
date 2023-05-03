@@ -66,7 +66,9 @@ fun AddCupTextField(
             trailingIcon = {
                 DefaultFloatingActionButton(
                     icon = R.drawable.drop_plus,
-                    actionOn = { addNewCup() },
+                    actionOn = {
+                        addNewCup()
+                    },
                     contentDescription = "Add cup"
                 )
             },
@@ -116,5 +118,5 @@ fun DefaultFloatingActionButton(
             focusedElevation = 0.dp
         ),
         modifier = modifier,
-        )
+    )
 }

@@ -88,6 +88,7 @@ fun CupsScreen(
                             state.cups.size
                         )
                     )
+                    name.value = ""
                 })
             AnimationImage(shown = showWallpaper)
             Spacer(modifier = modifier.height(4.dp))

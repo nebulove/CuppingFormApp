@@ -11,6 +11,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.FabPosition
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarHost
+import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -43,6 +45,7 @@ fun AddEditCupScreen(
     val context = LocalContext.current
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
     val scaffoldState = rememberScaffoldState()
+    val snackBarHostState = SnackbarHostState()
 
     val nameState = viewModel.cupName
     val levelOfRoast = viewModel.levelOfRoast
@@ -109,18 +112,23 @@ fun AddEditCupScreen(
     }
 
     Scaffold(
+        snackbarHost = { SnackbarHost(hostState = snackBarHostState) },
         scaffoldState = scaffoldState,
         topBar = {
             TopAppBarCuppingForm(
                 name = nameState,
                 finalScore = finalScore,
-                showOff = { editMessageShown.value = !editMessageShown.value })
+                showOff = {
+                    editMessageShown.value = !editMessageShown.value
+                })
         },
         floatingActionButton = {
             DefaultFloatingActionButton(
                 icon = R.drawable.save48,
-                actionOn = { viewModel.onEvent(AddEditCupEvent.SaveCup)
-                    Toast.makeText(context, "${nameState.value} saved", Toast.LENGTH_SHORT).show()},
+                actionOn = {
+                    viewModel.onEvent(AddEditCupEvent.SaveCup)
+                    Toast.makeText(context, "${nameState.value} saved", Toast.LENGTH_SHORT).show()
+                },
                 contentDescription = "Save",
                 shape = RoundedCornerShape(50)
             )
@@ -141,8 +149,8 @@ fun AddEditCupScreen(
                 R.string.Roast,
                 levelOfRoast = levelOfRoast,
                 onValueChange = { viewModel.onEvent(AddEditCupEvent.ChangeLevelOfRoast(it)) },
-                scaffoldState = scaffoldState,
                 coroutineScope = coroutineScope,
+                snackbarHostState = snackBarHostState,
                 context = context,
                 textInfo = R.string.RoastInfo,
             )
@@ -157,8 +165,8 @@ fun AddEditCupScreen(
                 onValueChange = { viewModel.onEvent(AddEditCupEvent.ChangeFragrance(it)) },
                 onValueChange2 = { viewModel.onEvent(AddEditCupEvent.ChangeDry(it)) },
                 onValueChange3 = { viewModel.onEvent(AddEditCupEvent.ChangeBreakAroma(it)) },
-                scaffoldState = scaffoldState,
                 coroutineScope = coroutineScope,
+                snackbarHostState = snackBarHostState,
                 context = context,
                 textInfo = R.string.FragranceInfo,
             )
@@ -170,8 +178,8 @@ fun AddEditCupScreen(
                 onValueChange3 = { },
                 textDescriptors = notesFlavor,
                 onTextChange = { viewModel.onEvent(AddEditCupEvent.ChangeNotesFlavor(it)) },
-                scaffoldState = scaffoldState,
                 coroutineScope = coroutineScope,
+                snackbarHostState = snackBarHostState,
                 context = context,
                 textInfo = R.string.FlavorInfo,
             )
@@ -183,8 +191,8 @@ fun AddEditCupScreen(
                 onValueChange3 = { },
                 textDescriptors = notesAftertaste,
                 onTextChange = { viewModel.onEvent(AddEditCupEvent.ChangeNotesAftertaste(it)) },
-                scaffoldState = scaffoldState,
                 coroutineScope = coroutineScope,
+                snackbarHostState = snackBarHostState,
                 context = context,
                 textInfo = R.string.AftertasteInfo,
             )
@@ -198,8 +206,8 @@ fun AddEditCupScreen(
                 onValueChange3 = { },
                 textDescriptors = notesAcidity,
                 onTextChange = { viewModel.onEvent(AddEditCupEvent.ChangeNotesAcidity(it)) },
-                scaffoldState = scaffoldState,
                 coroutineScope = coroutineScope,
+                snackbarHostState = snackBarHostState,
                 context = context,
                 textInfo = R.string.AcidityInfo,
             )
@@ -213,9 +221,9 @@ fun AddEditCupScreen(
                 onValueChange3 = { },
                 textDescriptors = notesBody,
                 onTextChange = { viewModel.onEvent(AddEditCupEvent.ChangeNotesBody(it)) },
-                scaffoldState = scaffoldState,
                 coroutineScope = coroutineScope,
                 context = context,
+                snackbarHostState = snackBarHostState,
                 textInfo = R.string.BodyInfo,
             )
             VerticalSlider(
@@ -226,9 +234,9 @@ fun AddEditCupScreen(
                 onValueChange3 = {},
                 textDescriptors = notesBalance,
                 onTextChange = { viewModel.onEvent(AddEditCupEvent.ChangeNotesBalance(it)) },
-                scaffoldState = scaffoldState,
                 coroutineScope = coroutineScope,
                 context = context,
+                snackbarHostState = snackBarHostState,
                 textInfo = R.string.BalanceInfo,
             )
             CheckBoxForm(
@@ -246,7 +254,7 @@ fun AddEditCupScreen(
                 onCheckedChange3 = { viewModel.onEvent(AddEditCupEvent.ChangeUniformityCup3(it)) },
                 onCheckedChange4 = { viewModel.onEvent(AddEditCupEvent.ChangeUniformityCup4(it)) },
                 onCheckedChange5 = { viewModel.onEvent(AddEditCupEvent.ChangeUniformityCup5(it)) },
-                scaffoldState = scaffoldState,
+                snackbarHostState = snackBarHostState,
                 coroutineScope = coroutineScope,
                 context = context,
                 textInfo = R.string.UniformityInfo,
@@ -266,7 +274,7 @@ fun AddEditCupScreen(
                 onCheckedChange3 = { viewModel.onEvent(AddEditCupEvent.ChangeCleanCup3(it)) },
                 onCheckedChange4 = { viewModel.onEvent(AddEditCupEvent.ChangeCleanCup4(it)) },
                 onCheckedChange5 = { viewModel.onEvent(AddEditCupEvent.ChangeCleanCup5(it)) },
-                scaffoldState = scaffoldState,
+                snackbarHostState = snackBarHostState,
                 coroutineScope = coroutineScope,
                 context = context,
                 textInfo = R.string.CleanCupInfo,
@@ -286,7 +294,7 @@ fun AddEditCupScreen(
                 onCheckedChange3 = { viewModel.onEvent(AddEditCupEvent.ChangeSweetnessCup3(it)) },
                 onCheckedChange4 = { viewModel.onEvent(AddEditCupEvent.ChangeSweetnessCup4(it)) },
                 onCheckedChange5 = { viewModel.onEvent(AddEditCupEvent.ChangeSweetnessCup5(it)) },
-                scaffoldState = scaffoldState,
+                snackbarHostState = snackBarHostState,
                 coroutineScope = coroutineScope,
                 context = context,
                 textInfo = R.string.SweetnessInfo,
@@ -302,7 +310,7 @@ fun AddEditCupScreen(
                 onValueInc1 = { viewModel.onEvent(AddEditCupEvent.ChangeTaintInc(0)) },
                 onValueDec2 = { viewModel.onEvent(AddEditCupEvent.ChangeFaultDec(0)) },
                 onValueInc2 = { viewModel.onEvent(AddEditCupEvent.ChangeFaultInc(0)) },
-                scaffoldState = scaffoldState,
+                snackbarHostState = snackBarHostState,
                 coroutineScope = coroutineScope,
                 context = context,
                 textInfo = R.string.DefectsInfo,
@@ -315,7 +323,7 @@ fun AddEditCupScreen(
                 onValueChange3 = {},
                 textDescriptors = notesOverall,
                 onTextChange = { viewModel.onEvent(AddEditCupEvent.ChangeNotesOverall(it)) },
-                scaffoldState = scaffoldState,
+                snackbarHostState = snackBarHostState,
                 coroutineScope = coroutineScope,
                 context = context,
                 textInfo = R.string.OverallInfo,

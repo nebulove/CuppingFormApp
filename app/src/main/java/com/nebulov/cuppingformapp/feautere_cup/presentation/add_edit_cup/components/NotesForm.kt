@@ -20,9 +20,13 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -34,10 +38,13 @@ import com.nebulov.cuppingformapp.core.Constants.Companion.EMPTY_STRING
 fun NotesForm(
     modifier: Modifier = Modifier,
     textDescriptors: State<String>,
-    onValueChange: (String) -> Unit
+    onValueChange: (String) -> Unit,
 ) {
 
+    val focusManager = LocalFocusManager.current
+    val focusRequester = remember{ FocusRequester() }
     val expanded = rememberSaveable { mutableStateOf(false) }
+
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -55,7 +62,10 @@ fun NotesForm(
         if (!expanded.value)
             IconButton(
                 modifier = Modifier.size(20.dp),
-                onClick = { expanded.value = !expanded.value }) {
+                onClick = {
+                    expanded.value = !expanded.value
+                    focusRequester.requestFocus()
+                }) {
                 Icon(
                     tint = MaterialTheme.colors.primary,
                     painter = if (textDescriptors.value == EMPTY_STRING) {
@@ -105,6 +115,7 @@ fun NotesForm(
             onValueChange = { onValueChange(it) },
             modifier = modifier
                 .fillMaxWidth()
+                .focusRequester(focusRequester)
         )
     }
 }

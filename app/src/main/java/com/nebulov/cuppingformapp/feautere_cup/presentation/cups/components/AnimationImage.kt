@@ -50,7 +50,7 @@ fun AnimationImage(
             AnimationImage03(shown = shown)
 
         }
-        WallpaperEmptyList(shown = shown)
+        AnimatedWelcomeText(shown = shown)
     }
 }
 
@@ -64,11 +64,11 @@ fun AnimationImage01(
         visible = shown.value,
         exit =
         shrinkVertically(
-            animationSpec = tween(1500)
+            animationSpec = tween(350)
         ),
         enter =
         slideInVertically(
-            animationSpec = tween(1000)
+            animationSpec = tween(700)
         ),
     )
     {
@@ -94,10 +94,10 @@ fun AnimationImage02(
         visible = shown.value,
         exit =
         shrinkVertically(
-            animationSpec = tween(1500)
+            animationSpec = tween(350)
         ),
         enter = slideInVertically(
-            animationSpec = tween(1000),
+            animationSpec = tween(700),
             initialOffsetY = { it / 2 }
         ),
     )
@@ -131,11 +131,11 @@ fun AnimationImage03(
         visible = shown.value,
         exit =
         shrinkVertically(
-            animationSpec = tween(1500)
+            animationSpec = tween(350)
         ),
         enter = scaleIn(
             animationSpec = tween(
-                2000
+                700, delayMillis = 300
             )
         ),
     )

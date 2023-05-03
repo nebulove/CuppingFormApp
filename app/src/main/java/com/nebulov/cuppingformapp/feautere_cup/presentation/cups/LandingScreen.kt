@@ -17,7 +17,6 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
@@ -36,7 +35,7 @@ fun LandingScreen(
     modifier: Modifier = Modifier,
 ) {
 
-    val currentOnTimeout by rememberUpdatedState(onTimeout)
+    val currentOnTimeout = rememberUpdatedState(onTimeout)
 
 
     val scale = remember {
@@ -67,8 +66,8 @@ fun LandingScreen(
                 }
             )
         )
-        delay(1000L)
-        currentOnTimeout()
+        delay(400L)
+        currentOnTimeout.value()
     }
 
     Surface(

@@ -11,10 +11,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Slider
 import androidx.compose.material.SliderDefaults
 import androidx.compose.material.SnackbarDuration
+import androidx.compose.material.SnackbarHostState
+import androidx.compose.material.SnackbarResult
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.contentColorFor
@@ -106,18 +107,22 @@ fun RoastForm(
     modifier: Modifier = Modifier,
     levelOfRoast: State<Float>,
     onValueChange: (Float) -> Unit,
-    scaffoldState: ScaffoldState,
     coroutineScope: CoroutineScope,
     context: Context,
     textInfo: Int,
+    snackbarHostState: SnackbarHostState
 ) {
 
     fun onClickInfo(textInfo: Int) {
         coroutineScope.launch {
-            scaffoldState.snackbarHostState.showSnackbar(
+            val result = snackbarHostState.showSnackbar(
                 message = context.getString(textInfo),
-                duration = SnackbarDuration.Short
+                duration = SnackbarDuration.Short,
+                actionLabel = "Hide"
             )
+            if (result == SnackbarResult.ActionPerformed) {
+                SnackbarResult.Dismissed
+            }
         }
     }
 
