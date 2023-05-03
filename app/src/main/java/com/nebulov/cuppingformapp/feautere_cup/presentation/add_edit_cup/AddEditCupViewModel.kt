@@ -249,6 +249,8 @@ class AddEditCupViewModel @Inject constructor(
         }
     }
 
+    val cup = mutableStateOf<Cup?>(null)
+
     fun onEvent(event: AddEditCupEvent) {
 
         when (event) {

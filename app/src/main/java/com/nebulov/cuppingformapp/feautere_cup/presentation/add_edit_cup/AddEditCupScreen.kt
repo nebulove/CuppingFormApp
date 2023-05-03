@@ -13,7 +13,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,10 +21,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.nebulov.cuppingform.ui.components.DefectsForm
 import com.nebulov.cuppingformapp.R
+import com.nebulov.cuppingformapp.feautere_cup.domain.model.Cup
 import com.nebulov.cuppingformapp.feautere_cup.presentation.add_edit_cup.components.AnimatedTextField
 import com.nebulov.cuppingformapp.feautere_cup.presentation.add_edit_cup.components.CheckBoxForm
 import com.nebulov.cuppingformapp.feautere_cup.presentation.add_edit_cup.components.MainBottomBar
@@ -34,95 +33,100 @@ import com.nebulov.cuppingformapp.feautere_cup.presentation.add_edit_cup.compone
 import com.nebulov.cuppingformapp.feautere_cup.presentation.add_edit_cup.components.VerticalSlider
 import com.nebulov.cuppingformapp.feautere_cup.presentation.cups.components.DefaultFloatingActionButton
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.collectLatest
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun AddEditCupScreen(
     navController: NavController,
-    viewModel: AddEditCupViewModel = hiltViewModel()
+    cup: Cup,
+    nameOnValueChange: (String) -> Unit,
+    levelOfRoastOnValueChange: (Float) -> Unit,
+    fragranceOnValueChange: (Float) -> Unit,
+    dryOnValueChange: (Float) -> Unit,
+    breakAromaOnValueChange: (Float) -> Unit,
+    flavorOnValueChange: (Float) -> Unit,
+    aftertasteOnValueChange: (Float) -> Unit,
+    acidityOnValueChange: (Float) -> Unit,
+    intensityOnValueChange: (Float) -> Unit,
+    bodyOnValueChange: (Float) -> Unit,
+    levelOfBodyOnValueChange: (Float) -> Unit,
+    balanceOnValueChange: (Float) -> Unit,
+    overallOnValueChange: (Float) -> Unit,
+
+    uCup1OnValueChange: (Boolean) -> Unit,
+    uCup2OnValueChange: (Boolean) -> Unit,
+    uCup3OnValueChange: (Boolean) -> Unit,
+    uCup4OnValueChange: (Boolean) -> Unit,
+    uCup5OnValueChange: (Boolean) -> Unit,
+
+    cCup1OnValueChange: (Boolean) -> Unit,
+    cCup2OnValueChange: (Boolean) -> Unit,
+    cCup3OnValueChange: (Boolean) -> Unit,
+    cCup4OnValueChange: (Boolean) -> Unit,
+    cCup5OnValueChange: (Boolean) -> Unit,
+
+    sCup1OnValueChange: (Boolean) -> Unit,
+    sCup2OnValueChange: (Boolean) -> Unit,
+    sCup3OnValueChange: (Boolean) -> Unit,
+    sCup4OnValueChange: (Boolean) -> Unit,
+    sCup5OnValueChange: (Boolean) -> Unit,
+
+    onValueDec1: () -> Unit,
+    onValueInc1: () -> Unit,
+    onValueDec2: () -> Unit,
+    onValueInc2: () -> Unit,
+
+    notesFragranceOnTextChange: (String) -> Unit,
+    notesFlavorOnTextChange: (String) -> Unit,
+    notesAftertasteOnTextChange: (String) -> Unit,
+    notesAcidityOnTextChange: (String) -> Unit,
+    notesBodyOnTextChange: (String) -> Unit,
+    notesBalanceOnTextChange: (String) -> Unit,
+    notesUniformityOnTextChange: (String) -> Unit,
+    notesCleanCupOnTextChange: (String) -> Unit,
+    notesSweetnessOnTextChange: (String) -> Unit,
+    notesDefectsOnTextChange: (String) -> Unit,
+    notesOverallOnTextChange: (String) -> Unit,
+
+    saveCup: () -> Unit
+
+
 ) {
     val context = LocalContext.current
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
     val scaffoldState = rememberScaffoldState()
 
-    val nameState = viewModel.cupName.value
-    val levelOfRoast = viewModel.levelOfRoast.value
-    val fragrance = viewModel.fragrance.value
-    val dry = viewModel.dry.value
-    val breakAroma = viewModel.breakAroma.value
-    val flavor = viewModel.flavor.value
-    val aftertaste = viewModel.aftertaste.value
-    val acidity = viewModel.acidity.value
-    val intensity = viewModel.intensity.value
-    val body = viewModel.body.value
-    val levelOfBody = viewModel.levelOfBody.value
-    val balance = viewModel.balance.value
-    val uniformity = viewModel.uniformity.value
-    val uCup1 = viewModel.uCup1.value
-    val uCup2 = viewModel.uCup2.value
-    val uCup3 = viewModel.uCup3.value
-    val uCup4 = viewModel.uCup4.value
-    val uCup5 = viewModel.uCup5.value
-    val cleanCup = viewModel.cleanCup.value
-    val cCup1 = viewModel.cCup1.value
-    val cCup2 = viewModel.cCup2.value
-    val cCup3 = viewModel.cCup3.value
-    val cCup4 = viewModel.cCup4.value
-    val cCup5 = viewModel.cCup5.value
-    val sweetness = viewModel.sweetness.value
-    val sCup1 = viewModel.sCup1.value
-    val sCup2 = viewModel.sCup2.value
-    val sCup3 = viewModel.sCup3.value
-    val sCup4 = viewModel.sCup4.value
-    val sCup5 = viewModel.sCup5.value
-    val defects = viewModel.defects.value
-    val taintDefects = viewModel.taintDefects.value
-    val faultDefects = viewModel.faultDefects.value
-    val overall = viewModel.overall.value
-    val finalScore = viewModel.finalScore.value
-    val notesFragrance = viewModel.notesFragrance.value
-    val notesFlavor = viewModel.notesFlavor.value
-    val notesAftertaste = viewModel.notesAftertaste.value
-    val notesAcidity = viewModel.notesAcidity.value
-    val notesBody = viewModel.notesBody.value
-    val notesBalance = viewModel.notesBalance.value
-    val notesUniformity = viewModel.notesUniformity.value
-    val notesCleanCup = viewModel.notesCleanCup.value
-    val notesSweetness = viewModel.notesSweetness.value
-    val notesDefects = viewModel.notesDefects.value
-    val notesOverall = viewModel.notesOverall.value
-
-
     var editMessageShown by remember { mutableStateOf(false) }
 
-    LaunchedEffect(key1 = true) {
-        viewModel.eventFlow.collectLatest { event ->
-            when (event) {
-                is AddEditCupViewModel.UiEvent.ShowSnackBar -> {
-                    scaffoldState.snackbarHostState.showSnackbar(
-                        message = event.message
-                    )
-                }
-
-                is AddEditCupViewModel.UiEvent.SaveCup -> {}
-            }
-        }
-    }
+//    LaunchedEffect(key1 = true) {
+//        viewModel.eventFlow.collectLatest { event ->
+//            when (event) {
+//                is AddEditCupViewModel.UiEvent.ShowSnackBar -> {
+//                    scaffoldState.snackbarHostState.showSnackbar(
+//                        message = event.message
+//                    )
+//                }
+//
+//                is AddEditCupViewModel.UiEvent.SaveCup -> {}
+//            }
+//        }
+//    }
 
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
             TopAppBarCuppingForm(
-                name = nameState,
-                finalScore = finalScore,
+                name = cup.name,
+                finalScore = cup.finalScore,
                 showOff = { editMessageShown = !editMessageShown })
         },
         floatingActionButton = {
             DefaultFloatingActionButton(
                 icon = R.drawable.save48,
-                actionOn = { viewModel.onEvent(AddEditCupEvent.SaveCup)
-                    Toast.makeText(context, "$nameState saved", Toast.LENGTH_SHORT).show()},
+                actionOn = {
+                    saveCup()
+                    Toast.makeText(context, "${cup.name} saved", Toast.LENGTH_SHORT).show()
+                },
                 contentDescription = "Save",
                 shape = RoundedCornerShape(50)
             )
@@ -141,8 +145,8 @@ fun AddEditCupScreen(
         ) {
             RoastForm(
                 R.string.Roast,
-                levelOfRoast = levelOfRoast,
-                onValueChange = { viewModel.onEvent(AddEditCupEvent.ChangeLevelOfRoast(it)) },
+                levelOfRoast = cup.levelOfRoast,
+                onValueChange = { levelOfRoastOnValueChange(it) },
                 scaffoldState = scaffoldState,
                 coroutineScope = coroutineScope,
                 context = context,
@@ -151,14 +155,14 @@ fun AddEditCupScreen(
             VerticalSlider(
                 text = R.string.Fragrance,
                 fragranceCheckSlider = true,
-                sliderValue = fragrance,
-                sliderValue2 = dry,
-                sliderValue3 = breakAroma,
-                textDescriptors = notesFragrance,
-                onTextChange = { viewModel.onEvent(AddEditCupEvent.ChangeNotesFragrance(it)) },
-                onValueChange = { viewModel.onEvent(AddEditCupEvent.ChangeFragrance(it)) },
-                onValueChange2 = { viewModel.onEvent(AddEditCupEvent.ChangeDry(it)) },
-                onValueChange3 = { viewModel.onEvent(AddEditCupEvent.ChangeBreakAroma(it)) },
+                sliderValue = cup.fragrance,
+                sliderValue2 = cup.dry,
+                sliderValue3 = cup.breakAroma,
+                textDescriptors = cup.notesFragrance,
+                onTextChange = { notesFragranceOnTextChange(it) },
+                onValueChange = { fragranceOnValueChange(it) },
+                onValueChange2 = { dryOnValueChange(it) },
+                onValueChange3 = { breakAromaOnValueChange(it) },
                 scaffoldState = scaffoldState,
                 coroutineScope = coroutineScope,
                 context = context,
@@ -166,12 +170,12 @@ fun AddEditCupScreen(
             )
             VerticalSlider(
                 text = R.string.Flavor,
-                sliderValue = flavor,
-                onValueChange = { viewModel.onEvent(AddEditCupEvent.ChangeFlavor(it)) },
+                sliderValue = cup.flavor,
+                onValueChange = { flavorOnValueChange(it) },
                 onValueChange2 = { },
                 onValueChange3 = { },
-                textDescriptors = notesFlavor,
-                onTextChange = { viewModel.onEvent(AddEditCupEvent.ChangeNotesFlavor(it)) },
+                textDescriptors = cup.notesFlavor,
+                onTextChange = { notesFlavorOnTextChange(it) },
                 scaffoldState = scaffoldState,
                 coroutineScope = coroutineScope,
                 context = context,
@@ -179,12 +183,12 @@ fun AddEditCupScreen(
             )
             VerticalSlider(
                 text = R.string.Aftertaste,
-                sliderValue = aftertaste,
-                onValueChange = { viewModel.onEvent(AddEditCupEvent.ChangeAftertaste(it)) },
+                sliderValue = cup.aftertaste,
+                onValueChange = { aftertasteOnValueChange(it) },
                 onValueChange2 = { },
                 onValueChange3 = { },
-                textDescriptors = notesAftertaste,
-                onTextChange = { viewModel.onEvent(AddEditCupEvent.ChangeNotesAftertaste(it)) },
+                textDescriptors = cup.notesAftertaste,
+                onTextChange = { notesAftertasteOnTextChange(it) },
                 scaffoldState = scaffoldState,
                 coroutineScope = coroutineScope,
                 context = context,
@@ -193,13 +197,13 @@ fun AddEditCupScreen(
             VerticalSlider(
                 text = R.string.Acidity,
                 acidityCheckSlider = true,
-                sliderValue = acidity,
-                sliderValue2 = intensity,
-                onValueChange = { viewModel.onEvent(AddEditCupEvent.ChangeAcidity(it)) },
-                onValueChange2 = { viewModel.onEvent(AddEditCupEvent.ChangeIntensity(it)) },
+                sliderValue = cup.acidity,
+                sliderValue2 = cup.intensity,
+                onValueChange = { acidityOnValueChange(it) },
+                onValueChange2 = { intensityOnValueChange(it) },
                 onValueChange3 = { },
-                textDescriptors = notesAcidity,
-                onTextChange = { viewModel.onEvent(AddEditCupEvent.ChangeNotesAcidity(it)) },
+                textDescriptors = cup.notesAcidity,
+                onTextChange = { notesAcidityOnTextChange(it) },
                 scaffoldState = scaffoldState,
                 coroutineScope = coroutineScope,
                 context = context,
@@ -208,13 +212,13 @@ fun AddEditCupScreen(
             VerticalSlider(
                 text = R.string.Body,
                 bodyCheckSlider = true,
-                sliderValue = body,
-                sliderValue2 = levelOfBody,
-                onValueChange = { viewModel.onEvent(AddEditCupEvent.ChangeBody(it)) },
-                onValueChange2 = { viewModel.onEvent(AddEditCupEvent.ChangeLevelOfBody(it)) },
+                sliderValue = cup.body,
+                sliderValue2 = cup.levelOfBody,
+                onValueChange = { bodyOnValueChange(it) },
+                onValueChange2 = { levelOfBodyOnValueChange(it) },
                 onValueChange3 = { },
-                textDescriptors = notesBody,
-                onTextChange = { viewModel.onEvent(AddEditCupEvent.ChangeNotesBody(it)) },
+                textDescriptors = cup.notesBody,
+                onTextChange = { notesBodyOnTextChange(it) },
                 scaffoldState = scaffoldState,
                 coroutineScope = coroutineScope,
                 context = context,
@@ -222,12 +226,12 @@ fun AddEditCupScreen(
             )
             VerticalSlider(
                 text = R.string.Balance,
-                sliderValue = balance,
-                onValueChange = { viewModel.onEvent(AddEditCupEvent.ChangeBalance(it)) },
+                sliderValue = cup.balance,
+                onValueChange = { balanceOnValueChange(it) },
                 onValueChange2 = {},
                 onValueChange3 = {},
-                textDescriptors = notesBalance,
-                onTextChange = { viewModel.onEvent(AddEditCupEvent.ChangeNotesBalance(it)) },
+                textDescriptors = cup.notesBalance,
+                onTextChange = { notesBalanceOnTextChange(it) },
                 scaffoldState = scaffoldState,
                 coroutineScope = coroutineScope,
                 context = context,
@@ -235,19 +239,19 @@ fun AddEditCupScreen(
             )
             CheckBoxForm(
                 text = R.string.Uniformity,
-                checkboxValue = uniformity,
-                textDescriptors = notesUniformity,
-                onTextChange = { viewModel.onEvent(AddEditCupEvent.ChangeNotesUniformity(it)) },
-                cup1 = uCup1,
-                cup2 = uCup2,
-                cup3 = uCup3,
-                cup4 = uCup4,
-                cup5 = uCup5,
-                onCheckedChange1 = { viewModel.onEvent(AddEditCupEvent.ChangeUniformityCup1(it)) },
-                onCheckedChange2 = { viewModel.onEvent(AddEditCupEvent.ChangeUniformityCup2(it)) },
-                onCheckedChange3 = { viewModel.onEvent(AddEditCupEvent.ChangeUniformityCup3(it)) },
-                onCheckedChange4 = { viewModel.onEvent(AddEditCupEvent.ChangeUniformityCup4(it)) },
-                onCheckedChange5 = { viewModel.onEvent(AddEditCupEvent.ChangeUniformityCup5(it)) },
+                checkboxValue = cup.uniformity,
+                textDescriptors = cup.notesUniformity,
+                onTextChange = { notesUniformityOnTextChange(it) },
+                cup1 = cup.uCup1,
+                cup2 = cup.uCup2,
+                cup3 = cup.uCup3,
+                cup4 = cup.uCup4,
+                cup5 = cup.uCup5,
+                onCheckedChange1 = { uCup1OnValueChange(it) },
+                onCheckedChange2 = { uCup2OnValueChange(it) },
+                onCheckedChange3 = { uCup3OnValueChange(it) },
+                onCheckedChange4 = { uCup4OnValueChange(it) },
+                onCheckedChange5 = { uCup5OnValueChange(it) },
                 scaffoldState = scaffoldState,
                 coroutineScope = coroutineScope,
                 context = context,
@@ -255,19 +259,19 @@ fun AddEditCupScreen(
             )
             CheckBoxForm(
                 text = R.string.CleanCup,
-                checkboxValue = cleanCup,
-                textDescriptors = notesCleanCup,
-                onTextChange = { viewModel.onEvent(AddEditCupEvent.ChangeNotesCleanCup(it)) },
-                cup1 = cCup1,
-                cup2 = cCup2,
-                cup3 = cCup3,
-                cup4 = cCup4,
-                cup5 = cCup5,
-                onCheckedChange1 = { viewModel.onEvent(AddEditCupEvent.ChangeCleanCup1(it)) },
-                onCheckedChange2 = { viewModel.onEvent(AddEditCupEvent.ChangeCleanCup2(it)) },
-                onCheckedChange3 = { viewModel.onEvent(AddEditCupEvent.ChangeCleanCup3(it)) },
-                onCheckedChange4 = { viewModel.onEvent(AddEditCupEvent.ChangeCleanCup4(it)) },
-                onCheckedChange5 = { viewModel.onEvent(AddEditCupEvent.ChangeCleanCup5(it)) },
+                checkboxValue = cup.cleanCup,
+                textDescriptors = cup.notesCleanCup,
+                onTextChange = { notesCleanCupOnTextChange(it) },
+                cup1 = cup.cCup1,
+                cup2 = cup.cCup2,
+                cup3 = cup.cCup3,
+                cup4 = cup.cCup4,
+                cup5 = cup.cCup5,
+                onCheckedChange1 = { cCup1OnValueChange(it) },
+                onCheckedChange2 = { cCup2OnValueChange(it) },
+                onCheckedChange3 = { cCup3OnValueChange(it) },
+                onCheckedChange4 = { cCup4OnValueChange(it) },
+                onCheckedChange5 = { cCup5OnValueChange(it) },
                 scaffoldState = scaffoldState,
                 coroutineScope = coroutineScope,
                 context = context,
@@ -275,19 +279,19 @@ fun AddEditCupScreen(
             )
             CheckBoxForm(
                 text = R.string.Sweetness,
-                checkboxValue = sweetness,
-                textDescriptors = notesSweetness,
-                onTextChange = { viewModel.onEvent(AddEditCupEvent.ChangeNotesSweetness(it)) },
-                cup1 = sCup1,
-                cup2 = sCup2,
-                cup3 = sCup3,
-                cup4 = sCup4,
-                cup5 = sCup5,
-                onCheckedChange1 = { viewModel.onEvent(AddEditCupEvent.ChangeSweetnessCup1(it)) },
-                onCheckedChange2 = { viewModel.onEvent(AddEditCupEvent.ChangeSweetnessCup2(it)) },
-                onCheckedChange3 = { viewModel.onEvent(AddEditCupEvent.ChangeSweetnessCup3(it)) },
-                onCheckedChange4 = { viewModel.onEvent(AddEditCupEvent.ChangeSweetnessCup4(it)) },
-                onCheckedChange5 = { viewModel.onEvent(AddEditCupEvent.ChangeSweetnessCup5(it)) },
+                checkboxValue = cup.sweetness,
+                textDescriptors = cup.notesSweetness,
+                onTextChange = { notesSweetnessOnTextChange(it) },
+                cup1 = cup.sCup1,
+                cup2 = cup.sCup2,
+                cup3 = cup.sCup3,
+                cup4 = cup.sCup4,
+                cup5 = cup.sCup5,
+                onCheckedChange1 = { sCup1OnValueChange(it) },
+                onCheckedChange2 = { sCup2OnValueChange(it) },
+                onCheckedChange3 = { sCup3OnValueChange(it) },
+                onCheckedChange4 = { sCup4OnValueChange(it) },
+                onCheckedChange5 = { sCup5OnValueChange(it) },
                 scaffoldState = scaffoldState,
                 coroutineScope = coroutineScope,
                 context = context,
@@ -295,15 +299,15 @@ fun AddEditCupScreen(
             )
             DefectsForm(
                 text = R.string.Defects,
-                textDescriptors = notesDefects,
-                onTextChange = { viewModel.onEvent(AddEditCupEvent.ChangeNotesDefect(it)) },
-                defectsResult = defects,
-                defectsValue1 = taintDefects,
-                defectsValue2 = faultDefects,
-                onValueDec1 = { viewModel.onEvent(AddEditCupEvent.ChangeTaintDec(0)) },
-                onValueInc1 = { viewModel.onEvent(AddEditCupEvent.ChangeTaintInc(0)) },
-                onValueDec2 = { viewModel.onEvent(AddEditCupEvent.ChangeFaultDec(0)) },
-                onValueInc2 = { viewModel.onEvent(AddEditCupEvent.ChangeFaultInc(0)) },
+                textDescriptors = cup.notesDefects,
+                onTextChange = { notesDefectsOnTextChange(it) },
+                defectsResult = cup.defects,
+                defectsValue1 = cup.taintDefects,
+                defectsValue2 = cup.faultDefects,
+                onValueDec1 = { onValueDec1() },
+                onValueInc1 = { onValueInc1() },
+                onValueDec2 = { onValueDec2() },
+                onValueInc2 = { onValueInc2() },
                 scaffoldState = scaffoldState,
                 coroutineScope = coroutineScope,
                 context = context,
@@ -311,12 +315,12 @@ fun AddEditCupScreen(
             )
             VerticalSlider(
                 text = R.string.Overall,
-                sliderValue = overall,
-                onValueChange = { viewModel.onEvent(AddEditCupEvent.ChangeOverall(it)) },
+                sliderValue = cup.overall,
+                onValueChange = { overallOnValueChange(it) },
                 onValueChange2 = {},
                 onValueChange3 = {},
-                textDescriptors = notesOverall,
-                onTextChange = { viewModel.onEvent(AddEditCupEvent.ChangeNotesOverall(it)) },
+                textDescriptors = cup.notesOverall,
+                onTextChange = { notesOverallOnTextChange(it) },
                 scaffoldState = scaffoldState,
                 coroutineScope = coroutineScope,
                 context = context,
@@ -326,9 +330,9 @@ fun AddEditCupScreen(
         }
         AnimatedTextField(
             showOff = { editMessageShown = !editMessageShown },
-            sampleName = nameState,
+            sampleName = cup.name,
             shown = editMessageShown,
-            onTextEdit = { viewModel.onEvent(AddEditCupEvent.EnteredName(it)) }
+            onTextEdit = { nameOnValueChange(it) }
         )
     }
 }

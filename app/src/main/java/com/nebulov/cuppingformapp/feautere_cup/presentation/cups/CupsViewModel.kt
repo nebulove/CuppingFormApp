@@ -10,8 +10,11 @@ import com.nebulov.cuppingformapp.feautere_cup.domain.util.CupOrder
 import com.nebulov.cuppingformapp.feautere_cup.domain.util.OrderType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,8 +24,8 @@ class CupsViewModel @Inject constructor(
 ) : ViewModel() {
 
 
-    private val _state = mutableStateOf(CupsState())
-    val state: State<CupsState> = _state
+    private val _state = MutableStateFlow(CupsState())
+    val state = _state.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), CupsState())
 
     private var recentlyDeletedCup: Cup? = null
 
@@ -56,7 +59,8 @@ class CupsViewModel @Inject constructor(
                     recentlyDeletedCup = null
                 }
             }
-            is CupEvent.ChangeFavorite ->{
+
+            is CupEvent.ChangeFavorite -> {
                 viewModelScope.launch {
                     val newItem = event.cup.copy(favorite = !event.cup.favorite)
                     cupUseCases.addCup(newItem)
