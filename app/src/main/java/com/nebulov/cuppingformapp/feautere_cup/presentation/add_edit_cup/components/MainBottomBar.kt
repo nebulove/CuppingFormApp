@@ -11,13 +11,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.nebulov.cuppingformapp.R
 
 @Composable
 fun MainBottomBar(
     modifier: Modifier = Modifier,
-    navController: NavController,
+    onShown: () -> Unit,
+    onClickBack:()-> Unit
 ) {
 
 
@@ -26,25 +26,20 @@ fun MainBottomBar(
         modifier = modifier
     ) {
         IconButton(
-            onClick = {
-                navController.navigateUp()
-            },
+            onClick = { onClickBack() },
         ) {
             Icon(
                 modifier = modifier.size(24.dp), painter = painterResource(
-                    R.drawable.outline_format_list_bulleted_black_24dp
+                    R.drawable.outline_west_24
                 ), contentDescription = stringResource(R.string.ListofCups)
             )
         }
         Spacer(Modifier.weight(1f, true))
-        IconButton(onClick =
-        {
-
-        }) {
+        IconButton(onClick = { onShown() }) {
             Icon(
                 modifier = modifier.size(24.dp),
                 painter = painterResource(
-                    R.drawable.outline_local_cafe_black_24dp
+                    R.drawable.outline_format_list_bulleted_black_24dp
                 ),
                 contentDescription = "Станция"
             )

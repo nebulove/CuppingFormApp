@@ -88,7 +88,7 @@ fun LandingScreen(
                     .align(CenterHorizontally)
                     .padding(start = 5.dp)
                     .scale(scale.value),
-                painter = painterResource(id = R.drawable.logo_2),
+                painter = painterResource(id = R.drawable.logo_circle_3),
                 contentDescription = "logo"
             )
             Spacer(modifier = modifier.height(15.dp))

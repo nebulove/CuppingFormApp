@@ -253,7 +253,7 @@ fun SmallSlider(
             onValueChange = { onValueChange(it) },
             steps = 3,
             enabled = true,
-            valueRange = 0f..5f,
+            valueRange = 1f..5f,
             modifier = modifier.width(160.dp),
             colors = SliderDefaults.colors(
                 activeTrackColor = gradientChose(),

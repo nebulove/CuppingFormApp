@@ -4,6 +4,15 @@
     <string name="home_name">Name</string>
 
     <string name="app_name">CuppingFormApp</string>
+
+    <string name="VeryLightRoast">" Very Light Roast"</string>
+    <string name="LightRoast">"Light Roast"</string>
+    <string name="MediumLightRoast">"Medium-Light Roast"</string>
+    <string name="MediumRoast">"Medium Roast"</string>
+    <string name="MediumDarkRoast">"Medium-Dark Roast"</string>
+    <string name="DarkRoast">"Dark Roast"</string>
+    <string name="VeryDarkRoast">"Very Dark Roast"</string>
+
     <string name="Fragrance">"Fragrance/Aroma "</string>
     <string name="Flavor">"Flavor "</string>
     <string name="Aftertaste">"Aftertaste "</string>

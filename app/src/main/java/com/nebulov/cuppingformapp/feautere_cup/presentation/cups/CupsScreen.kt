@@ -9,11 +9,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarResult
+import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -23,6 +24,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.nebulov.cuppingformapp.feautere_cup.presentation.add_edit_cup.AddEditCupEvent
@@ -32,6 +34,7 @@ import com.nebulov.cuppingformapp.feautere_cup.presentation.cups.components.Anim
 import com.nebulov.cuppingformapp.feautere_cup.presentation.cups.components.CupItem
 import com.nebulov.cuppingformapp.feautere_cup.presentation.cups.components.IconOrderSection
 import com.nebulov.cuppingformapp.feautere_cup.presentation.util.Screen
+import com.nebulov.cuppingformapp.feautere_cup.presentation.util.convertLongToTime
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -58,6 +61,8 @@ fun CupsScreen(
     val currentOnTimeout = rememberSaveable { mutableStateOf(false) }
     val showWallpaper = remember { mutableStateOf(false) }
     showWallpaper.value = state.cups.isEmpty() && currentOnTimeout.value
+
+    val cupsByDate = state.cups.groupBy { convertLongToTime(it.timestamp) }
 
     LaunchedEffect(key1 = true) {
         delay(500)
@@ -93,35 +98,49 @@ fun CupsScreen(
             AnimationImage(shown = showWallpaper)
             Spacer(modifier = modifier.height(4.dp))
             LazyColumn(modifier = modifier.fillMaxSize()) {
-                items(items = state.cups) { cup ->
-                    CupItem(
-                        cup = cup,
-                        modifier = modifier
-                            .animateItemPlacement()
-                            .clickable {
-                                navController.navigate(
-                                    Screen.AddEditCupScreen.route +
-                                            "?cupId=${cup.id}"
-                                )
-                            },
-                        onDeleteClick = {
-                            viewModel.onEvent(CupEvent.DeleteCup(cup))
-                            scope.launch {
-                                val result = scaffoldState.snackbarHostState.showSnackbar(
-                                    message = "Cup deleted",
-                                    actionLabel = "Undo"
-                                )
-                                if (result == SnackbarResult.ActionPerformed) {
-                                    viewModel.onEvent(CupEvent.RestoreCup)
+                state.cups.forEachIndexed { index, cup ->
+                    val showDate =
+                        index == 0 || convertLongToTime(cup.timestamp) != convertLongToTime(state.cups[index - 1].timestamp)
+                    if (showDate) {
+                        item {
+                            Text(
+                                text = convertLongToTime(cup.timestamp),
+                                fontSize = 12.sp,
+                                modifier = modifier.padding(start = 10.dp, top = 6.dp)
+                            )
+                        }
+                    }
+                    item {
+                        CupItem(
+                            cup = cup,
+                            modifier = modifier
+                                .animateItemPlacement()
+                                .clickable {
+                                    navController.navigate(
+                                        Screen.AddEditCupScreen.route +
+                                                "?cupId=${cup.id}"
+                                    )
+                                },
+                            onDeleteClick = {
+                                viewModel.onEvent(CupEvent.DeleteCup(cup))
+                                scope.launch {
+                                    val result = scaffoldState.snackbarHostState.showSnackbar(
+                                        message = "Cup deleted",
+                                        actionLabel = "Undo"
+                                    )
+                                    if (result == SnackbarResult.ActionPerformed) {
+                                        viewModel.onEvent(CupEvent.RestoreCup)
+                                    }
                                 }
-                            }
-                        },
-                        onFavoriteChange = { viewModel.onEvent(CupEvent.ChangeFavorite(cup)) })
+                            },
+                            onFavoriteChange = { viewModel.onEvent(CupEvent.ChangeFavorite(cup)) })
+                    }
                 }
             }
-            Spacer(modifier = Modifier.height(16.dp))
         }
+        Spacer(modifier = Modifier.height(16.dp))
     }
-
 }
+
+
 

@@ -5,6 +5,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.White
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
@@ -68,7 +69,28 @@ private val DarkCuppingPalette = darkColors(
     onBackground = WhiteNight,
     onSurface = WhiteNight,
 )
-
+private val BWLightCuppingPalette = lightColors(
+    primary = White,
+    primaryVariant = White,
+    secondary = White,
+    background = White,
+    surface = White,
+    onPrimary = Black,
+    onSecondary = Black,
+    onBackground = Black,
+    onSurface = Black,
+)
+private val BWDarkCuppingPalette = darkColors(
+    primary = BlackNight,
+    primaryVariant = BlackNight,
+    secondary = BlackNight,
+    background = BlackNight,
+    surface = BlackNight,
+    onPrimary = WhiteNight,
+    onSecondary = WhiteNight,
+    onBackground = WhiteNight,
+    onSurface = WhiteNight,
+)
 //
 //val GradientCuppingPalette = lightColors(
 //    primary = when (totalScore.value) {
@@ -148,6 +170,34 @@ fun CuppingFormTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Compo
     } else {
         systemUiController.setSystemBarsColor(
             color = Blue200
+        )
+    }
+}
+
+@Composable
+fun BWCuppingFormTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
+    val colors = if (darkTheme) {
+        BWDarkCuppingPalette
+    } else {
+        BWLightCuppingPalette
+    }
+
+    MaterialTheme(
+        colors = colors,
+        content = content,
+        typography = Typography
+
+    )
+
+
+    val systemUiController = rememberSystemUiController()
+    if (darkTheme) {
+        systemUiController.setSystemBarsColor(
+            color = BlackNight
+        )
+    } else {
+        systemUiController.setSystemBarsColor(
+            color = White
         )
     }
 }

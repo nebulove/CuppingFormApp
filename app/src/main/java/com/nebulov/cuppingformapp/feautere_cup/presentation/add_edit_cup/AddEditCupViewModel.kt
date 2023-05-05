@@ -162,6 +162,8 @@ class AddEditCupViewModel @Inject constructor(
     private val _notesOverall = mutableStateOf(EMPTY_STRING)
     val notesOverall: State<String> = _notesOverall
 
+    private val _timestamp = mutableStateOf(1L)
+    val timestamp: State<Long> = _timestamp
 
     private fun updateFinalScore() {
         viewModelScope.launch {
@@ -243,6 +245,7 @@ class AddEditCupViewModel @Inject constructor(
                         _notesSweetness.value = cup.notesSweetness
                         _notesDefects.value = cup.notesDefects
                         _notesOverall.value = cup.notesOverall
+                        _timestamp.value = cup.timestamp
                     }
                 }
             }
@@ -600,7 +603,7 @@ class AddEditCupViewModel @Inject constructor(
                                 overall = overall.value,
                                 notesOverall = notesOverall.value,
                                 finalScore = finalScore.value,
-                                timestamp = System.currentTimeMillis(),
+                                timestamp = timestamp.value,
                                 id = currentNoteId,
                             )
                         )

@@ -4,10 +4,6 @@ package com.nebulov.cuppingformapp.feautere_cup.presentation.cups.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.shrinkVertically
@@ -74,9 +70,9 @@ fun AnimationImage01(
     {
         Image(
             painter = if (isSystemInDarkTheme()) {
-                painterResource(R.drawable.image01_night)
+                painterResource(R.drawable.image01_night_v2)
             } else painterResource(
-                R.drawable.image01_day
+                R.drawable.image01_day_v2
             ),
             contentDescription = "",
             modifier = modifier
@@ -103,7 +99,7 @@ fun AnimationImage02(
     )
     {
         Image(
-            painter = painterResource(R.drawable.image02_day),
+            painter = painterResource(R.drawable.image02_day_v2),
             contentDescription = "",
             modifier = modifier
                 .fillMaxHeight(0.6f),
@@ -117,15 +113,6 @@ fun AnimationImage03(
     modifier: Modifier = Modifier,
     shown: State<Boolean>
 ) {
-    val transition = rememberInfiniteTransition()
-    val sizeRatio = transition.animateFloat(
-        initialValue = 0.5f,
-        targetValue = 0.6f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(3000),
-            repeatMode = RepeatMode.Reverse
-        )
-    )
 
     AnimatedVisibility(
         visible = shown.value,
@@ -141,10 +128,10 @@ fun AnimationImage03(
     )
     {
         Image(
-            painter = painterResource(R.drawable.image03_day),
+            painter = painterResource(R.drawable.image03_day_v2),
             contentDescription = "",
             modifier = modifier
-                .fillMaxHeight(sizeRatio.value),
+                .fillMaxHeight(0.6f),
         )
     }
 }

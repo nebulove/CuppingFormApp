@@ -2,11 +2,14 @@ package com.nebulov.cuppingformapp.feautere_cup.presentation.cups.components
 
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -76,10 +79,10 @@ fun IconOrderSection(
                 text = "DROP"
             )
             DefaultIcon(
-                icon = R.drawable.outline_update_24,
+                icon = R.drawable.outline_history_24,
                 onClick = { onOrderChange(CupOrder.Date(cupOrder.orderType)) },
                 checked = cupOrder is CupOrder.Date,
-                text = "UPDATE"
+                text = "DATE"
             )
             DefaultIcon(
                 icon = R.drawable.outline_sort_by_alpha_24,
@@ -99,6 +102,7 @@ fun IconOrderSection(
 }
 
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DefaultIcon(
     @DrawableRes icon: Int,
@@ -109,13 +113,10 @@ fun DefaultIcon(
 ) {
 
     val checkedColor: Color = if (checked) MaterialTheme.colors.onPrimary
-    else MaterialTheme.colors.onPrimary.copy(
-        alpha = 0.3f
-    )
-
+    else MaterialTheme.colors.onPrimary.copy(alpha = 0.5f)
 
     Box(
-        modifier = modifier
+        modifier = modifier.animateContentSize(tween(240))
             .width(50.dp)
             .height(50.dp)
             .clip(RoundedCornerShape(50))
@@ -124,7 +125,7 @@ fun DefaultIcon(
             }), contentAlignment = Alignment.Center
 
     ) {
-        Column(
+        Column(modifier = modifier,
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -135,11 +136,23 @@ fun DefaultIcon(
                 modifier = modifier
                     .size(22.dp)
             )
-            Text(
-                modifier = modifier,
-                text = text, color = checkedColor,
-                fontSize = 9.sp
+            AnimatedVisibility(
+                visible = checked,
+                exit =
+                shrinkVertically (
+                    animationSpec = tween(350)),
+                enter = slideInVertically(
+                    animationSpec = tween(350),
+                    initialOffsetY = { it / 2 }
+                ),
             )
+            {
+                Text(
+                    modifier = modifier,
+                    text = text, color = checkedColor,
+                    fontSize = 9.sp
+                )
+            }
         }
     }
 
