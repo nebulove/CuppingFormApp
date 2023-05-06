@@ -2,14 +2,14 @@ package com.nebulov.cuppingformapp.di
 
 import android.app.Application
 import androidx.room.Room
-import com.nebulov.cuppingformapp.feautere_cup.data.data_source.CupDatabase
-import com.nebulov.cuppingformapp.feautere_cup.data.repository.CupRepositoryImpl
-import com.nebulov.cuppingformapp.feautere_cup.domain.repository.CupRepository
-import com.nebulov.cuppingformapp.feautere_cup.domain.use_case.AddCup
-import com.nebulov.cuppingformapp.feautere_cup.domain.use_case.CupUseCases
-import com.nebulov.cuppingformapp.feautere_cup.domain.use_case.DeleteCup
-import com.nebulov.cuppingformapp.feautere_cup.domain.use_case.GetCup
-import com.nebulov.cuppingformapp.feautere_cup.domain.use_case.GetCupList
+import com.nebulov.cuppingformapp.feature_cup.data.data_source.CupDatabase
+import com.nebulov.cuppingformapp.feature_cup.data.repository.CupRepositoryImpl
+import com.nebulov.cuppingformapp.feature_cup.domain.repository.CupRepository
+import com.nebulov.cuppingformapp.feature_cup.domain.use_case.AddCup
+import com.nebulov.cuppingformapp.feature_cup.domain.use_case.CupUseCases
+import com.nebulov.cuppingformapp.feature_cup.domain.use_case.DeleteCup
+import com.nebulov.cuppingformapp.feature_cup.domain.use_case.GetCup
+import com.nebulov.cuppingformapp.feature_cup.domain.use_case.GetCupList
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

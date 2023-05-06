@@ -8,16 +8,15 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/logo_circle_grad_2"
+        android:icon="@drawable/logo_circle_grad_3"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/logo_circle_grad_2"
+        android:roundIcon="@drawable/logo_circle_grad_3"
         android:supportsRtl="true"
         android:theme="@style/Theme.CuppingFormApp"
         tools:targetApi="tiramisu">
         <activity
-            android:name=".feautere_cup.presentation.MainActivity"
+            android:name=".feature_cup.presentation.MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.CuppingFormApp">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
