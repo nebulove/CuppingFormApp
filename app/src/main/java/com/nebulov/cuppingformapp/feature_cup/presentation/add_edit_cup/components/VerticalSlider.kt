@@ -170,6 +170,7 @@ fun VerticalSlider(
                         sliderValue2,
                         onValueChange = { onValueChange2(it) }
                     )
+                    Spacer(modifier = modifier.weight(1f, true))
                     SmallSlider(
                         stringResource(R.string.Break),
                         modifier = modifier,

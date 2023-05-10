@@ -19,6 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.nebulov.cuppingformapp.R
+import com.nebulov.cuppingformapp.feature_cup.presentation.util.convertLongToTime
 import com.nebulov.cuppingformapp.ui.theme.BWCuppingFormTheme
 
 @Composable
@@ -55,7 +56,8 @@ fun ResultList(
     notesSweetness: State<String>,
     notesDefects: State<String>,
     notesOverall: State<String>,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    timestamp: State<Long>
 
 
 ) {
@@ -97,7 +99,7 @@ fun ResultList(
                     { onClick() })
                     .verticalScroll(scrollState)
             ) {
-                Text(nameState.value)
+                Text( "${convertLongToTime(timestamp.value)} ${nameState.value}")
                 Text(
                     text = stringResource(id = R.string.Roast) + ": "
                             + stringResource(id = roastLevel(levelOfRoast.value))

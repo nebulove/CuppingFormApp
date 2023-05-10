@@ -77,7 +77,7 @@ fun IconOrderSection(
                 icon = R.drawable.outline_water_drop_black_24dp,
                 onClick = { onOrderChange(CupOrder.Favorite(cupOrder.orderType)) },
                 checked = cupOrder is CupOrder.Favorite,
-                text = "DROP"
+                text = "LIKE"
             )
             DefaultIcon(
                 icon = R.drawable.outline_history_24,

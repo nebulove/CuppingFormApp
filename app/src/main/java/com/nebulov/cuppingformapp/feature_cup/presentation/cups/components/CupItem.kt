@@ -1,5 +1,6 @@
 package com.nebulov.cuppingformapp.feature_cup.presentation.cups.components
 
+
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
@@ -22,7 +23,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawWithCache
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -39,11 +44,37 @@ fun CupItem(
     modifier: Modifier = Modifier,
     onDeleteClick: () -> Unit,
     onFavoriteChange: () -> Unit,
+    icon: Int,
+
 
 ) {
 
     val iconColor = cup.favorite
     val scrollState = rememberScrollState()
+
+    val gradientBrush = Brush.verticalGradient(
+        colors = listOf(
+            MaterialTheme.colors.secondary,
+            MaterialTheme.colors.primary
+        )
+    )
+    val primaryColorBrush = Brush.verticalGradient(
+        colors = listOf(
+            MaterialTheme.colors.primary,
+            MaterialTheme.colors.primary
+        )
+    )
+
+
+    fun changeBrushColor(state: Boolean): Brush {
+        val brush = if (!state) {
+            primaryColorBrush
+        } else {
+            gradientBrush
+        }
+        return brush
+    }
+
 
     Surface(
         shape = RoundedCornerShape(8.dp),
@@ -53,7 +84,8 @@ fun CupItem(
                 start = 10.dp,
                 end = 10.dp,
                 bottom = 3.dp
-            ) )
+            )
+    )
     {
         Row(
             modifier = modifier.fillMaxWidth(),
@@ -62,17 +94,19 @@ fun CupItem(
         ) {
             DeleteIcon(
                 modifier = modifier.clickable(onClick = { onFavoriteChange() }),
-                icon = R.drawable.outline_water_drop_black_24dp,
+                icon = icon,
                 tint = changeIconColor(iconColor),
                 text = R.string.favorite,
-                start = 8.dp, end = 8.dp
+                start = 8.dp, end = 8.dp,
+                brushGradient = changeBrushColor(iconColor)
             )
             Spacer(modifier = modifier.width(6.dp))
             Text(
                 maxLines = 1,
                 modifier = modifier
                     .fillMaxWidth(0.7f)
-                    .horizontalScroll(scrollState).padding(
+                    .horizontalScroll(scrollState)
+                    .padding(
                         top = 9.dp,
                         bottom = 10.dp),
                 text = cup.name,
@@ -81,7 +115,8 @@ fun CupItem(
             Spacer(modifier = modifier.width(1.dp))
             Text(
                 modifier = modifier
-                    .fillMaxWidth(0.6f).padding(
+                    .fillMaxWidth(0.6f)
+                    .padding(
                         top = 9.dp,
                         bottom = 10.dp),
                 text = cup.finalScore.toString(),
@@ -95,7 +130,8 @@ fun CupItem(
                 tint = MaterialTheme.colors.primary,
                 text = R.string.Delete,
                 start = 4.dp,
-                end = 8.dp
+                end = 8.dp,
+                brushGradient = primaryColorBrush
             )
         }
     }
@@ -108,7 +144,8 @@ fun DeleteIcon(
     tint: Color,
     @StringRes text: Int,
     start: Dp,
-    end: Dp
+    end: Dp,
+    brushGradient: Brush
 ) {
     Surface(
         color = MaterialTheme.colors.background, modifier = modifier
@@ -122,7 +159,14 @@ fun DeleteIcon(
                     top = 10.dp,
                     bottom = 10.dp, start = start, end = end
                 )
-                .size(20.dp),
+                .size(20.dp)
+                .graphicsLayer(alpha = 0.99f)
+                .drawWithCache {
+                    onDrawWithContent {
+                        drawContent()
+                        drawRect(brushGradient, blendMode = BlendMode.SrcAtop)
+                    }
+                },
             painter = painterResource(icon),
             contentDescription = stringResource(text),
             tint = tint

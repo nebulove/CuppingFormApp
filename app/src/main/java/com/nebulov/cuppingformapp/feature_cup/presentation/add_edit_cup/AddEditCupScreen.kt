@@ -14,6 +14,7 @@ import androidx.compose.animation.shrinkHorizontally
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -105,6 +106,7 @@ fun AddEditCupScreen(
     val notesSweetness = viewModel.notesSweetness
     val notesDefects = viewModel.notesDefects
     val notesOverall = viewModel.notesOverall
+    val timestamp = viewModel.timestamp
 
 
     val shownAddEditScreen = rememberSaveable { mutableStateOf(true) }
@@ -178,7 +180,7 @@ fun AddEditCupScreen(
                 Column(
                     modifier = Modifier.verticalScroll(
                         rememberScrollState()
-                    )
+                    ).padding(it),
                 ) {
                     RoastForm(
                         R.string.Roast,
@@ -479,7 +481,8 @@ fun AddEditCupScreen(
             notesSweetness = notesSweetness,
             notesDefects = notesDefects,
             notesOverall = notesOverall,
-            onClick = { shownAddEditScreen.value = !shownAddEditScreen.value }
+            onClick = { shownAddEditScreen.value = !shownAddEditScreen.value },
+            timestamp = timestamp,
         )
     }
 }
