@@ -37,13 +37,8 @@ fun LandingScreen(
 
     val currentOnTimeout = rememberUpdatedState(onTimeout)
 
-
-    val scale = remember {
-        Animatable(0f)
-    }
-    val scaleText = remember {
-        Animatable(0f)
-    }
+    val scale = remember { Animatable(0f) }
+    val scaleText = remember { Animatable(0f) }
 
 
     LaunchedEffect(key1 = true) {

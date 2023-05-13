@@ -24,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithCache
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -47,7 +48,7 @@ fun CupItem(
     icon: Int,
 
 
-) {
+    ) {
 
     val iconColor = cup.favorite
     val scrollState = rememberScrollState()
@@ -108,7 +109,8 @@ fun CupItem(
                     .horizontalScroll(scrollState)
                     .padding(
                         top = 9.dp,
-                        bottom = 10.dp),
+                        bottom = 10.dp
+                    ),
                 text = cup.name,
             )
             Spacer(modifier = modifier.weight(1f, true))
@@ -118,7 +120,8 @@ fun CupItem(
                     .fillMaxWidth(0.6f)
                     .padding(
                         top = 9.dp,
-                        bottom = 10.dp),
+                        bottom = 10.dp
+                    ),
                 text = cup.finalScore.toString(),
                 fontWeight = FontWeight.W600,
                 textAlign = TextAlign.Center

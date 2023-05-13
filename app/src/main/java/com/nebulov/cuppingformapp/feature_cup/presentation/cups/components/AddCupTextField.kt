@@ -20,6 +20,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawWithCache
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.nebulov.cuppingformapp.R
@@ -97,8 +100,9 @@ fun DefaultFloatingActionButton(
         bottomStart = 8.dp
     )
 ) {
-    FloatingActionButton(
 
+    FloatingActionButton(
+        modifier = modifier,
         shape = shape,
         content = {
             Icon(
@@ -106,7 +110,8 @@ fun DefaultFloatingActionButton(
                     icon
                 ),
                 contentDescription = contentDescription,
-                modifier = modifier.size(24.dp),
+                modifier = modifier
+                    .size(24.dp),
                 tint = MaterialTheme.colors.onPrimary
             )
         },
@@ -117,6 +122,6 @@ fun DefaultFloatingActionButton(
             hoveredElevation = 0.dp,
             focusedElevation = 0.dp
         ),
-        modifier = modifier,
-    )
+
+)
 }

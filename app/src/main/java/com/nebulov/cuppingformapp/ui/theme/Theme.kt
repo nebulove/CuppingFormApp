@@ -5,6 +5,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.White
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -146,6 +147,7 @@ onSurface = Color(0xFF1C1B1F),
 //}
 
 
+
 @Composable
 fun CuppingFormTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
     val colors = if (darkTheme) {
@@ -201,3 +203,5 @@ fun BWCuppingFormTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Com
         )
     }
 }
+
+
