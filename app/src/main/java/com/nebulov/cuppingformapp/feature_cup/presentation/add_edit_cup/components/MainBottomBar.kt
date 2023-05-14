@@ -17,7 +17,7 @@ import com.nebulov.cuppingformapp.R
 fun MainBottomBar(
     modifier: Modifier = Modifier,
     onShown: () -> Unit,
-    onClickBack:()-> Unit
+    onClickBack: () -> Unit
 ) {
 
 

@@ -29,16 +29,23 @@ fun NavScreen(
             composable(route = Screen.CupsScreen.route) {
                 CupsScreen(navController = navController)
             }
-            composable(route = Screen.AddEditCupScreen.route + "?cupId={cupId}",
+            composable(route = Screen.AddEditCupScreen.route + "?cupId={cupId}&timestamp={timestamp}",
                 arguments = listOf(
                     navArgument(
                         name = "cupId"
                     ) {
                         type = NavType.IntType
                         defaultValue = -1
+                    },
+                    navArgument(
+                        name = "timestamp"
+                    ){
+                        type = NavType.LongType
+                        defaultValue = 1L
                     }
                 )) {
-                AddEditCupScreen(navController = navController)
+                val timestamp = it.arguments?.getLong("timestamp") ?: 1L
+                AddEditCupScreen(navController = navController, timestamp = timestamp)
             }
         }
 

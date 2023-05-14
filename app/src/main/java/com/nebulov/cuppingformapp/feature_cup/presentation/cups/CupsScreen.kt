@@ -35,9 +35,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawWithCache
-import androidx.compose.ui.graphics.BlendMode
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -181,7 +178,7 @@ fun CupsScreen(
                                     .clickable {
                                         navController.navigate(
                                             Screen.AddEditCupScreen.route +
-                                                    "?cupId=${cup.id}"
+                                                    "?cupId=${cup.id}&timestamp=${cup.timestamp}"
                                         )
                                     },
                                 onDeleteClick = {
