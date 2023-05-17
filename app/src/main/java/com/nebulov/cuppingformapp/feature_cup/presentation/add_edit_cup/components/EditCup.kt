@@ -36,7 +36,6 @@ import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun EditCup(
-    navController: NavController,
     viewModel: AddEditCupViewModel = hiltViewModel(),
     showOff: () -> Unit,
     onTextEdit: (String) -> Unit,

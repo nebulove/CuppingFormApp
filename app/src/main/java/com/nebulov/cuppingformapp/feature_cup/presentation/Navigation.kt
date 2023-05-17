@@ -25,7 +25,6 @@ fun NavScreen(
             navController = navController,
             startDestination = Screen.CupsScreen.route
         ) {
-
             composable(route = Screen.CupsScreen.route) {
                 CupsScreen(navController = navController)
             }

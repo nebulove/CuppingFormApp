@@ -19,14 +19,24 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight.Companion.W400
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
 import com.nebulov.cuppingformapp.feature_cup.domain.model.Cup
+import com.nebulov.cuppingformapp.feature_cup.presentation.add_edit_cup.AddEditCupEvent
+import com.nebulov.cuppingformapp.feature_cup.presentation.cups.CupsViewModel
+import com.nebulov.cuppingformapp.feature_cup.presentation.util.Screen
+import com.nebulov.cuppingformapp.feature_cup.presentation.util.convertLongToTime
 
 @Composable
 fun CupListLazyRow(
     modifier: Modifier = Modifier,
     cupList: List<Cup>,
     saveCup: () -> Unit,
+    navControllerEditCup: NavController,
 ) {
+
+
 
     LazyRow(
         modifier = modifier
@@ -43,6 +53,9 @@ fun CupListLazyRow(
                 RoundCupScoreItem(
                     modifier = modifier,
                     onClick = {
+                        navControllerEditCup.navigate(
+                            Screen.EditCup.route + "?cupId=${cup.id}"
+                        )
                         saveCup()
                     },
                     index = cup.id!!
