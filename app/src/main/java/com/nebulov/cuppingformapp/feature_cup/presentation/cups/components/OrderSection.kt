@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nebulov.cuppingformapp.R
@@ -63,39 +64,45 @@ fun IconOrderSection(
         ) {
             DefaultIcon(
                 icon = R.drawable.outline_south_24,
-                text = "DESCEND",
+                text = stringResource(R.string.descend),
                 checked = cupOrder.orderType is OrderType.Descending,
-                onClick = { onOrderChange(cupOrder.copy(OrderType.Descending)) }
+                onClick = { onOrderChange(cupOrder.copy(OrderType.Descending)) },
+                contentDescription = stringResource(R.string.descend)
             )
             DefaultIcon(
                 icon = R.drawable.outline_diamond_24,
                 onClick = { onOrderChange(CupOrder.Value(cupOrder.orderType)) },
                 checked = cupOrder is CupOrder.Value,
-                text = "SCORE"
+                text = stringResource(R.string.score),
+                contentDescription = stringResource(R.string.score)
             )
             DefaultIcon(
                 icon = R.drawable.outline_water_drop_black_24dp,
                 onClick = { onOrderChange(CupOrder.Favorite(cupOrder.orderType)) },
                 checked = cupOrder is CupOrder.Favorite,
-                text = "LIKE"
+                text = stringResource(R.string.like),
+                contentDescription = stringResource(R.string.favorite)
             )
             DefaultIcon(
                 icon = R.drawable.outline_history_24,
                 onClick = { onOrderChange(CupOrder.Date(cupOrder.orderType)) },
                 checked = cupOrder is CupOrder.Date,
-                text = "DATE"
+                text = stringResource(R.string.date),
+                contentDescription = stringResource(R.string.date)
             )
             DefaultIcon(
                 icon = R.drawable.outline_sort_by_alpha_24,
                 onClick = { onOrderChange(CupOrder.Title(cupOrder.orderType)) },
                 checked = cupOrder is CupOrder.Title,
-                text = "NAME"
+                text = stringResource(R.string.name),
+                contentDescription = stringResource(R.string.name)
             )
             DefaultIcon(
                 icon = R.drawable.outline_north_24,
-                text = "ASCEND",
+                text = stringResource(R.string.ascend),
                 checked = cupOrder.orderType is OrderType.Ascending,
-                onClick = { onOrderChange(cupOrder.copy(OrderType.Ascending)) }
+                onClick = { onOrderChange(cupOrder.copy(OrderType.Ascending)) },
+                contentDescription = stringResource(R.string.ascend)
             )
         }
     }
@@ -111,6 +118,7 @@ fun DefaultIcon(
     modifier: Modifier = Modifier,
     checked: Boolean,
     text: String,
+    contentDescription: String
 ) {
 
     val checkedColor: Color = if (checked) MaterialTheme.colors.onPrimary
@@ -132,7 +140,7 @@ fun DefaultIcon(
         ) {
             Icon(
                 painter = painterResource(id = icon),
-                contentDescription = "null",
+                contentDescription = contentDescription,
                 tint = checkedColor,
                 modifier = modifier
                     .size(22.dp)

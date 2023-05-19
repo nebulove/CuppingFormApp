@@ -31,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -76,7 +77,7 @@ fun TopAppBarCuppingForm(
             ) {
                 if (name.value == EMPTY_STRING) {
                     Text(
-                        text = "Sample #",
+                        text = stringResource(R.string.sample),
                         fontSize = 20.sp,
                         modifier = modifier
                             .padding(
@@ -115,7 +116,7 @@ fun TopAppBarCuppingForm(
                         .padding(end = 6.dp)
                 ) {
                     Text(
-                        text = "FINAL SCORE",
+                        text = stringResource(R.string.final_score),
                         fontSize = 9.sp,
                         modifier = modifier.offset(y = 4.dp),
                         fontWeight = FontWeight.W700
@@ -141,7 +142,7 @@ fun TopAppBarCuppingForm(
                         painter = painterResource(
                             R.drawable.baseline_visibility_off_black_20
                         ),
-                        contentDescription = "visibility",
+                        contentDescription = stringResource(R.string.visibility),
                     )
             }
         }

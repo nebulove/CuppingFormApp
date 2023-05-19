@@ -35,14 +35,13 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawWithCache
-import androidx.compose.ui.graphics.BlendMode
-import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.nebulov.cuppingformapp.R
+import com.nebulov.cuppingformapp.core.Constants.Companion.EMPTY_STRING
 import com.nebulov.cuppingformapp.feature_cup.presentation.add_edit_cup.AddEditCupEvent
 import com.nebulov.cuppingformapp.feature_cup.presentation.add_edit_cup.AddEditCupViewModel
 import com.nebulov.cuppingformapp.feature_cup.presentation.cups.components.AddCupTextField
@@ -75,7 +74,7 @@ fun CupsScreen(
 
     val addEditCupViewModel: AddEditCupViewModel = hiltViewModel()
 
-    val name = rememberSaveable { mutableStateOf("") }
+    val name = rememberSaveable { mutableStateOf(EMPTY_STRING) }
 
     val currentOnTimeout = rememberSaveable { mutableStateOf(false) }
     val showWallpaper = remember { mutableStateOf(false) }
@@ -117,7 +116,7 @@ fun CupsScreen(
                     ) {
                         Icon(
                             Icons.Filled.KeyboardArrowUp,
-                            contentDescription = "Вернуться к началу списка",
+                            contentDescription = stringResource(R.string.backtothetopofthelist),
                             tint = MaterialTheme.colors.primary,
                             modifier = modifier
                                 .wrapContentSize()
@@ -145,7 +144,7 @@ fun CupsScreen(
                                 state.cups.size
                             )
                         )
-                        name.value = ""
+                        name.value = EMPTY_STRING
                     })
                 AnimationImage(shown = showWallpaper)
                 LazyColumn(

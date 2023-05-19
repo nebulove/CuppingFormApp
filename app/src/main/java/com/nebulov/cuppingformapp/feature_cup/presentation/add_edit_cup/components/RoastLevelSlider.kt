@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.nebulov.cuppingformapp.R
 import com.nebulov.cuppingformapp.ui.theme.Dark
 import com.nebulov.cuppingformapp.ui.theme.DarkNight
 import com.nebulov.cuppingformapp.ui.theme.Light
@@ -118,7 +119,7 @@ fun RoastForm(
             val result = snackbarHostState.showSnackbar(
                 message = context.getString(textInfo),
                 duration = SnackbarDuration.Short,
-                actionLabel = "Hide"
+                actionLabel = context.getString(R.string.hide)
             )
             if (result == SnackbarResult.ActionPerformed) {
                 SnackbarResult.Dismissed

@@ -56,7 +56,7 @@ fun DefectsForm(
             val result = snackbarHostState.showSnackbar(
                 message = context.getString(textInfo),
                 duration = SnackbarDuration.Short,
-                actionLabel = "Hide"
+                actionLabel = context.getString(R.string.hide)
             )
             if (result == SnackbarResult.ActionPerformed) {
                 SnackbarResult.Dismissed

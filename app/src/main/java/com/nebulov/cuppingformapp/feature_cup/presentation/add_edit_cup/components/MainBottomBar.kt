@@ -41,7 +41,7 @@ fun MainBottomBar(
                 painter = painterResource(
                     R.drawable.outline_format_list_bulleted_black_24dp
                 ),
-                contentDescription = "Станция"
+                contentDescription = stringResource(R.string.result_list)
             )
         }
     }

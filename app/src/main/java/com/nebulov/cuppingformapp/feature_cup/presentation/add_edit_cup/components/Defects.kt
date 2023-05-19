@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.nebulov.cuppingformapp.R
 
 
 @Composable
@@ -45,7 +46,7 @@ fun Defects(
             ) {
                 Icon(
                     imageVector = Icons.Filled.ArrowBack,
-                    contentDescription = "Remove"
+                    contentDescription = stringResource(R.string.remove)
                 )
             }
             AnimatedDefectsValue(defectsValue)
@@ -56,7 +57,7 @@ fun Defects(
             ) {
                 Icon(
                     imageVector = Icons.Filled.ArrowForward,
-                    contentDescription = "Add"
+                    contentDescription = stringResource(R.string.add)
                 )
             }
         }

@@ -20,9 +20,11 @@ import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.nebulov.cuppingformapp.R
 
 @Composable
 fun AnimatedWelcomeText(
@@ -32,8 +34,9 @@ fun AnimatedWelcomeText(
     AnimatedVisibility(
         visible = shown.value,
         exit =
-        shrinkVertically (
-            animationSpec = tween(350)),
+        shrinkVertically(
+            animationSpec = tween(350)
+        ),
         enter = slideInVertically(
             animationSpec = tween(700),
             initialOffsetY = { it / 2 }
@@ -61,10 +64,15 @@ fun AnimatedWelcomeText(
 //                    .offset(y = 20.dp),
 //                alpha = 1f
 //            )
-            Text(text = "Let's Go!", color = color, fontSize = 28.sp, fontWeight = FontWeight.W900)
+            Text(
+                text = stringResource(R.string.let_s_go),
+                color = color,
+                fontSize = 28.sp,
+                fontWeight = FontWeight.W900
+            )
             Spacer(modifier = modifier.height(4.dp))
             Text(
-                text = "Click on the button to start cupping",
+                text = stringResource(R.string.click_on_the_button_to_start_cupping),
                 color = color,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.W200

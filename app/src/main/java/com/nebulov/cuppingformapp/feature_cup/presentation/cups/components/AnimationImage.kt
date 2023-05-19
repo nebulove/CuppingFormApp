@@ -74,7 +74,7 @@ fun AnimationImage01(
             } else painterResource(
                 R.drawable.image01_day_v2
             ),
-            contentDescription = "",
+            contentDescription = null,
             modifier = modifier
                 .fillMaxHeight(0.6f),
         )
@@ -100,7 +100,7 @@ fun AnimationImage02(
     {
         Image(
             painter = painterResource(R.drawable.image02_day_v2),
-            contentDescription = "",
+            contentDescription = null,
             modifier = modifier
                 .fillMaxHeight(0.6f),
         )
@@ -129,7 +129,7 @@ fun AnimationImage03(
     {
         Image(
             painter = painterResource(R.drawable.image03_day_v2),
-            contentDescription = "",
+            contentDescription = null,
             modifier = modifier
                 .fillMaxHeight(0.6f),
         )

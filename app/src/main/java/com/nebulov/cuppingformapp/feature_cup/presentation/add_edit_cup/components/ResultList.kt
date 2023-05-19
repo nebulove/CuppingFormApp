@@ -85,7 +85,7 @@ fun ResultList(
         ) {
             Icon(
                         painter = painterResource(R.drawable.logo_circle_3),
-                contentDescription = "",
+                contentDescription = null,
                 modifier = modifier
                     .fillMaxHeight(0.6f),
                 tint = MaterialTheme.colors.onPrimary.copy(0.01f)

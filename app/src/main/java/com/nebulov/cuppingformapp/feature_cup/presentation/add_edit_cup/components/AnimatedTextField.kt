@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.nebulov.cuppingformapp.R
 
@@ -62,7 +63,7 @@ fun AnimatedTextField(
                 trailingIcon = {
                     Icon(
                         painter = painterResource(id = R.drawable.send_48),
-                        contentDescription = "Save",
+                        contentDescription = stringResource(id = R.string.save),
                         tint = MaterialTheme.colors.primary,
                         modifier = modifier
                             .clickable(onClick = showOff)

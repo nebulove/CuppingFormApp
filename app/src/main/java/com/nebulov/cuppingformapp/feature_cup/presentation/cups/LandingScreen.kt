@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -23,10 +22,9 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.nebulov.cuppingformapp.R
-import com.nebulov.cuppingformapp.ui.theme.TypographyInter
 import kotlinx.coroutines.delay
 
 @Composable
@@ -39,18 +37,19 @@ fun LandingScreen(
 
     val scale = remember { Animatable(0f) }
     val scaleText = remember { Animatable(0f) }
+    val scaleVision = remember { Animatable(1f) }
 
 
     LaunchedEffect(key1 = true) {
-        scale.animateTo(
-            targetValue = 1f,
-            animationSpec = tween(
-                durationMillis = 800,
-                easing = {
-                    OvershootInterpolator(2f).getInterpolation(it)
-                }
-            )
-        )
+//        scale.animateTo(
+//            targetValue = 1f,
+//            animationSpec = tween(
+//                durationMillis = 800,
+//                easing = {
+//                    OvershootInterpolator(2f).getInterpolation(it)
+//                }
+//            )
+//        )
         delay(100L)
         scaleText.animateTo(
             targetValue = 1f,
@@ -62,6 +61,15 @@ fun LandingScreen(
             )
         )
         delay(400L)
+        scaleVision.animateTo(
+            targetValue = 0f,
+            animationSpec = tween(
+                durationMillis = 400,
+                easing = {
+                    OvershootInterpolator(2f).getInterpolation(it)
+                }
+            )
+        )
         currentOnTimeout.value()
     }
 
@@ -77,24 +85,34 @@ fun LandingScreen(
                 .wrapContentSize(),
             verticalArrangement = Arrangement.Center
         ) {
+//            Image(
+//                modifier = modifier
+//                    .fillMaxWidth(0.4f)
+//                    .align(CenterHorizontally)
+//                    .padding(start = 5.dp)
+//                    .scale(scale.value),
+//                painter = painterResource(id = R.drawable.logo_circle_3),
+//                contentDescription = "logo"
+//            )
+            Spacer(modifier = modifier.height(15.dp))
             Image(
                 modifier = modifier
                     .fillMaxWidth(0.4f)
                     .align(CenterHorizontally)
                     .padding(start = 5.dp)
-                    .scale(scale.value),
-                painter = painterResource(id = R.drawable.logo_circle_3),
-                contentDescription = "logo"
-            )
-            Spacer(modifier = modifier.height(15.dp))
-            Text(
-                modifier = modifier
-                    .align(CenterHorizontally)
                     .scale(scaleText.value),
-                text = "Start with a drop",
-                style = TypographyInter.h1,
-                fontSize = 26.sp
+                painter = painterResource(id = R.drawable.hluppr),
+                contentDescription = stringResource(R.string.logo),
+                alpha = scaleVision.value
             )
+//            Text(
+//                modifier = modifier
+//                    .align(CenterHorizontally)
+//                    .scale(scaleText.value),
+//                text = "Start with a drop",
+//                style = TypographyInter.h1,
+//                fontSize = 26.sp
+//            )
         }
     }
 }
