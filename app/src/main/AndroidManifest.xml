@@ -4,7 +4,7 @@
 
     <application
         android:enableOnBackInvokedCallback="true"
-        android:name=".CupApp"
+        android:name="com.nebulov.hluppr.CupApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -15,7 +15,7 @@
         android:theme="@style/Theme.CuppingFormApp"
         tools:targetApi="tiramisu">
         <activity
-            android:name=".feature_cup.presentation.MainActivity"
+            android:name="com.nebulov.hluppr.feature_cup.presentation.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.CuppingFormApp">
             <intent-filter>

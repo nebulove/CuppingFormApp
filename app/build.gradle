@@ -10,7 +10,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.nebulov.cuppingformapp"
+        applicationId 'com.nebulov.hluppr'
         minSdk 26
         targetSdk 33
         versionCode 1
