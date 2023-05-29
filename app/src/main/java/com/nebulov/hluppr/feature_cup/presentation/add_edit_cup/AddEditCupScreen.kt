@@ -36,10 +36,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.nebulov.hluppr.feature_cup.presentation.add_edit_cup.components.DefectsForm
 import com.nebulov.cuppingformapp.R
 import com.nebulov.hluppr.feature_cup.presentation.add_edit_cup.components.AnimatedTextField
 import com.nebulov.hluppr.feature_cup.presentation.add_edit_cup.components.CheckBoxForm
+import com.nebulov.hluppr.feature_cup.presentation.add_edit_cup.components.DefectsForm
 import com.nebulov.hluppr.feature_cup.presentation.add_edit_cup.components.MainBottomBar
 import com.nebulov.hluppr.feature_cup.presentation.add_edit_cup.components.ResultList
 import com.nebulov.hluppr.feature_cup.presentation.add_edit_cup.components.RoastForm
@@ -145,12 +145,7 @@ fun AddEditCupScreen(
                 snackbarHost = { SnackbarHost(hostState = snackBarHostState) },
                 scaffoldState = scaffoldState,
                 topBar = {
-                    TopAppBarCuppingForm(
-                        name = nameState,
-                        finalScore = finalScore,
-                        showOff = {
-                            editMessageShown.value = !editMessageShown.value
-                        })
+
                 },
                 floatingActionButton = {
                     DefaultFloatingActionButton(
@@ -179,10 +174,13 @@ fun AddEditCupScreen(
                 }
             ) {
                 Column(
-                    modifier = Modifier.verticalScroll(
-                        rememberScrollState()
-                    ).padding(it),
+                    modifier = Modifier
+                        .verticalScroll(
+                            rememberScrollState()
+                        )
+                        .padding(it),
                 ) {
+                    Spacer(Modifier.height(58.dp))
                     RoastForm(
                         R.string.Roast,
                         levelOfRoast = levelOfRoast,
@@ -428,12 +426,20 @@ fun AddEditCupScreen(
                     )
                     Spacer(Modifier.height(85.dp))
                 }
-                AnimatedTextField(
-                    showOff = { editMessageShown.value = !editMessageShown.value },
-                    sampleName = nameState,
-                    shown = editMessageShown,
-                    onTextEdit = { viewModel.onEvent(AddEditCupEvent.EnteredName(it)) }
-                )
+                Column {
+                    TopAppBarCuppingForm(
+                        name = nameState,
+                        finalScore = finalScore,
+                        showOff = {
+                            editMessageShown.value = !editMessageShown.value
+                        })
+                    AnimatedTextField(
+                        showOff = { editMessageShown.value = !editMessageShown.value },
+                        sampleName = nameState,
+                        shown = editMessageShown,
+                        onTextEdit = { viewModel.onEvent(AddEditCupEvent.EnteredName(it)) }
+                    )
+                }
             }
         }
     }

@@ -4,8 +4,8 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
@@ -34,15 +34,15 @@ fun AnimatedTextField(
 
     AnimatedVisibility(
         visible = shown.value,
-        enter = slideInVertically(
+        enter = fadeIn(
             // Enters by sliding in from offset -fullHeight to 0.
-            initialOffsetY = { fullHeight -> -fullHeight },
+//            initialOffsetY = { -it/8 },
             animationSpec = tween(durationMillis = 350, easing = LinearOutSlowInEasing)
         ),
-        exit = slideOutVertically(
+        exit = fadeOut(
             // Exits by sliding out from offset 0 to -fullHeight.
-            targetOffsetY = { fullHeight -> -fullHeight },
-            animationSpec = tween(durationMillis = 550, easing = FastOutLinearInEasing)
+//            targetOffsetY = { fullHeight -> -fullHeight/8 },
+            animationSpec = tween(durationMillis = 350, easing = FastOutLinearInEasing)
         )
     ) {
         Surface(

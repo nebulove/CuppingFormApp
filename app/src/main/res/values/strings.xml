@@ -72,4 +72,7 @@
     <string name="info">Info</string>
     <string name="remove">Remove</string>
     <string name="add">Add</string>
+    <string name="singleSample">Single</string>
+    <string name="session">Session</string>
+    <string name="custom">Custom</string>
 </resources>
