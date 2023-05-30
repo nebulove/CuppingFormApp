@@ -7,23 +7,17 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.material.SnackbarResult
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.rememberScaffoldState
@@ -37,7 +31,6 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.nebulov.cuppingformapp.R
@@ -46,11 +39,9 @@ import com.nebulov.hluppr.feature_cup.presentation.add_edit_cup.AddEditCupEvent
 import com.nebulov.hluppr.feature_cup.presentation.add_edit_cup.AddEditCupViewModel
 import com.nebulov.hluppr.feature_cup.presentation.cups.components.AddCupTextField
 import com.nebulov.hluppr.feature_cup.presentation.cups.components.AnimationImage
-import com.nebulov.hluppr.feature_cup.presentation.cups.components.CupItem
 import com.nebulov.hluppr.feature_cup.presentation.cups.components.CupListIconNavigation
 import com.nebulov.hluppr.feature_cup.presentation.cups.components.IconOrderSection
-import com.nebulov.hluppr.feature_cup.presentation.util.Screen
-import com.nebulov.hluppr.feature_cup.presentation.util.convertLongToTime
+import com.nebulov.hluppr.feature_cup.presentation.cups.components.SingleCupList
 import com.nebulov.hluppr.ui.theme.CuppingFormTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -151,67 +142,14 @@ fun CupsScreen(
                 CupListIconNavigation(selectedItemPosition = selectedItemPosition)
                 AnimationImage(shown = showWallpaper)
                 if (selectedItemPosition.value == 0) {
-                    LazyColumn(
-                        modifier = modifier
-                            .fillMaxSize()
-                            .padding(it),
-                        state = scrollState,
-                        contentPadding = PaddingValues(
-                            bottom = 72.dp
-                        )
-                    ) {
-                        state.cups.forEachIndexed { index, cup ->
-                            val showDate =
-                                index == 0 || convertLongToTime(cup.timestamp) != convertLongToTime(
-                                    state.cups[index - 1].timestamp
-                                )
-                            if (showDate) {
-                                item {
-                                    Text(
-                                        text = convertLongToTime(cup.timestamp),
-                                        fontSize = 12.sp,
-                                        modifier = modifier
-                                            .padding(start = 10.dp, top = 6.dp)
-
-                                    )
-                                }
-                            }
-                            item {
-                                CupItem(
-                                    cup = cup,
-                                    modifier = modifier
-                                        .animateItemPlacement()
-                                        .clickable {
-                                            navController.navigate(
-                                                Screen.AddEditCupScreen.route +
-                                                        "?cupId=${cup.id}"
-                                            )
-                                        },
-                                    onDeleteClick = {
-                                        viewModel.onEvent(CupEvent.DeleteCup(cup))
-                                        scope.launch {
-                                            val result =
-                                                scaffoldState.snackbarHostState.showSnackbar(
-                                                    message = "Cup deleted",
-                                                    actionLabel = "Undo"
-                                                )
-                                            if (result == SnackbarResult.ActionPerformed) {
-                                                viewModel.onEvent(CupEvent.RestoreCup)
-                                            }
-                                        }
-                                    },
-                                    onFavoriteChange = {
-                                        viewModel.onEvent(
-                                            CupEvent.ChangeFavorite(
-                                                cup
-                                            )
-                                        )
-                                    },
-                                    icon = if (cup.favorite) R.drawable.baseline_water_drop_24 else R.drawable.outline_water_drop_black_24dp
-                                )
-                            }
-                        }
-                    }
+                    SingleCupList(
+                        navController = navController,
+                        scrollState = scrollState,
+                        paddingValues = it,
+                        state = state,
+                        scope = scope,
+                        scaffoldState = scaffoldState
+                    )
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))
