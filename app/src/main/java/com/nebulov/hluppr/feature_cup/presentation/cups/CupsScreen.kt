@@ -38,9 +38,11 @@ import com.nebulov.hluppr.core.Constants.Companion.EMPTY_STRING
 import com.nebulov.hluppr.feature_cup.presentation.add_edit_cup.AddEditCupEvent
 import com.nebulov.hluppr.feature_cup.presentation.add_edit_cup.AddEditCupViewModel
 import com.nebulov.hluppr.feature_cup.presentation.cups.components.AddCupTextField
+import com.nebulov.hluppr.feature_cup.presentation.cups.components.AddSessionTextField
 import com.nebulov.hluppr.feature_cup.presentation.cups.components.AnimationImage
 import com.nebulov.hluppr.feature_cup.presentation.cups.components.CupListIconNavigation
 import com.nebulov.hluppr.feature_cup.presentation.cups.components.IconOrderSection
+import com.nebulov.hluppr.feature_cup.presentation.cups.components.SessionCupList
 import com.nebulov.hluppr.feature_cup.presentation.cups.components.SingleCupList
 import com.nebulov.hluppr.ui.theme.CuppingFormTheme
 import kotlinx.coroutines.delay
@@ -67,6 +69,7 @@ fun CupsScreen(
     val addEditCupViewModel: AddEditCupViewModel = hiltViewModel()
 
     val name = rememberSaveable { mutableStateOf(EMPTY_STRING) }
+    val count = rememberSaveable { mutableStateOf(0) }
 
     val currentOnTimeout = rememberSaveable { mutableStateOf(false) }
     val showWallpaper = remember { mutableStateOf(false) }
@@ -127,18 +130,31 @@ fun CupsScreen(
             )
             Column(modifier = modifier.animateContentSize(animationSpec = tween(500))) {
                 Spacer(modifier = modifier.height(50.dp))
-                AddCupTextField(
-                    name = name,
-                    onValueChange = { name.value = it },
-                    addNewCup = {
-                        addEditCupViewModel.onEvent(
-                            AddEditCupEvent.SaveCupWithName(
-                                name.value,
-                                state.cups.size
+                if (selectedItemPosition.value == 0) {
+                    AddCupTextField(
+                        name = name,
+                        onValueChange = { name.value = it },
+                        addNewCup = {
+                            addEditCupViewModel.onEvent(
+                                AddEditCupEvent.SaveCupWithName(
+                                    name.value,
+                                    state.cups.size
+                                )
                             )
-                        )
-                        name.value = EMPTY_STRING
-                    })
+                            name.value = EMPTY_STRING
+                        })
+                }
+                if (selectedItemPosition.value == 1) {
+                    AddSessionTextField(
+                        count = count,
+                        onValueChange = { count.value = it },
+                        addNewCup = {
+                            addEditCupViewModel.onEvent(
+                                AddEditCupEvent.SaveSession(count.value)
+                            )
+                            count.value = 0
+                        })
+                }
                 CupListIconNavigation(selectedItemPosition = selectedItemPosition)
                 AnimationImage(shown = showWallpaper)
                 if (selectedItemPosition.value == 0) {
@@ -151,11 +167,22 @@ fun CupsScreen(
                         scaffoldState = scaffoldState
                     )
                 }
+                if (selectedItemPosition.value == 1) {
+                    SessionCupList(
+                        navController = navController,
+                        scrollState = scrollState,
+                        paddingValues = it,
+                        state = state,
+                        scope = scope,
+                        scaffoldState = scaffoldState
+                    )
+                }
             }
-            Spacer(modifier = Modifier.height(16.dp))
         }
+        Spacer(modifier = Modifier.height(16.dp))
     }
 }
+
 
 
 

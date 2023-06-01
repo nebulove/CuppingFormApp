@@ -52,4 +52,5 @@ sealed class AddEditCupEvent {
 
     object SaveCup : AddEditCupEvent()
     data class SaveCupWithName(val value: String, val count: Int) : AddEditCupEvent()
+    data class SaveSession(val count: Int) : AddEditCupEvent()
 }

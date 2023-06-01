@@ -45,9 +45,10 @@ fun CupItem(
     onDeleteClick: () -> Unit,
     onFavoriteChange: () -> Unit,
     icon: Int,
-
-
-    ) {
+    top: Dp = 8.dp,
+    bottom: Dp = 3.dp,
+    roundedCornerShape: RoundedCornerShape = RoundedCornerShape(8.dp)
+) {
 
     val iconColor = cup.favorite
     val scrollState = rememberScrollState()
@@ -77,13 +78,13 @@ fun CupItem(
 
 
     Surface(
-        shape = RoundedCornerShape(8.dp),
+        shape = roundedCornerShape,
         modifier = modifier
             .padding(
-                top = 8.dp,
+                top = top,
                 start = 10.dp,
                 end = 10.dp,
-                bottom = 3.dp
+                bottom = bottom
             )
     )
     {
