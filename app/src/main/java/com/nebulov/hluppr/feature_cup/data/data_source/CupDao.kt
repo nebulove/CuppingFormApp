@@ -21,4 +21,7 @@ interface CupDao {
 
     @Query("SELECT * FROM cup WHERE id = :id")
     suspend fun getCup(id: Int): Cup?
+
+    @Query("DELETE FROM cup WHERE timestamp = :timestamp")
+    suspend fun deleteSession(timestamp: Long)
 }

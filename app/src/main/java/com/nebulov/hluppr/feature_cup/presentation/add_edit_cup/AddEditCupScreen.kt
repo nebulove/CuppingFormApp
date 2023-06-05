@@ -13,6 +13,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkHorizontally
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -40,6 +41,7 @@ import com.nebulov.cuppingformapp.R
 import com.nebulov.hluppr.feature_cup.presentation.add_edit_cup.components.AnimatedTextField
 import com.nebulov.hluppr.feature_cup.presentation.add_edit_cup.components.CheckBoxForm
 import com.nebulov.hluppr.feature_cup.presentation.add_edit_cup.components.DefectsForm
+import com.nebulov.hluppr.feature_cup.presentation.add_edit_cup.components.Graph
 import com.nebulov.hluppr.feature_cup.presentation.add_edit_cup.components.MainBottomBar
 import com.nebulov.hluppr.feature_cup.presentation.add_edit_cup.components.ResultList
 import com.nebulov.hluppr.feature_cup.presentation.add_edit_cup.components.RoastForm
@@ -113,6 +115,18 @@ fun AddEditCupScreen(
     val shownAddEditScreen = rememberSaveable { mutableStateOf(true) }
     val editMessageShown = remember { mutableStateOf(false) }
 
+    val yStep = 1F
+    val points = listOf(
+        fragrance.value,
+        flavor.value,
+        aftertaste.value,
+        acidity.value,
+        body.value,
+        balance.value,
+        overall.value
+    ).map { (it - 5f) }
+
+
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
             when (event) {
@@ -180,7 +194,7 @@ fun AddEditCupScreen(
                         )
                         .padding(it),
                 ) {
-                    Spacer(Modifier.height(58.dp))
+                    Spacer(Modifier.height(178.dp))
                     RoastForm(
                         R.string.Roast,
                         levelOfRoast = levelOfRoast,
@@ -438,6 +452,16 @@ fun AddEditCupScreen(
                         sampleName = nameState,
                         shown = editMessageShown,
                         onTextEdit = { viewModel.onEvent(AddEditCupEvent.EnteredName(it)) }
+                    )
+                    Graph(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                    ,
+                    xValues = (0..6).map { it + 1 },
+                    yValues = (0..4).map { (it + 6) },
+                    points = points,
+                    paddingSpace = 16.dp,
+                    verticalStep = yStep
                     )
                 }
             }

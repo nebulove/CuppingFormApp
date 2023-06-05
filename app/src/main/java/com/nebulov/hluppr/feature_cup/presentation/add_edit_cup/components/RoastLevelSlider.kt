@@ -128,7 +128,7 @@ fun RoastForm(
     }
 
     Surface(
-        shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp),
+        shape = RoundedCornerShape(8.dp),
         modifier = modifier
             .padding(
                 start = 6.dp,

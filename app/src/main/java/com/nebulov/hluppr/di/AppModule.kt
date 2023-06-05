@@ -8,6 +8,7 @@ import com.nebulov.hluppr.feature_cup.domain.repository.CupRepository
 import com.nebulov.hluppr.feature_cup.domain.use_case.AddCup
 import com.nebulov.hluppr.feature_cup.domain.use_case.CupUseCases
 import com.nebulov.hluppr.feature_cup.domain.use_case.DeleteCup
+import com.nebulov.hluppr.feature_cup.domain.use_case.DeleteSession
 import com.nebulov.hluppr.feature_cup.domain.use_case.GetCup
 import com.nebulov.hluppr.feature_cup.domain.use_case.GetCupList
 import dagger.Module
@@ -44,7 +45,8 @@ object AppModule {
             getCupList = GetCupList(repository),
             deleteCup = DeleteCup(repository),
             addCup = AddCup(repository),
-            getCup = GetCup(repository)
+            getCup = GetCup(repository),
+            deleteSession = DeleteSession(repository)
         )
     }
 }

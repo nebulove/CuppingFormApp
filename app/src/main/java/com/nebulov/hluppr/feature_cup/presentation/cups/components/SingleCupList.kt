@@ -38,6 +38,8 @@ fun SingleCupList(
     scaffoldState: ScaffoldState
 ) {
 
+    val cupList = state.cups.groupBy { it.timestamp }.filterValues { it.size == 1 }.values.flatten()
+
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
@@ -47,10 +49,10 @@ fun SingleCupList(
             bottom = 72.dp
         )
     ) {
-        state.cups.forEachIndexed { index, cup ->
+        cupList.forEachIndexed { index, cup ->
             val showDate =
                 index == 0 || convertLongToTime(cup.timestamp) != convertLongToTime(
-                    state.cups[index - 1].timestamp
+                    cupList[index - 1].timestamp
                 )
             if (showDate) {
                 item {
@@ -94,7 +96,10 @@ fun SingleCupList(
                             )
                         )
                     },
-                    icon = if (cup.favorite) R.drawable.baseline_water_drop_24 else R.drawable.outline_water_drop_black_24dp
+                    icon = if (cup.favorite)
+                        R.drawable.baseline_water_drop_24
+                    else
+                        R.drawable.outline_water_drop_black_24dp
                 )
             }
         }

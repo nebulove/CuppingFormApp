@@ -21,6 +21,7 @@ import com.nebulov.hluppr.feature_cup.presentation.cups.NavigationIcon
 @Composable
 fun CupListIconNavigation(
     selectedItemPosition: MutableState<Int> = rememberSaveable { mutableStateOf(0) },
+    changeOrder: () -> Unit
 ) {
     BottomNavigation(
         elevation = 0.dp,
@@ -40,7 +41,10 @@ fun CupListIconNavigation(
                 selectedContentColor = MaterialTheme.colors.onPrimary,
                 unselectedContentColor = MaterialTheme.colors.onPrimary.copy(alpha = 0.5f),
                 selected = selectedItemPosition.value == index,
-                onClick = { selectedItemPosition.value = index },
+                onClick = {
+                    selectedItemPosition.value = index
+                    changeOrder()
+                },
                 icon = {
                     Icon(painter = painterResource(id = item.iconRes), contentDescription = null)
                 },

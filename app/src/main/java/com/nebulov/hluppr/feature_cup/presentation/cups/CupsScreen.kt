@@ -35,6 +35,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.nebulov.cuppingformapp.R
 import com.nebulov.hluppr.core.Constants.Companion.EMPTY_STRING
+import com.nebulov.hluppr.feature_cup.domain.util.CupOrder
 import com.nebulov.hluppr.feature_cup.presentation.add_edit_cup.AddEditCupEvent
 import com.nebulov.hluppr.feature_cup.presentation.add_edit_cup.AddEditCupViewModel
 import com.nebulov.hluppr.feature_cup.presentation.cups.components.AddCupTextField
@@ -63,8 +64,8 @@ fun CupsScreen(
     val scrollState = rememberLazyListState()
     val fabVisible = remember { mutableStateOf(false) }
 
-    val show = rememberSaveable() { mutableStateOf(false) }
-    show.value = state.cups.size >= 3
+    val shownOrderIconBar = rememberSaveable() { mutableStateOf(false) }
+    shownOrderIconBar.value = state.cups.size >= 3
 
     val addEditCupViewModel: AddEditCupViewModel = hiltViewModel()
 
@@ -126,7 +127,7 @@ fun CupsScreen(
             IconOrderSection(
                 onOrderChange = { viewModel.onEvent(CupEvent.Order(it)) },
                 cupOrder = state.cupOrder,
-                shown = show
+                shown = shownOrderIconBar
             )
             Column(modifier = modifier.animateContentSize(animationSpec = tween(500))) {
                 Spacer(modifier = modifier.height(50.dp))
@@ -155,7 +156,10 @@ fun CupsScreen(
                             count.value = 0
                         })
                 }
-                CupListIconNavigation(selectedItemPosition = selectedItemPosition)
+                CupListIconNavigation(selectedItemPosition = selectedItemPosition,
+                    changeOrder = {
+                        viewModel.onEvent(CupEvent.Order(CupOrder.Date(state.cupOrder.orderType)))
+                    })
                 AnimationImage(shown = showWallpaper)
                 if (selectedItemPosition.value == 0) {
                     SingleCupList(
@@ -174,8 +178,10 @@ fun CupsScreen(
                         paddingValues = it,
                         state = state,
                         scope = scope,
-                        scaffoldState = scaffoldState
-                    )
+                        scaffoldState = scaffoldState,
+
+
+                        )
                 }
             }
         }

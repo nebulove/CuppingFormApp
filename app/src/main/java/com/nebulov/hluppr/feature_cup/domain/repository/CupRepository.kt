@@ -13,4 +13,5 @@ interface CupRepository {
     suspend fun insertCup(cup: Cup)
 
     suspend fun deleteCup(cup: Cup)
+    suspend fun deleteSession(timestamp: Long)
 }

@@ -24,4 +24,8 @@ class CupRepositoryImpl(
     override suspend fun deleteCup(cup: Cup) {
         dao.deleteCup(cup)
     }
+
+    override suspend fun deleteSession(timestamp: Long) {
+        dao.deleteSession(timestamp)
+    }
 }

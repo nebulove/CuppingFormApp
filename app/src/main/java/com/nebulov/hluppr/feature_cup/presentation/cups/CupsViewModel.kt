@@ -63,6 +63,11 @@ class CupsViewModel @Inject constructor(
                     cupUseCases.addCup(newItem)
                 }
             }
+            is CupEvent.DeleteSession -> {
+                viewModelScope.launch {
+                    cupUseCases.deleteSession(event.timestamp)
+                }
+            }
         }
     }
 
