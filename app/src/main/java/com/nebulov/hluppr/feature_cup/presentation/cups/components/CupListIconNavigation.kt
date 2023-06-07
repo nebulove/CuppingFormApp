@@ -24,6 +24,7 @@ fun CupListIconNavigation(
     changeOrder: () -> Unit
 ) {
     BottomNavigation(
+        backgroundColor = MaterialTheme.colors.primary,
         elevation = 0.dp,
         modifier = Modifier
             .height(24.dp)

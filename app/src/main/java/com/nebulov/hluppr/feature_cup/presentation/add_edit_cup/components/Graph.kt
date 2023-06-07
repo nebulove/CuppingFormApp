@@ -3,14 +3,14 @@ package com.nebulov.hluppr.feature_cup.presentation.add_edit_cup.components
 import android.graphics.Paint
 import android.graphics.PointF
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithCache
@@ -36,7 +36,8 @@ fun Graph(
     yValues: List<Int>,
     points: List<Float>,
     paddingSpace: Dp,
-    verticalStep: Float
+    verticalStep: Float,
+    changeSettings: State<Boolean>
 ) {
     val controlPoints1 = mutableListOf<PointF>()
     val controlPoints2 = mutableListOf<PointF>()
@@ -44,6 +45,7 @@ fun Graph(
     val yAxisListName =
         listOf("Fragrance", "Flavor", "Aftertaste", "Acidity", "Body", "Balance", "Overall")
     val density = LocalDensity.current
+
     val listColor = listOf(
         MaterialTheme.colors.secondary,
         MaterialTheme.colors.primary
@@ -51,7 +53,6 @@ fun Graph(
     val primaryColor = MaterialTheme.colors.primary
     val onPrimaryColor = MaterialTheme.colors.onPrimary
     val onPrimaryColorInt = MaterialTheme.colors.onPrimary.toArgb()
-
 
     val textPaint = remember(density) {
         Paint().apply {
@@ -63,21 +64,21 @@ fun Graph(
 
 
     Surface(
-        shape = RoundedCornerShape(bottomStart =  8.dp, bottomEnd = 8.dp),
+        shape = RoundedCornerShape(bottomStart = 8.dp, bottomEnd = 8.dp),
         modifier = modifier
             .fillMaxWidth()
             .padding(
                 start = 6.dp,
                 end = 6.dp,
-                bottom = 3.dp
             ),
-        color = MaterialTheme.colors.primary
+        color = primaryColor
     ) {
         Spacer(
             modifier = Modifier
                 .padding(10.dp)
-                .aspectRatio(4 / 1f)
-                .fillMaxSize()
+//                .aspectRatio(4 / 1f)
+//                .fillMaxSize()
+                .height(100.dp)
                 .drawWithCache {
                     onDrawBehind {
                         val xAxisSpace = (size.width - paddingSpace.toPx()) / xValues.size
@@ -111,11 +112,16 @@ fun Graph(
                             coordinates.add(PointF(x1, y1))
                             /** drawing circles to indicate all the points */
                             /** drawing circles to indicate all the points */
+//                            if (!changeSettings.value)
                             drawCircle(
                                 color = onPrimaryColor,
                                 radius = 10f,
                                 center = Offset(x1, y1)
                             )
+//                            else
+//                                drawContext.canvas.nativeCanvas.drawText(
+//                                    String.format("%.2f", points[i] + 5), x1, y1, textPaint
+//                                )
                         }
                         /** calculating the connection points */
                         /** calculating the connection points */
@@ -157,18 +163,18 @@ fun Graph(
                                 close()
                             }
                         drawPath(
-                            fillPath,
-                            brush = Brush.verticalGradient(
-                                listColor,
-                                endY = size.height - yAxisSpace
-                            )
-                        )
-                        drawPath(
                             stroke,
                             color = primaryColor,
                             style = Stroke(
                                 width = 5f,
                                 cap = StrokeCap.Round
+                            )
+                        )
+                        drawPath(
+                            fillPath,
+                            brush = Brush.verticalGradient(
+                                listColor,
+                                endY = size.height - yAxisSpace
                             )
                         )
                     }

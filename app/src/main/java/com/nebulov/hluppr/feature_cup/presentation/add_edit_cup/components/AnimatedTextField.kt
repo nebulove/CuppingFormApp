@@ -4,8 +4,8 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
@@ -27,21 +27,21 @@ import com.nebulov.cuppingformapp.R
 fun AnimatedTextField(
     modifier: Modifier = Modifier, shown: State<Boolean>,
     sampleName: State<String>,
-    onTextEdit: (String)-> Unit,
+    onTextEdit: (String) -> Unit,
     showOff: () -> Unit,
 ) {
 
 
     AnimatedVisibility(
         visible = shown.value,
-        enter = fadeIn(
+        enter = slideInVertically(
             // Enters by sliding in from offset -fullHeight to 0.
-//            initialOffsetY = { -it/8 },
+            initialOffsetY = { fullHeight -> -fullHeight },
             animationSpec = tween(durationMillis = 350, easing = LinearOutSlowInEasing)
         ),
-        exit = fadeOut(
+        exit = slideOutVertically(
             // Exits by sliding out from offset 0 to -fullHeight.
-//            targetOffsetY = { fullHeight -> -fullHeight/8 },
+            targetOffsetY = { fullHeight -> -fullHeight  },
             animationSpec = tween(durationMillis = 350, easing = FastOutLinearInEasing)
         )
     ) {

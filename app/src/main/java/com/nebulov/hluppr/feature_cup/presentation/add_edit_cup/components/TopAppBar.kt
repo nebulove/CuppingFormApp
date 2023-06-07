@@ -1,16 +1,21 @@
 package com.nebulov.hluppr.feature_cup.presentation.add_edit_cup.components
 
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.AnimationVector1D
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -44,107 +49,131 @@ fun TopAppBarCuppingForm(
     modifier: Modifier = Modifier,
     name: State<String>,
     finalScore: State<Float>,
-    showOff: () -> Unit
+    showOff: () -> Unit,
+    shownGraph: () -> Unit,
+    animationSize: Animatable<Float, AnimationVector1D>
 ) {
 
     var isVisible by rememberSaveable { mutableStateOf(true) }
 
-
-    TopAppBar(
-        modifier = modifier,
-        elevation = 0.dp,
-        backgroundColor = MaterialTheme.colors.primary
-    ) {
-        Row(
-            modifier = modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
-                .padding(end = 3.dp, bottom = 6.dp)
-                .animateContentSize(
-                    animationSpec = tween(
-                        durationMillis = 300,
-                        delayMillis = 50,
-                        easing = LinearOutSlowInEasing
-                    )
-                ),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.Bottom
+    Box() {
+        TopAppBar(
+            modifier = modifier,
+            elevation = 0.dp,
+            backgroundColor = MaterialTheme.colors.primary
         ) {
-            Column(
+            Row(
                 modifier = modifier
-                    .fillMaxWidth(0.7f)
-                    .horizontalScroll(rememberScrollState())
-            ) {
-                if (name.value == EMPTY_STRING) {
-                    Text(
-                        text = stringResource(R.string.sample),
-                        fontSize = 20.sp,
-                        modifier = modifier
-                            .padding(
-                                start = 16.dp,
-                            )
-                            .clickable(onClick = showOff)
-                    )
-                }
-                if (name.value != EMPTY_STRING) {
-                    Text(
-                        text = name.value,
-                        fontSize = 20.sp,
-                        maxLines = 1,
-                        softWrap = false,
-                        fontWeight = FontWeight.W500,
-                        modifier = modifier
-                            .padding(
-                                start = 16.dp,
-                            )
-                            .clickable(onClick = showOff)
-                    )
-                }
-            }
-            Spacer(modifier = modifier.weight(1f, true))
-
-            Surface(
-//                shape = RoundedCornerShape(8.dp),
-                color = MaterialTheme.colors.primary,
-                modifier = modifier.clip(RoundedCornerShape(8.dp))
-                    .width(69.dp)
-                    .clickable(onClick = { isVisible = !isVisible })
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .padding(end = 3.dp, bottom = 6.dp)
+                    .animateContentSize(
+                        animationSpec = tween(
+                            durationMillis = 300,
+                            delayMillis = 50,
+                            easing = LinearOutSlowInEasing
+                        )
+                    ),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.Bottom
             ) {
                 Column(
-                    horizontalAlignment = Alignment.End,
                     modifier = modifier
-                        .padding(end = 6.dp)
+                        .fillMaxWidth(0.7f)
+                        .horizontalScroll(rememberScrollState())
                 ) {
-                    Text(
-                        text = stringResource(R.string.final_score),
-                        fontSize = 9.sp,
-                        modifier = modifier.offset(y = 4.dp),
-                        fontWeight = FontWeight.W700
-                    )
-                    Row(
-                        horizontalArrangement = Arrangement.End,
-                        modifier = modifier.fillMaxWidth()
-                    ) {
-
+                    if (name.value == EMPTY_STRING) {
                         Text(
-                            text = if (isVisible)
-                                String.format("%.2f", finalScore.value) else EMPTY_STRING,
-                            fontSize = 22.sp,
-                            fontWeight = FontWeight.W400,
-                            overflow = TextOverflow.Visible,
-                            softWrap = false
+                            text = stringResource(R.string.sample),
+                            fontSize = 20.sp,
+                            modifier = modifier
+                                .padding(
+                                    start = 16.dp,
+                                )
+                                .clickable(onClick = showOff)
+                        )
+                    }
+                    if (name.value != EMPTY_STRING) {
+                        Text(
+                            text = name.value,
+                            fontSize = 20.sp,
+                            maxLines = 1,
+                            softWrap = false,
+                            fontWeight = FontWeight.W500,
+                            modifier = modifier
+                                .padding(
+                                    start = 16.dp,
+                                )
+                                .clickable(onClick = showOff)
                         )
                     }
                 }
-                if (!isVisible)
-                    Icon(
-                        modifier = modifier.offset(y = 18.dp),
-                        painter = painterResource(
-                            R.drawable.baseline_visibility_off_black_20
-                        ),
-                        contentDescription = stringResource(R.string.visibility),
-                    )
+                Spacer(modifier = modifier.weight(1f, true))
+
+                Surface(
+//                shape = RoundedCornerShape(8.dp),
+                    color = MaterialTheme.colors.primary,
+                    modifier = modifier
+                        .clip(RoundedCornerShape(8.dp))
+                        .width(69.dp)
+                        .clickable(onClick = { isVisible = !isVisible })
+                ) {
+                    Column(
+                        horizontalAlignment = Alignment.End,
+                        modifier = modifier
+                            .padding(end = 6.dp)
+                    ) {
+                        Text(
+                            text = stringResource(R.string.final_score),
+                            fontSize = 9.sp,
+                            modifier = modifier.offset(y = 4.dp),
+                            fontWeight = FontWeight.W700
+                        )
+                        Row(
+                            horizontalArrangement = Arrangement.End,
+                            modifier = modifier.fillMaxWidth()
+                        ) {
+
+                            Text(
+                                text = if (isVisible)
+                                    String.format("%.2f", finalScore.value) else EMPTY_STRING,
+                                fontSize = 22.sp,
+                                fontWeight = FontWeight.W400,
+                                overflow = TextOverflow.Visible,
+                                softWrap = false
+                            )
+                        }
+                    }
+                    if (!isVisible)
+                        Icon(
+                            modifier = modifier.offset(y = 18.dp),
+                            painter = painterResource(
+                                R.drawable.baseline_visibility_off_black_20
+                            ),
+                            contentDescription = stringResource(R.string.visibility),
+                        )
+                }
             }
         }
+        Surface(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .width(60.dp)
+                .offset(y = 8.dp + (animationSize.value.dp * 200))
+                .height(15.dp)
+                .padding(
+                    start = 6.dp,
+                    end = 6.dp,
+                    bottom = 3.dp
+                )
+                .clip(RoundedCornerShape(8.dp))
+                .border(
+                    2.dp,
+                    MaterialTheme.colors.primary,
+                    RoundedCornerShape(8.dp)
+                )
+                .clickable(onClick = { shownGraph() })
+        ) {}
+
     }
 }

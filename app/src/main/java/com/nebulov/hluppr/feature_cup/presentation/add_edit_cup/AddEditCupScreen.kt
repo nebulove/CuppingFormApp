@@ -6,11 +6,18 @@ import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.FastOutLinearInEasing
+import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandHorizontally
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkHorizontally
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -31,6 +38,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -51,6 +59,7 @@ import com.nebulov.hluppr.feature_cup.presentation.cups.components.DefaultFloati
 import com.nebulov.hluppr.ui.theme.CuppingFormTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -114,6 +123,11 @@ fun AddEditCupScreen(
 
     val shownAddEditScreen = rememberSaveable { mutableStateOf(true) }
     val editMessageShown = remember { mutableStateOf(false) }
+    val graphShown = remember { mutableStateOf(false) }
+    val changeSettings = remember { mutableStateOf(false) }
+
+    val animationScope = rememberCoroutineScope()
+    val animationSize = remember { Animatable(0f) }
 
     val yStep = 1F
     val points = listOf(
@@ -140,6 +154,7 @@ fun AddEditCupScreen(
             }
         }
     }
+
 
     AnimatedVisibility(
         visible = shownAddEditScreen.value,
@@ -194,7 +209,10 @@ fun AddEditCupScreen(
                         )
                         .padding(it),
                 ) {
-                    Spacer(Modifier.height(178.dp))
+                    Spacer(
+                        Modifier
+                            .height(62.dp + (animationSize.value.dp * 200))
+                    )
                     RoastForm(
                         R.string.Roast,
                         levelOfRoast = levelOfRoast,
@@ -440,29 +458,75 @@ fun AddEditCupScreen(
                     )
                     Spacer(Modifier.height(85.dp))
                 }
-                Column {
-                    TopAppBarCuppingForm(
-                        name = nameState,
-                        finalScore = finalScore,
-                        showOff = {
-                            editMessageShown.value = !editMessageShown.value
-                        })
-                    AnimatedTextField(
-                        showOff = { editMessageShown.value = !editMessageShown.value },
-                        sampleName = nameState,
-                        shown = editMessageShown,
-                        onTextEdit = { viewModel.onEvent(AddEditCupEvent.EnteredName(it)) }
-                    )
-                    Graph(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                    ,
-                    xValues = (0..6).map { it + 1 },
-                    yValues = (0..4).map { (it + 6) },
-                    points = points,
-                    paddingSpace = 16.dp,
-                    verticalStep = yStep
-                    )
+                Column() {
+                    Box() {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Spacer(Modifier.height(56.dp))
+                            AnimatedVisibility(
+                                visible = graphShown.value,
+                                enter = slideInVertically(
+                                    // Enters by sliding in from offset -fullHeight to 0.
+                                    initialOffsetY = { fullHeight -> -fullHeight },
+                                    animationSpec = tween(
+                                        durationMillis = 350,
+                                        easing = LinearOutSlowInEasing
+                                    )
+                                ),
+                                exit = slideOutVertically(
+                                    // Exits by sliding out from offset 0 to -fullHeight.
+                                    targetOffsetY = { fullHeight -> -fullHeight },
+                                    animationSpec = tween(
+                                        durationMillis = 350,
+                                        easing = FastOutLinearInEasing
+                                    )
+                                )
+                            ) {
+                                Box(contentAlignment = Alignment.BottomCenter) {
+                                    Graph(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .clickable(onClick = {
+                                                changeSettings.value = !changeSettings.value
+                                            }),
+                                        xValues = (0..6).map { it + 1 },
+                                        yValues = (0..4).map { (it + 6) },
+                                        points = points,
+                                        paddingSpace = 16.dp,
+                                        verticalStep = yStep,
+                                        changeSettings = changeSettings
+                                    )
+                                }
+                            }
+                        }
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Spacer(Modifier.height(56.dp))
+                            AnimatedTextField(
+                                showOff = { editMessageShown.value = !editMessageShown.value },
+                                sampleName = nameState,
+                                shown = editMessageShown,
+                                onTextEdit = { viewModel.onEvent(AddEditCupEvent.EnteredName(it)) }
+                            )
+                        }
+                        TopAppBarCuppingForm(
+                            name = nameState,
+                            finalScore = finalScore,
+                            showOff = {
+                                editMessageShown.value = !editMessageShown.value
+                            },
+                            animationSize = animationSize,
+                            shownGraph = {
+                                graphShown.value = !graphShown.value
+                                animationScope.launch {
+                                    if (!graphShown.value) animationSize.animateTo(
+                                        0f, tween(350)
+                                    )
+                                    else animationSize.animateTo(
+                                        0.6f,
+                                        tween(350)
+                                    )
+                                }
+                            })
+                    }
                 }
             }
         }
