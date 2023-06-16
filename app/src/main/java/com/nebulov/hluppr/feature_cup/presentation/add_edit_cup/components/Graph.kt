@@ -112,16 +112,16 @@ fun Graph(
                             coordinates.add(PointF(x1, y1))
                             /** drawing circles to indicate all the points */
                             /** drawing circles to indicate all the points */
-//                            if (!changeSettings.value)
+                            if (!changeSettings.value)
                             drawCircle(
                                 color = onPrimaryColor,
                                 radius = 10f,
                                 center = Offset(x1, y1)
                             )
-//                            else
-//                                drawContext.canvas.nativeCanvas.drawText(
-//                                    String.format("%.2f", points[i] + 5), x1, y1, textPaint
-//                                )
+                            else
+                                drawContext.canvas.nativeCanvas.drawText(
+                                    String.format("%.2f", points[i] + 5), x1, y1, textPaint
+                                )
                         }
                         /** calculating the connection points */
                         /** calculating the connection points */

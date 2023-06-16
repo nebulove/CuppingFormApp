@@ -46,6 +46,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.nebulov.cuppingformapp.R
+import com.nebulov.hluppr.feature_cup.presentation.add_edit_cup.components.AddImage
 import com.nebulov.hluppr.feature_cup.presentation.add_edit_cup.components.AnimatedTextField
 import com.nebulov.hluppr.feature_cup.presentation.add_edit_cup.components.CheckBoxForm
 import com.nebulov.hluppr.feature_cup.presentation.add_edit_cup.components.DefectsForm
@@ -213,6 +214,7 @@ fun AddEditCupScreen(
                         Modifier
                             .height(62.dp + (animationSize.value.dp * 200))
                     )
+                    AddImage()
                     RoastForm(
                         R.string.Roast,
                         levelOfRoast = levelOfRoast,
