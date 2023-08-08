@@ -34,7 +34,7 @@ fun CupListIconNavigation(
         val items = listOf(
             NavigationIcon.Single,
             NavigationIcon.Session,
-            NavigationIcon.Custom,
+//            NavigationIcon.Custom,
 
             )
         items.forEachIndexed() { index, item ->
