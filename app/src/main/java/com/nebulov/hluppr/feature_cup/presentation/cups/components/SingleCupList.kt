@@ -17,8 +17,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.nebulov.cuppingformapp.R
+import com.nebulov.hluppr.feature_cup.domain.model.Cup
 import com.nebulov.hluppr.feature_cup.presentation.cups.CupEvent
-import com.nebulov.hluppr.feature_cup.presentation.cups.CupsState
 import com.nebulov.hluppr.feature_cup.presentation.cups.CupsViewModel
 import com.nebulov.hluppr.feature_cup.presentation.util.Screen
 import com.nebulov.hluppr.feature_cup.presentation.util.convertLongToTime
@@ -32,13 +32,11 @@ fun SingleCupList(
     navController: NavController,
     scrollState: LazyListState,
     paddingValues: PaddingValues,
-    state: CupsState,
+    cupList: List<Cup>,
     viewModel: CupsViewModel = hiltViewModel(),
     scope: CoroutineScope,
     scaffoldState: ScaffoldState
 ) {
-
-    val cupList = state.cups.groupBy { it.timestamp }.filterValues { it.size == 1 }.values.flatten()
 
     LazyColumn(
         modifier = modifier

@@ -54,14 +54,25 @@ import kotlinx.coroutines.launch
 fun CupsScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
-
     viewModel: CupsViewModel = hiltViewModel(),
 ) {
     val state = viewModel.state.value
+    val cupList = state.cups.groupBy { it.timestamp }.filterValues { it.size == 1 }.values.flatten()
+    val duplicatedValues = remember(state.cups) {
+        state.cups.groupBy { it.timestamp }
+            .filterValues { it.size > 1 }
+            .keys
+    }
+    val filteredCups = remember(duplicatedValues, state.cups) {
+        state.cups.filter { it.timestamp in duplicatedValues }
+    }
+
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
 
-    val scrollState = rememberLazyListState()
+    val singleScrollState = rememberLazyListState()
+    val sessionScrollState = rememberLazyListState()
+
     val fabVisible = remember { mutableStateOf(false) }
 
     val shownOrderIconBar = rememberSaveable() { mutableStateOf(false) }
@@ -83,17 +94,25 @@ fun CupsScreen(
         currentOnTimeout.value = true
     }
 
-    LaunchedEffect(scrollState) {
+    LaunchedEffect(singleScrollState) {
         var prev = 0
-        snapshotFlow { scrollState.firstVisibleItemIndex }
+        snapshotFlow { singleScrollState.firstVisibleItemIndex }
             .collect { index ->
-                fabVisible.value = scrollState.firstVisibleItemIndex <= prev && index > 0
-                prev = scrollState.firstVisibleItemIndex
+                fabVisible.value = singleScrollState.firstVisibleItemIndex <= prev && index > 0
+                prev = singleScrollState.firstVisibleItemIndex
+            }
+    }
+
+    LaunchedEffect(sessionScrollState) {
+        var prev = 0
+        snapshotFlow { sessionScrollState.firstVisibleItemIndex }
+            .collect { index ->
+                fabVisible.value = sessionScrollState.firstVisibleItemIndex <= prev && index > 0
+                prev = sessionScrollState.firstVisibleItemIndex
             }
     }
 
     CuppingFormTheme() {
-
         Scaffold(
             modifier = modifier,
             scaffoldState = scaffoldState,
@@ -104,31 +123,54 @@ fun CupsScreen(
                     enter = slideInVertically(initialOffsetY = { it / 2 }),
                     exit = slideOutVertically() + fadeOut()
                 ) {
-                    FloatingActionButton(
-                        onClick = {
-                            scope.launch { scrollState.animateScrollToItem(0) }
-                        },
-                        backgroundColor = MaterialTheme.colors.onPrimary,
-                        modifier = modifier.size(38.dp)
-                    ) {
-                        Icon(
-                            Icons.Filled.KeyboardArrowUp,
-                            contentDescription = stringResource(R.string.backtothetopofthelist),
-                            tint = MaterialTheme.colors.primary,
-                            modifier = modifier
-                                .wrapContentSize()
-                                .fillMaxSize()
-                                .size(36.dp)
-                        )
+                    if (selectedItemPosition.value == 0) {
+                        FloatingActionButton(
+                            onClick = {
+                                scope.launch { singleScrollState.animateScrollToItem(0) }
+                            },
+                            backgroundColor = MaterialTheme.colors.onPrimary,
+                            modifier = modifier.size(38.dp)
+                        ) {
+                            Icon(
+                                Icons.Filled.KeyboardArrowUp,
+                                contentDescription = stringResource(R.string.backtothetopofthelist),
+                                tint = MaterialTheme.colors.primary,
+                                modifier = modifier
+                                    .wrapContentSize()
+                                    .fillMaxSize()
+                                    .size(36.dp)
+                            )
+                        }
+                    }
+                    if (selectedItemPosition.value == 1) {
+                        FloatingActionButton(
+                            onClick = {
+                                scope.launch { sessionScrollState.animateScrollToItem(0) }
+                            },
+                            backgroundColor = MaterialTheme.colors.onPrimary,
+                            modifier = modifier.size(38.dp)
+                        ) {
+                            Icon(
+                                Icons.Filled.KeyboardArrowUp,
+                                contentDescription = stringResource(R.string.backtothetopofthelist),
+                                tint = MaterialTheme.colors.primary,
+                                modifier = modifier
+                                    .wrapContentSize()
+                                    .fillMaxSize()
+                                    .size(36.dp)
+                            )
+                        }
                     }
                 }
             }
         ) {
-            IconOrderSection(
-                onOrderChange = { viewModel.onEvent(CupEvent.Order(it)) },
-                cupOrder = state.cupOrder,
-                shown = shownOrderIconBar
-            )
+            if (selectedItemPosition.value == 0) {
+                IconOrderSection(
+                    onOrderChange = { viewModel.onEvent(CupEvent.Order(it)) },
+                    cupOrder = state.cupOrder,
+                    shown = shownOrderIconBar
+                )
+            }
             Column(modifier = modifier.animateContentSize(animationSpec = tween(500))) {
                 Spacer(modifier = modifier.height(50.dp))
                 if (selectedItemPosition.value == 0) {
@@ -153,6 +195,7 @@ fun CupsScreen(
                             addEditCupViewModel.onEvent(
                                 AddEditCupEvent.SaveSession(count.value)
                             )
+                            scope.launch { sessionScrollState.animateScrollToItem(0) }
                             count.value = 0
                         })
                 }
@@ -164,9 +207,9 @@ fun CupsScreen(
                 if (selectedItemPosition.value == 0) {
                     SingleCupList(
                         navController = navController,
-                        scrollState = scrollState,
+                        scrollState = singleScrollState,
                         paddingValues = it,
-                        state = state,
+                        cupList = cupList,
                         scope = scope,
                         scaffoldState = scaffoldState
                     )
@@ -174,14 +217,10 @@ fun CupsScreen(
                 if (selectedItemPosition.value == 1) {
                     SessionCupList(
                         navController = navController,
-                        scrollState = scrollState,
+                        scrollState = sessionScrollState,
                         paddingValues = it,
-                        state = state,
-                        scope = scope,
-                        scaffoldState = scaffoldState,
-
-
-                        )
+                        filteredCups = filteredCups,
+                    )
                 }
             }
         }

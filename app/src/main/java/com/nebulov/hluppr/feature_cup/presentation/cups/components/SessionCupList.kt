@@ -8,19 +8,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.nebulov.hluppr.feature_cup.domain.model.Cup
 import com.nebulov.hluppr.feature_cup.presentation.cups.CupEvent
-import com.nebulov.hluppr.feature_cup.presentation.cups.CupsState
 import com.nebulov.hluppr.feature_cup.presentation.cups.CupsViewModel
 import com.nebulov.hluppr.feature_cup.presentation.util.Screen
 import com.nebulov.hluppr.feature_cup.presentation.util.convertLongToTime
-import kotlinx.coroutines.CoroutineScope
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -29,23 +26,9 @@ fun SessionCupList(
     navController: NavController,
     scrollState: LazyListState,
     paddingValues: PaddingValues,
-    state: CupsState,
-    viewModel: CupsViewModel = hiltViewModel(),
-    scope: CoroutineScope,
-    scaffoldState: ScaffoldState,
+    filteredCups: List<Cup>,
+    viewModel: CupsViewModel = hiltViewModel()
 ) {
-
-    val duplicatedValues = remember(state.cups) {
-        state.cups.groupBy { it.timestamp }
-            .filterValues { it.size > 1 }
-            .keys
-    }
-
-    val filteredCups = remember(duplicatedValues, state.cups) {
-        state.cups.filter { it.timestamp in duplicatedValues }
-    }
-
-
 
     LazyColumn(
         modifier = modifier
