@@ -85,7 +85,7 @@ fun CupsScreen(
 
     val currentOnTimeout = rememberSaveable { mutableStateOf(false) }
     val showWallpaper = remember { mutableStateOf(false) }
-    showWallpaper.value = state.cups.isEmpty() && currentOnTimeout.value
+    showWallpaper.value = cupList.isEmpty() && currentOnTimeout.value
 
     val selectedItemPosition = rememberSaveable { mutableStateOf(0) }
 
@@ -195,7 +195,7 @@ fun CupsScreen(
                             addEditCupViewModel.onEvent(
                                 AddEditCupEvent.SaveSession(count.value)
                             )
-                            scope.launch { sessionScrollState.animateScrollToItem(0) }
+                            scope.launch { sessionScrollState.animateScrollToItem(1) }
                             count.value = 0
                         })
                 }
@@ -203,8 +203,16 @@ fun CupsScreen(
                     changeOrder = {
                         viewModel.onEvent(CupEvent.Order(CupOrder.Date(state.cupOrder.orderType)))
                     })
-                AnimationImage(shown = showWallpaper)
                 if (selectedItemPosition.value == 0) {
+                    AnimationImage(
+                        shown = showWallpaper,
+                        image3 = R.drawable.image03_day_v2,
+                        image1Day =R.drawable.image01_day_v2,
+                        image2 =R.drawable.image02_day_v2,
+                        image1Night =R.drawable.image01_night_v2,
+                        text1 = R.string.let_s_go,
+                        text2 = R.string.click_on_the_button_to_start_cupping
+                    )
                     SingleCupList(
                         navController = navController,
                         scrollState = singleScrollState,

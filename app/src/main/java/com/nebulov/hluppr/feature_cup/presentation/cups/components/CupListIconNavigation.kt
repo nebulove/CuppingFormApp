@@ -25,9 +25,9 @@ fun CupListIconNavigation(
 ) {
     BottomNavigation(
         backgroundColor = MaterialTheme.colors.primary,
-        elevation = 0.dp,
+        elevation =0.dp,
         modifier = Modifier
-            .height(24.dp)
+            .height(25.dp)
             .clip(shape = RoundedCornerShape(8.dp)),
     ) {
 

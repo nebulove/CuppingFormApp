@@ -2,6 +2,7 @@
 
 package com.nebulov.hluppr.feature_cup.presentation.cups.components
 
+import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
@@ -24,12 +25,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.nebulov.cuppingformapp.R
 
 @Composable
 fun AnimatedWelcomeText(
     modifier: Modifier = Modifier,
-    shown: State<Boolean>
+    shown: State<Boolean>,
+    @StringRes text1: Int,
+    @StringRes text2: Int
 ) {
     AnimatedVisibility(
         visible = shown.value,
@@ -65,14 +67,14 @@ fun AnimatedWelcomeText(
 //                alpha = 1f
 //            )
             Text(
-                text = stringResource(R.string.let_s_go),
+                text = stringResource(text1),
                 color = color,
                 fontSize = 28.sp,
                 fontWeight = FontWeight.W900
             )
             Spacer(modifier = modifier.height(4.dp))
             Text(
-                text = stringResource(R.string.click_on_the_button_to_start_cupping),
+                text = stringResource(text2),
                 color = color,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.W200

@@ -2,6 +2,8 @@
 
 package com.nebulov.hluppr.feature_cup.presentation.cups.components
 
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
@@ -21,12 +23,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.nebulov.cuppingformapp.R
 
 @Composable
 fun AnimationImage(
     modifier: Modifier = Modifier,
-    shown: State<Boolean>
+    shown: State<Boolean>,
+    @DrawableRes image1Day: Int,
+    @DrawableRes image1Night: Int,
+    @DrawableRes image2: Int,
+    @DrawableRes image3: Int,
+    @StringRes text1: Int,
+    @StringRes text2: Int,
 ) {
 
     Column(
@@ -41,12 +48,15 @@ fun AnimationImage(
             modifier = modifier.offset(y = 20.dp),
             contentAlignment = Alignment.Center,
         ) {
-            AnimationImage02(shown = shown)
-            AnimationImage01(shown = shown)
-            AnimationImage03(shown = shown)
+            AnimationImage02(shown = shown, image2 = image2)
+            AnimationImage01(shown = shown, image1Day = image1Day, image1Night = image1Night)
+            AnimationImage03(
+                shown = shown,
+                image3 = image3
+            )
 
         }
-        AnimatedWelcomeText(shown = shown)
+        AnimatedWelcomeText(shown = shown, text2 = text2, text1 = text1)
     }
 }
 
@@ -54,7 +64,9 @@ fun AnimationImage(
 @Composable
 fun AnimationImage01(
     modifier: Modifier = Modifier,
-    shown: State<Boolean>
+    shown: State<Boolean>,
+    @DrawableRes image1Day: Int,
+    @DrawableRes image1Night: Int,
 ) {
     AnimatedVisibility(
         visible = shown.value,
@@ -70,9 +82,9 @@ fun AnimationImage01(
     {
         Image(
             painter = if (isSystemInDarkTheme()) {
-                painterResource(R.drawable.image01_night_v2)
+                painterResource(image1Night)
             } else painterResource(
-                R.drawable.image01_day_v2
+                image1Day
             ),
             contentDescription = null,
             modifier = modifier
@@ -84,7 +96,8 @@ fun AnimationImage01(
 @Composable
 fun AnimationImage02(
     modifier: Modifier = Modifier,
-    shown: State<Boolean>
+    shown: State<Boolean>,
+    @DrawableRes image2: Int,
 ) {
     AnimatedVisibility(
         visible = shown.value,
@@ -99,7 +112,7 @@ fun AnimationImage02(
     )
     {
         Image(
-            painter = painterResource(R.drawable.image02_day_v2),
+            painter = painterResource(image2),
             contentDescription = null,
             modifier = modifier
                 .fillMaxHeight(0.6f),
@@ -111,7 +124,8 @@ fun AnimationImage02(
 @Composable
 fun AnimationImage03(
     modifier: Modifier = Modifier,
-    shown: State<Boolean>
+    shown: State<Boolean>,
+    @DrawableRes image3: Int
 ) {
 
     AnimatedVisibility(
@@ -128,7 +142,7 @@ fun AnimationImage03(
     )
     {
         Image(
-            painter = painterResource(R.drawable.image03_day_v2),
+            painter = painterResource(image3),
             contentDescription = null,
             modifier = modifier
                 .fillMaxHeight(0.6f),
