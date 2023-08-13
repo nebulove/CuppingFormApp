@@ -223,6 +223,14 @@ fun CupsScreen(
                     )
                 }
                 if (selectedItemPosition.value == 1) {
+                    AnimationImage(
+                        shown = showWallpaper,
+                        image3 = R.drawable.image03_day_v2_session,
+                        image1Day =R.drawable.image01_day_v2_session,
+                        image2 =R.drawable.image02_day_v2_session,
+                        image1Night =R.drawable.image01_night_v2_session,
+                        text1 = R.string.let_s_go,
+                        text2 = R.string.click_on_the_button_to_start_cupping)
                     SessionCupList(
                         navController = navController,
                         scrollState = sessionScrollState,
