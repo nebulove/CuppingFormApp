@@ -14,5 +14,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Hluppr"
+rootProject.name = "CuppingFormApp"
 include(":app")
