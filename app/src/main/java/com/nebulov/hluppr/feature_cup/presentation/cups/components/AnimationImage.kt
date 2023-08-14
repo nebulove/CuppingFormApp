@@ -48,12 +48,13 @@ fun AnimationImage(
             modifier = modifier.offset(y = 20.dp),
             contentAlignment = Alignment.Center,
         ) {
-            AnimationImage02(shown = shown, image2 = image2)
-            AnimationImage01(shown = shown, image1Day = image1Day, image1Night = image1Night)
             AnimationImage03(
                 shown = shown,
                 image3 = image3
             )
+            AnimationImage02(shown = shown, image2 = image2)
+            AnimationImage01(shown = shown, image1Day = image1Day, image1Night = image1Night)
+
 
         }
         AnimatedWelcomeText(shown = shown, text2 = text2, text1 = text1)

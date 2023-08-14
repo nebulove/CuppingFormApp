@@ -48,7 +48,7 @@ fun SessionCupList(
             if (showDate) {
                 item(key = cup.id) {
                     CupSessionTitleItem(
-                        modifier = modifier,
+                        modifier = modifier.animateItemPlacement(),
                         date = convertLongToTime(cup.timestamp),
                         onDeleteClick = { viewModel.onEvent(CupEvent.DeleteSession(cup.timestamp)) },
                     )

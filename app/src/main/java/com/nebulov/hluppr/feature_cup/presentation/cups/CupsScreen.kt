@@ -87,6 +87,9 @@ fun CupsScreen(
     val showWallpaper = remember { mutableStateOf(false) }
     showWallpaper.value = cupList.isEmpty() && currentOnTimeout.value
 
+    val showSessionWallpaper = remember { mutableStateOf(false) }
+    showSessionWallpaper.value = filteredCups.isEmpty() && currentOnTimeout.value
+
     val selectedItemPosition = rememberSaveable { mutableStateOf(0) }
 
     LaunchedEffect(key1 = true) {
@@ -171,6 +174,14 @@ fun CupsScreen(
                     shown = shownOrderIconBar
                 )
             }
+            if (selectedItemPosition.value == 1) {
+                IconOrderSection(
+                    onOrderChange = { viewModel.onEvent(CupEvent.Order(it)) },
+                    cupOrder = state.cupOrder,
+                    shown = shownOrderIconBar,
+                    visible = false
+                )
+            }
             Column(modifier = modifier.animateContentSize(animationSpec = tween(500))) {
                 Spacer(modifier = modifier.height(50.dp))
                 if (selectedItemPosition.value == 0) {
@@ -207,10 +218,10 @@ fun CupsScreen(
                     AnimationImage(
                         shown = showWallpaper,
                         image3 = R.drawable.image03_day_v2,
-                        image1Day =R.drawable.image01_day_v2,
-                        image2 =R.drawable.image02_day_v2,
-                        image1Night =R.drawable.image01_night_v2,
-                        text1 = R.string.let_s_go,
+                        image1Day = R.drawable.image01_day_v2,
+                        image2 = R.drawable.image02_day_v2,
+                        image1Night = R.drawable.image01_night_v2,
+                        text1 = R.string.let_the_cupping_begin,
                         text2 = R.string.click_on_the_button_to_start_cupping
                     )
                     SingleCupList(
@@ -224,13 +235,14 @@ fun CupsScreen(
                 }
                 if (selectedItemPosition.value == 1) {
                     AnimationImage(
-                        shown = showWallpaper,
-                        image3 = R.drawable.image03_day_v2_session,
-                        image1Day =R.drawable.image01_day_v2_session,
-                        image2 =R.drawable.image02_day_v2_session,
-                        image1Night =R.drawable.image01_night_v2_session,
-                        text1 = R.string.let_s_go,
-                        text2 = R.string.click_on_the_button_to_start_cupping)
+                        shown = showSessionWallpaper,
+                        image3 = R.drawable.image03_day_v3_session,
+                        image1Day = R.drawable.image01_day_v2_session,
+                        image2 = R.drawable.image02_day_v2_session,
+                        image1Night = R.drawable.image01_night_v2_session,
+                        text1 = R.string.start_the_cupping_experience,
+                        text2 = R.string.create_flight
+                    )
                     SessionCupList(
                         navController = navController,
                         scrollState = sessionScrollState,
@@ -243,6 +255,7 @@ fun CupsScreen(
         Spacer(modifier = Modifier.height(16.dp))
     }
 }
+
 
 
 

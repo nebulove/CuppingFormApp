@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
@@ -45,6 +46,7 @@ fun IconOrderSection(
     cupOrder: CupOrder = CupOrder.Date(OrderType.Descending),
     onOrderChange: (CupOrder) -> Unit,
     shown: State<Boolean>,
+    visible: Boolean = true
 ) {
     AnimatedVisibility(
         visible = shown.value,
@@ -59,8 +61,8 @@ fun IconOrderSection(
     )
     {
         Row(
-            modifier = modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceAround
+            modifier = modifier.fillMaxWidth().padding(horizontal = 6.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
             DefaultIcon(
                 icon = R.drawable.outline_south_24,
@@ -74,14 +76,16 @@ fun IconOrderSection(
                 onClick = { onOrderChange(CupOrder.Value(cupOrder.orderType)) },
                 checked = cupOrder is CupOrder.Value,
                 text = stringResource(R.string.score),
-                contentDescription = stringResource(R.string.score)
+                contentDescription = stringResource(R.string.score),
+                visible = visible
             )
             DefaultIcon(
                 icon = R.drawable.outline_water_drop_black_24dp,
                 onClick = { onOrderChange(CupOrder.Favorite(cupOrder.orderType)) },
                 checked = cupOrder is CupOrder.Favorite,
                 text = stringResource(R.string.like),
-                contentDescription = stringResource(R.string.favorite)
+                contentDescription = stringResource(R.string.favorite),
+                visible = visible
             )
             DefaultIcon(
                 icon = R.drawable.outline_history_24,
@@ -95,7 +99,8 @@ fun IconOrderSection(
                 onClick = { onOrderChange(CupOrder.Title(cupOrder.orderType)) },
                 checked = cupOrder is CupOrder.Title,
                 text = stringResource(R.string.name),
-                contentDescription = stringResource(R.string.name)
+                contentDescription = stringResource(R.string.name),
+                visible = visible
             )
             DefaultIcon(
                 icon = R.drawable.outline_north_24,
@@ -118,53 +123,58 @@ fun DefaultIcon(
     modifier: Modifier = Modifier,
     checked: Boolean,
     text: String,
-    contentDescription: String
+    contentDescription: String,
+    visible: Boolean = true
 ) {
 
     val checkedColor: Color = if (checked) MaterialTheme.colors.onPrimary
     else MaterialTheme.colors.onPrimary.copy(alpha = 0.5f)
 
-    Box(
-        modifier = modifier.animateContentSize(tween(240))
-            .width(50.dp)
-            .height(50.dp)
-            .clip(RoundedCornerShape(50))
-            .selectable(selected = checked, onClick = {
-                onClick()
-            }), contentAlignment = Alignment.Center
+    if (visible)
+        Box(
+            modifier = modifier
+                .animateContentSize(tween(240))
+                .width(50.dp)
+                .height(50.dp)
+                .clip(RoundedCornerShape(50))
+                .selectable(selected = checked, onClick = {
+                    onClick()
+                }), contentAlignment = Alignment.Center
 
-    ) {
-        Column(modifier = modifier,
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Icon(
-                painter = painterResource(id = icon),
-                contentDescription = contentDescription,
-                tint = checkedColor,
-                modifier = modifier
-                    .size(22.dp)
-            )
-            AnimatedVisibility(
-                visible = checked,
-                exit =
-                shrinkVertically (
-                    animationSpec = tween(350)),
-                enter = slideInVertically(
-                    animationSpec = tween(350),
-                    initialOffsetY = { it / 2 }
-                ),
-            )
-            {
-                Text(
-                    modifier = modifier,
-                    text = text, color = checkedColor,
-                    style = TypographyInter.body2,
-                    fontSize = 9.sp
+            Column(
+                modifier = modifier,
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Icon(
+                    painter = painterResource(id = icon),
+                    contentDescription = contentDescription,
+                    tint = checkedColor,
+                    modifier = modifier
+                        .size(22.dp)
                 )
+                AnimatedVisibility(
+                    visible = checked,
+                    exit =
+                    shrinkVertically(
+                        animationSpec = tween(350)
+                    ),
+                    enter = slideInVertically(
+                        animationSpec = tween(350),
+                        initialOffsetY = { it / 2 }
+                    ),
+                )
+                {
+                    Text(
+                        modifier = modifier,
+                        text = text, color = checkedColor,
+                        style = TypographyInter.body2,
+                        fontSize = 9.sp
+                    )
+                }
             }
         }
-    }
 
 
 }

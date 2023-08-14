@@ -60,9 +60,13 @@
     <string name="name">NAME</string>
     <string name="ascend">ASCEND</string>
     <string name="let_s_go">Let\'s Go!</string>
+    <string name="create_flight">Create a cupping flight with the press of a button</string>
+    <string name="form_a_cupping_flight">Form a cupping flight of 2 to 50 cups with the press of a button</string>
+    <string name="let_the_cupping_begin">Let the cupping begin! </string>
+    <string name="start_the_cupping_experience">Start the cupping experience! </string>
     <string name="click_on_the_button_to_start_cupping">Click on the button to start cupping</string>
     <string name="enter_sample_name">Enter sample name</string>
-    <string name="enter_number_of_samples">Enter number of samples</string>
+    <string name="enter_number_of_samples">Enter number of cups</string>
     <string name="add_cup">Add cup</string>
     <string name="save">Save</string>
     <string name="hide">Hide</string>
@@ -75,5 +79,6 @@
     <string name="add">Add</string>
     <string name="singleSample">Single</string>
     <string name="session">Session</string>
+    <string name="set">Set</string>
     <string name="custom">Custom</string>
 </resources>

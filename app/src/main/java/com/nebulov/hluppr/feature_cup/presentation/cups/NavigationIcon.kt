@@ -11,7 +11,7 @@ sealed class NavigationIcon(
         iconRes = R.drawable.drop_plus_2_24dp
     )
     object Session: NavigationIcon(
-        titleResId = R.string.session,
+        titleResId = R.string.set,
         iconRes = R.drawable.drop_plus_2_24dp
     )
     object Custom: NavigationIcon(
