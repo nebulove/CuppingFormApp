@@ -35,6 +35,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -51,7 +52,9 @@ fun TopAppBarCuppingForm(
     finalScore: State<Float>,
     showOff: () -> Unit,
     shownGraph: () -> Unit,
-    animationSize: Animatable<Float, AnimationVector1D>
+    animationSize: Animatable<Float, AnimationVector1D>,
+    onLock: () -> Unit,
+    iconLock: ImageVector
 ) {
 
     var isVisible by rememberSaveable { mutableStateOf(true) }
@@ -115,43 +118,53 @@ fun TopAppBarCuppingForm(
                     color = MaterialTheme.colors.primary,
                     modifier = modifier
                         .clip(RoundedCornerShape(8.dp))
-                        .width(69.dp)
+                        .width(94.dp)
                         .clickable(onClick = { isVisible = !isVisible })
                 ) {
-                    Column(
-                        horizontalAlignment = Alignment.End,
-                        modifier = modifier
-                            .padding(end = 6.dp)
-                    ) {
-                        Text(
-                            text = stringResource(R.string.final_score),
-                            fontSize = 9.sp,
-                            modifier = modifier.offset(y = 4.dp),
-                            fontWeight = FontWeight.W700
-                        )
-                        Row(
-                            horizontalArrangement = Arrangement.End,
-                            modifier = modifier.fillMaxWidth()
-                        ) {
+                    Row {
+                        LockedIcon(modifier = modifier
+                            .align(Alignment.CenterVertically)
+                            .padding(top = 8.dp),
+                            onClickInfo = { onLock() }, iconLock = iconLock, )
 
+
+                        Column(
+                            horizontalAlignment = Alignment.End,
+                            modifier = modifier
+                                .padding(end = 6.dp)
+                        ) {
                             Text(
-                                text = if (isVisible)
-                                    String.format("%.2f", finalScore.value) else EMPTY_STRING,
-                                fontSize = 22.sp,
-                                fontWeight = FontWeight.W400,
-                                overflow = TextOverflow.Visible,
-                                softWrap = false
+                                text = stringResource(R.string.final_score),
+                                fontSize = 9.sp,
+                                modifier = modifier.offset(y = 4.dp),
+                                fontWeight = FontWeight.W700
                             )
+                            Row(
+                                horizontalArrangement = Arrangement.End,
+                                modifier = modifier.fillMaxWidth()
+                            ) {
+
+                                Text(
+                                    text = if (isVisible)
+                                        String.format("%.2f", finalScore.value) else EMPTY_STRING,
+                                    fontSize = 22.sp,
+                                    fontWeight = FontWeight.W400,
+                                    overflow = TextOverflow.Visible,
+                                    softWrap = false
+                                )
+                            }
                         }
                     }
                     if (!isVisible)
                         Icon(
-                            modifier = modifier.offset(y = 18.dp),
+                            modifier = modifier.offset(y = 18.dp).padding(start =  25.dp),
                             painter = painterResource(
                                 R.drawable.baseline_visibility_off_black_20
                             ),
                             contentDescription = stringResource(R.string.visibility),
                         )
+
+
                 }
             }
         }

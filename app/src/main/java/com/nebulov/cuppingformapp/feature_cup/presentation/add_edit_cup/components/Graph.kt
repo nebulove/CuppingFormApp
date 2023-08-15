@@ -14,7 +14,6 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithCache
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
@@ -113,15 +112,15 @@ fun Graph(
                             /** drawing circles to indicate all the points */
                             /** drawing circles to indicate all the points */
 //                            if (!changeSettings.value)
-                            drawCircle(
-                                color = onPrimaryColor,
-                                radius = 10f,
-                                center = Offset(x1, y1)
-                            )
+//                            drawCircle(
+//                                color = onPrimaryColor,
+//                                radius = 10f,
+//                                center = Offset(x1, y1)
+//                            )
 //                            else
-//                                drawContext.canvas.nativeCanvas.drawText(
-//                                    String.format("%.2f", points[i] + 5), x1, y1, textPaint
-//                                )
+                                drawContext.canvas.nativeCanvas.drawText(
+                                    String.format("%.2f", points[i] + 5), x1, y1, textPaint
+                                )
                         }
                         /** calculating the connection points */
                         /** calculating the connection points */

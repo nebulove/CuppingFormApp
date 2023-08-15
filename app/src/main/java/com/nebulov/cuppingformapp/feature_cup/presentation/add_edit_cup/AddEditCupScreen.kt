@@ -31,6 +31,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarHost
 import androidx.compose.material.SnackbarHostState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.outlined.LockOpen
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -71,6 +74,7 @@ fun AddEditCupScreen(
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
     val scaffoldState = rememberScaffoldState()
     val snackBarHostState = SnackbarHostState()
+    val lock = rememberSaveable { mutableStateOf(true) }
 
     val nameState = viewModel.cupName
     val levelOfRoast = viewModel.levelOfRoast
@@ -221,6 +225,7 @@ fun AddEditCupScreen(
                         snackbarHostState = snackBarHostState,
                         context = context,
                         textInfo = R.string.RoastInfo,
+                        lock = lock
                     )
                     VerticalSlider(
                         text = R.string.Fragrance,
@@ -237,6 +242,7 @@ fun AddEditCupScreen(
                         snackbarHostState = snackBarHostState,
                         context = context,
                         textInfo = R.string.FragranceInfo,
+                        lock = lock
                     )
                     VerticalSlider(
                         text = R.string.Flavor,
@@ -250,6 +256,7 @@ fun AddEditCupScreen(
                         snackbarHostState = snackBarHostState,
                         context = context,
                         textInfo = R.string.FlavorInfo,
+                        lock = lock
                     )
                     VerticalSlider(
                         text = R.string.Aftertaste,
@@ -263,6 +270,7 @@ fun AddEditCupScreen(
                         snackbarHostState = snackBarHostState,
                         context = context,
                         textInfo = R.string.AftertasteInfo,
+                        lock = lock
                     )
                     VerticalSlider(
                         text = R.string.Acidity,
@@ -278,6 +286,7 @@ fun AddEditCupScreen(
                         snackbarHostState = snackBarHostState,
                         context = context,
                         textInfo = R.string.AcidityInfo,
+                        lock = lock
                     )
                     VerticalSlider(
                         text = R.string.Body,
@@ -293,6 +302,7 @@ fun AddEditCupScreen(
                         context = context,
                         snackbarHostState = snackBarHostState,
                         textInfo = R.string.BodyInfo,
+                        lock = lock
                     )
                     VerticalSlider(
                         text = R.string.Balance,
@@ -306,6 +316,7 @@ fun AddEditCupScreen(
                         context = context,
                         snackbarHostState = snackBarHostState,
                         textInfo = R.string.BalanceInfo,
+                        lock = lock
                     )
                     CheckBoxForm(
                         text = R.string.Uniformity,
@@ -356,6 +367,7 @@ fun AddEditCupScreen(
                         coroutineScope = coroutineScope,
                         context = context,
                         textInfo = R.string.UniformityInfo,
+                        lock = lock
                     )
                     CheckBoxForm(
                         text = R.string.CleanCup,
@@ -376,6 +388,7 @@ fun AddEditCupScreen(
                         coroutineScope = coroutineScope,
                         context = context,
                         textInfo = R.string.CleanCupInfo,
+                        lock = lock
                     )
                     CheckBoxForm(
                         text = R.string.Sweetness,
@@ -426,6 +439,7 @@ fun AddEditCupScreen(
                         coroutineScope = coroutineScope,
                         context = context,
                         textInfo = R.string.SweetnessInfo,
+                        lock = lock
                     )
                     DefectsForm(
                         text = R.string.Defects,
@@ -442,6 +456,7 @@ fun AddEditCupScreen(
                         coroutineScope = coroutineScope,
                         context = context,
                         textInfo = R.string.DefectsInfo,
+                        lock = lock
                     )
                     VerticalSlider(
                         text = R.string.Overall,
@@ -455,6 +470,7 @@ fun AddEditCupScreen(
                         coroutineScope = coroutineScope,
                         context = context,
                         textInfo = R.string.OverallInfo,
+                        lock = lock
                     )
                     Spacer(Modifier.height(85.dp))
                 }
@@ -511,8 +527,11 @@ fun AddEditCupScreen(
                             name = nameState,
                             finalScore = finalScore,
                             showOff = {
+                                lock.value = !lock.value
                                 editMessageShown.value = !editMessageShown.value
                             },
+                            onLock = { lock.value = !lock.value },
+                            iconLock = if (!lock.value) Icons.Filled.Lock else Icons.Outlined.LockOpen,
                             animationSize = animationSize,
                             shownGraph = {
                                 graphShown.value = !graphShown.value

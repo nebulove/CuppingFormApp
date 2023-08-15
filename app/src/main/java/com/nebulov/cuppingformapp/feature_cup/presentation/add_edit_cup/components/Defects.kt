@@ -26,6 +26,7 @@ fun Defects(
     defectsValue: State<Int>,
     onValueInc:()-> Unit,
     onValueDec:()-> Unit,
+    lock: State<Boolean>
 ) {
     Column(
         verticalArrangement = Arrangement.Center,
@@ -42,7 +43,7 @@ fun Defects(
             IconButton(
                 onClick = { onValueDec() },
                 modifier = Modifier.size(15.dp),
-                enabled = defectsValue.value > 0
+                enabled = defectsValue.value > 0 && lock.value
             ) {
                 Icon(
                     imageVector = Icons.Filled.ArrowBack,
@@ -53,7 +54,7 @@ fun Defects(
             IconButton(
                 onClick = { onValueInc() },
                 modifier = Modifier.size(15.dp),
-                enabled = defectsValue.value < 5
+                enabled = defectsValue.value < 5 && lock.value
             ) {
                 Icon(
                     imageVector = Icons.Filled.ArrowForward,

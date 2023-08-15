@@ -28,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nebulov.cuppingformapp.R
@@ -68,8 +69,10 @@ fun VerticalSlider(
     coroutineScope: CoroutineScope,
     context: Context,
     textInfo: Int,
-    snackbarHostState: SnackbarHostState
-) {
+    snackbarHostState: SnackbarHostState,
+    lock: State<Boolean>
+
+    ) {
 
     fun onClickInfo(textInfo: Int) {
         coroutineScope.launch {
@@ -136,10 +139,12 @@ fun VerticalSlider(
             InfoIcon(
                 modifier = modifier.align(Alignment.CenterVertically),
                 onClickInfo = { onClickInfo(textInfo) })
+
             Spacer(modifier = modifier.weight(1f, true))
             Text(
                 text = String.format("%.2f", sliderValueCut(sliderValue).value),
-                fontSize = 18.sp
+                fontSize = 18.sp,
+                textAlign = TextAlign.End,
             )
         }
         Column(
@@ -156,7 +161,7 @@ fun VerticalSlider(
                 onValueChange = { onValueChange(it) },
                 valueRange = 6f..10f,
                 steps = 15,
-                enabled = true,
+                enabled = lock.value,
                 modifier = modifier.padding(bottom = 2.dp)
             )
             if (fragranceCheckSlider)
@@ -168,14 +173,16 @@ fun VerticalSlider(
                         stringResource(R.string.Dry),
                         modifier = modifier,
                         sliderValue2,
-                        onValueChange = { onValueChange2(it) }
+                        onValueChange = { onValueChange2(it) },
+                        lock = lock
                     )
                     Spacer(modifier = modifier.weight(1f, true))
                     SmallSlider(
                         stringResource(R.string.Break),
                         modifier = modifier,
                         sliderValue3,
-                        onValueChange = { onValueChange3(it) }
+                        onValueChange = { onValueChange3(it) },
+                        lock = lock
                     )
                 }
             if (acidityCheckSlider)
@@ -187,7 +194,8 @@ fun VerticalSlider(
                         stringResource(R.string.Intensity),
                         modifier = modifier,
                         sliderValue2,
-                        onValueChange = { onValueChange2(it) }
+                        onValueChange = { onValueChange2(it) },
+                        lock = lock
                     )
                 }
             if (bodyCheckSlider)
@@ -199,13 +207,15 @@ fun VerticalSlider(
                         stringResource(R.string.Level),
                         modifier = modifier,
                         sliderValue2,
-                        onValueChange = { onValueChange2(it) }
+                        onValueChange = { onValueChange2(it) },
+                        lock = lock
                     )
                 }
             NotesForm(
                 modifier,
                 textDescriptors = textDescriptors,
-                onValueChange = { onTextChange(it) })
+                onValueChange = { onTextChange(it) },
+                lock = lock)
         }
     }
 }
@@ -215,7 +225,8 @@ fun SmallSlider(
     name: String,
     modifier: Modifier = Modifier,
     sliderValue: State<Float> = (mutableStateOf(ZERO_F)),
-    onValueChange: (Float) -> Unit
+    onValueChange: (Float) -> Unit,
+    lock: State<Boolean>
 ) {
     @Composable
     fun gradientChose(darkTheme: Boolean = isSystemInDarkTheme()): Color {
@@ -253,7 +264,7 @@ fun SmallSlider(
             value = sliderValue.value,
             onValueChange = { onValueChange(it) },
             steps = 3,
-            enabled = true,
+            enabled = lock.value,
             valueRange = 1f..5f,
             modifier = modifier.width(160.dp),
             colors = SliderDefaults.colors(

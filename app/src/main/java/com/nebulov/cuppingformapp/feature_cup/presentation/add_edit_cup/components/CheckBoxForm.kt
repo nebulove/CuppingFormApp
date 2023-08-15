@@ -39,7 +39,8 @@ fun CheckBoxForm(
     coroutineScope: CoroutineScope,
     context: Context,
     textInfo: Int,
-    snackbarHostState: SnackbarHostState
+    snackbarHostState: SnackbarHostState,
+    lock: State<Boolean>
 ) {
 
     fun onClickInfo(textInfo: Int) {
@@ -105,16 +106,17 @@ fun CheckBoxForm(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = modifier.fillMaxWidth()
             ) {
-                OneCheckBox(cup = cup1, onCheckedChange = { onCheckedChange1(it) })
-                OneCheckBox(cup = cup2, onCheckedChange = { onCheckedChange2(it) })
-                OneCheckBox(cup = cup3, onCheckedChange = { onCheckedChange3(it) })
-                OneCheckBox(cup = cup4, onCheckedChange = { onCheckedChange4(it) })
-                OneCheckBox(cup = cup5, onCheckedChange = { onCheckedChange5(it) })
+                OneCheckBox(cup = cup1, onCheckedChange = { onCheckedChange1(it) }, lock = lock)
+                OneCheckBox(cup = cup2, onCheckedChange = { onCheckedChange2(it) }, lock = lock)
+                OneCheckBox(cup = cup3, onCheckedChange = { onCheckedChange3(it) }, lock = lock)
+                OneCheckBox(cup = cup4, onCheckedChange = { onCheckedChange4(it) }, lock = lock)
+                OneCheckBox(cup = cup5, onCheckedChange = { onCheckedChange5(it) }, lock = lock)
             }
             NotesForm(
                 modifier,
                 textDescriptors = textDescriptors,
-                onValueChange = { onTextChange(it) })
+                onValueChange = { onTextChange(it) },
+                lock = lock)
         }
     }
 }
@@ -146,7 +148,8 @@ fun AnimatedValue(count: State<Int>) {
 @Composable
 fun OneCheckBox(
     cup: State<Boolean>,
-    onCheckedChange: (Boolean) -> Unit
+    onCheckedChange: (Boolean) -> Unit,
+    lock: State<Boolean>
 ) {
 
 
@@ -162,7 +165,8 @@ fun OneCheckBox(
 
     Checkbox(
         checked = cup.value,
-        onCheckedChange = { onCheckedChange(it) }
+        onCheckedChange = { onCheckedChange(it) },
+        enabled = lock.value
     )
 
 

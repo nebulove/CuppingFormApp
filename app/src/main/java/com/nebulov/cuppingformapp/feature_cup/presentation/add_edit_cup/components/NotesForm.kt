@@ -35,6 +35,7 @@ fun NotesForm(
     modifier: Modifier = Modifier,
     textDescriptors: State<String>,
     onValueChange: (String) -> Unit,
+    lock: State<Boolean>
 ) {
 
     val expanded = rememberSaveable { mutableStateOf(false) }
@@ -58,9 +59,10 @@ fun NotesForm(
                 modifier = Modifier.size(20.dp),
                 onClick = {
                     expanded.value = !expanded.value
-                }) {
+                },
+                enabled = lock.value) {
                 Icon(
-                    tint = MaterialTheme.colors.primary,
+                    tint = if(lock.value) MaterialTheme.colors.primary else MaterialTheme.colors.primary.copy(alpha = 0.24f) ,
                     painter = if (textDescriptors.value == EMPTY_STRING) {
                         painterResource(R.drawable.add_notes48)
                     } else painterResource(R.drawable.edit_note48),
@@ -73,7 +75,7 @@ fun NotesForm(
                 )
             }
         Spacer(Modifier.width(6.dp))
-        if (textDescriptors.value == EMPTY_STRING && !expanded.value)
+        if (textDescriptors.value == EMPTY_STRING && !expanded.value && lock.value)
             Text(
                 text = stringResource(R.string.Notes),
                 maxLines = 1,
@@ -91,7 +93,7 @@ fun NotesForm(
         TextField(
             value = textDescriptors.value,
             trailingIcon = {
-                IconButton(onClick = { expanded.value = !expanded.value }) {
+                IconButton(onClick = { expanded.value = !expanded.value }, enabled = lock.value) {
                     Icon(
                         painterResource(
                             R.drawable.send_48

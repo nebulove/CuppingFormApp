@@ -75,6 +75,7 @@
     <string name="visibility">visibility</string>
     <string name="result_list">Result list</string>
     <string name="info">Info</string>
+    <string name="lock">Close the lock</string>
     <string name="remove">Remove</string>
     <string name="add">Add</string>
     <string name="singleSample">Single</string>

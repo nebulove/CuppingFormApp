@@ -45,7 +45,8 @@ fun DefectsForm(
     coroutineScope: CoroutineScope,
     context: Context,
     textInfo: Int,
-    snackbarHostState: SnackbarHostState
+    snackbarHostState: SnackbarHostState,
+    lock: State<Boolean>
 ) {
 
 
@@ -119,18 +120,21 @@ fun DefectsForm(
                     defectsValue = defectsValue1,
                     onValueDec = { onValueDec1() },
                     onValueInc = { onValueInc1() },
+                    lock = lock
                 )
                 Defects(
                     text = R.string.Fault, modifier,
                     defectsValue = defectsValue2,
                     onValueDec = { onValueDec2() },
                     onValueInc = { onValueInc2() },
+                    lock = lock
                 )
             }
             NotesForm(
                 modifier,
                 textDescriptors = textDescriptors,
-                onValueChange = { onTextChange(it) })
+                onValueChange = { onTextChange(it) },
+                lock = lock)
         }
     }
 }

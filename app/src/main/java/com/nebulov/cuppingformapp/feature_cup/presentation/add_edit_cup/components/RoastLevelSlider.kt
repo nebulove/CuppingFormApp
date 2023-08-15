@@ -49,7 +49,8 @@ import kotlinx.coroutines.launch
 fun RoastLevelSlider(
     modifier: Modifier = Modifier,
     levelOfRoast: State<Float>,
-    onValueChange: (Float) -> Unit
+    onValueChange: (Float) -> Unit,
+    lock: State<Boolean>
 ) {
 
     @Composable
@@ -90,7 +91,7 @@ fun RoastLevelSlider(
         onValueChange = { onValueChange(it) },
         valueRange = 0f..6f,
         steps = 5,
-        enabled = true,
+        enabled = lock.value,
         modifier = modifier.padding(bottom = 2.dp),
         colors = SliderDefaults.colors(
             activeTrackColor = gradientChose(),
@@ -111,7 +112,8 @@ fun RoastForm(
     coroutineScope: CoroutineScope,
     context: Context,
     textInfo: Int,
-    snackbarHostState: SnackbarHostState
+    snackbarHostState: SnackbarHostState,
+    lock: State<Boolean>
 ) {
 
     fun onClickInfo(textInfo: Int) {
@@ -162,7 +164,8 @@ fun RoastForm(
                 modifier = modifier
                     .padding(bottom = 4.dp),
                 levelOfRoast = levelOfRoast,
-                onValueChange = { onValueChange(it) }
+                onValueChange = { onValueChange(it) },
+                lock = lock
             )
         }
     }
