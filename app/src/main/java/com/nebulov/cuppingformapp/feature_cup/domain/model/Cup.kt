@@ -70,6 +70,9 @@ data class Cup(
     val timestamp: Long,
 
     var favorite: Boolean = false,
+
+    val setId: Int,
+    val setName: String
 )
 
 class InvalidNoteException(message: String): Exception(message)

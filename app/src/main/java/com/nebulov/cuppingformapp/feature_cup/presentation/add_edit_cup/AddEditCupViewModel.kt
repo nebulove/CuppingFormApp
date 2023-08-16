@@ -605,6 +605,8 @@ class AddEditCupViewModel @Inject constructor(
                                 finalScore = finalScore.value,
                                 timestamp = timestamp.value,
                                 id = currentNoteId,
+                                setId =  0,
+                                setName = ""
                             )
                         )
                         _eventFlow.emit(UiEvent.SaveCup)
@@ -679,6 +681,8 @@ class AddEditCupViewModel @Inject constructor(
                                 finalScore = finalScore.value,
                                 timestamp = System.currentTimeMillis(),
                                 id = currentNoteId,
+                                setId =  0,
+                                setName = ""
                             )
                         )
                         _eventFlow.emit(UiEvent.SaveCup)
@@ -751,6 +755,8 @@ class AddEditCupViewModel @Inject constructor(
                                     finalScore = finalScore.value,
                                     timestamp = sessionTime,
                                     id = currentNoteId,
+                                    setId =  0,
+                                    setName = ""
                                 )
                                 cupUseCases.addCup(newCup)
                                 _eventFlow.emit(UiEvent.SaveCup)

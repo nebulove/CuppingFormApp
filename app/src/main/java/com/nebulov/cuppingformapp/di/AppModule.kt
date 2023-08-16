@@ -3,6 +3,7 @@ package com.nebulov.cuppingformapp.di
 import android.app.Application
 import androidx.room.Room
 import com.nebulov.cuppingformapp.feature_cup.data.data_source.CupDatabase
+import com.nebulov.cuppingformapp.feature_cup.data.data_source.CupDatabase.Companion.MIGRATION_2_3
 import com.nebulov.cuppingformapp.feature_cup.data.repository.CupRepositoryImpl
 import com.nebulov.cuppingformapp.feature_cup.domain.repository.CupRepository
 import com.nebulov.cuppingformapp.feature_cup.domain.use_case.AddCup
@@ -28,7 +29,7 @@ object AppModule {
             app,
             CupDatabase::class.java,
             CupDatabase.DATABASE_NAME
-        ).fallbackToDestructiveMigration()
+        ).addMigrations(MIGRATION_2_3)
             .build()
     }
 
