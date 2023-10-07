@@ -527,7 +527,6 @@ fun AddEditCupScreen(
                             name = nameState,
                             finalScore = finalScore,
                             showOff = {
-                                lock.value = !lock.value
                                 editMessageShown.value = !editMessageShown.value
                             },
                             onLock = { lock.value = !lock.value },

@@ -24,8 +24,8 @@ fun Defects(
     @StringRes text: Int,
     modifier: Modifier = Modifier,
     defectsValue: State<Int>,
-    onValueInc:()-> Unit,
-    onValueDec:()-> Unit,
+    onValueInc: () -> Unit,
+    onValueDec: () -> Unit,
     lock: State<Boolean>
 ) {
     Column(
@@ -76,11 +76,11 @@ fun AnimatedDefectsValue(count: State<Int>, modifier: Modifier = Modifier) {
         targetState = count.value,
         transitionSpec = {
             if (targetState > initialState) {
-                slideInVertically { height -> height } + fadeIn() with
-                        slideOutVertically { height -> -height } + fadeOut()
+                (slideInVertically { height -> height } + fadeIn()).togetherWith(
+                    slideOutVertically { height -> -height } + fadeOut())
             } else {
-                slideInVertically { height -> -height } + fadeIn() with
-                        slideOutVertically { height -> height } + fadeOut()
+                (slideInVertically { height -> -height } + fadeIn()).togetherWith(
+                    slideOutVertically { height -> height } + fadeOut())
             }.using(
                 SizeTransform(clip = false)
             )
