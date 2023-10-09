@@ -82,4 +82,5 @@
     <string name="session">Session</string>
     <string name="set">Set</string>
     <string name="custom">Custom</string>
+    <string name="compare">Compare</string>
 </resources>

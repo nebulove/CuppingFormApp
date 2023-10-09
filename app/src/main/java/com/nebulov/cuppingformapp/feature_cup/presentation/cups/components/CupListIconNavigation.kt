@@ -23,7 +23,7 @@ fun CupListIconNavigation(
 ) {
     BottomNavigation(
         backgroundColor = MaterialTheme.colors.primary,
-        elevation =0.dp,
+        elevation = 0.dp,
         modifier = Modifier
             .height(25.dp)
             .clip(shape = RoundedCornerShape(8.dp)),
@@ -32,7 +32,7 @@ fun CupListIconNavigation(
         val items = listOf(
             NavigationIcon.Single,
             NavigationIcon.Session,
-//            NavigationIcon.Custom,
+            NavigationIcon.Compare,
 
             )
         items.forEachIndexed() { index, item ->

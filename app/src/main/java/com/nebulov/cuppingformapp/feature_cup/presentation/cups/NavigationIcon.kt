@@ -14,8 +14,8 @@ sealed class NavigationIcon(
         titleResId = R.string.set,
         iconRes = R.drawable.drop_plus_2_24dp
     )
-    object Custom: NavigationIcon(
-        titleResId = R.string.custom,
+    object Compare: NavigationIcon(
+        titleResId = R.string.compare,
         iconRes = R.drawable.drop_plus_2_24dp
     )
 }

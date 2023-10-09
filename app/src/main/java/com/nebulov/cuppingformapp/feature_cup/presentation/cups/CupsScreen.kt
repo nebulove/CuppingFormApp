@@ -41,6 +41,7 @@ import com.nebulov.cuppingformapp.feature_cup.presentation.add_edit_cup.AddEditC
 import com.nebulov.cuppingformapp.feature_cup.presentation.cups.components.AddCupTextField
 import com.nebulov.cuppingformapp.feature_cup.presentation.cups.components.AddSessionTextField
 import com.nebulov.cuppingformapp.feature_cup.presentation.cups.components.AnimationImage
+import com.nebulov.cuppingformapp.feature_cup.presentation.cups.components.CompareList
 import com.nebulov.cuppingformapp.feature_cup.presentation.cups.components.CupListIconNavigation
 import com.nebulov.cuppingformapp.feature_cup.presentation.cups.components.IconOrderSection
 import com.nebulov.cuppingformapp.feature_cup.presentation.cups.components.SessionCupList
@@ -72,6 +73,7 @@ fun CupsScreen(
 
     val singleScrollState = rememberLazyListState()
     val sessionScrollState = rememberLazyListState()
+    val compareScrollState = rememberLazyListState()
 
     val fabVisible = remember { mutableStateOf(false) }
 
@@ -248,6 +250,14 @@ fun CupsScreen(
                         scrollState = sessionScrollState,
                         paddingValues = it,
                         filteredCups = filteredCups,
+                    )
+                }
+                if (selectedItemPosition.value == 2) {
+                    CompareList(
+                        navController = navController,
+                        scrollState = compareScrollState,
+                        paddingValues = it,
+                        cupList = state.cups
                     )
                 }
             }
