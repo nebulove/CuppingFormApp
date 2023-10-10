@@ -1,7 +1,11 @@
 package com.nebulov.cuppingformapp.feature_cup.presentation.cups.components
 
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -18,11 +22,16 @@ import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.nebulov.cuppingformapp.R
 
 @Composable
@@ -121,5 +130,48 @@ fun DefaultFloatingActionButton(
             focusedElevation = 0.dp
         ),
 
-)
+        )
+}
+
+@Composable
+fun CompareButton(
+    modifier: Modifier = Modifier,
+) {
+
+    val gradientBrush = Brush.verticalGradient(
+        colors = listOf(
+            MaterialTheme.colors.secondary,
+            MaterialTheme.colors.primary
+        )
+    )
+
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable { }
+            .padding(bottom = 10.dp, top = 9.dp),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            maxLines = 1,
+            modifier = modifier
+                .padding(
+                    top = 3.dp,
+                    bottom = 3.dp
+                ),
+            text = "C O M P A R E",
+            fontSize = 28.sp,
+            fontWeight = FontWeight.W800,
+            color = MaterialTheme.colors.onPrimary,
+            textAlign = TextAlign.Center
+        )
+        Spacer(modifier = modifier.width(8.dp))
+        Icon(
+            painter = painterResource(id = R.drawable.priority24px),
+            contentDescription = null,
+        )
+
+    }
+
 }
