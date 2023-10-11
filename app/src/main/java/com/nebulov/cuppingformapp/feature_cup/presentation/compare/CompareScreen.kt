@@ -4,6 +4,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -13,7 +14,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -22,6 +22,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.nebulov.cuppingformapp.R
 import com.nebulov.cuppingformapp.feature_cup.presentation.compare.components.CompareItem
+import com.nebulov.cuppingformapp.feature_cup.presentation.compare.components.TextForCompareItem
 import com.nebulov.cuppingformapp.feature_cup.presentation.cups.CupsViewModel
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -58,30 +59,48 @@ fun CompareScreen(
                     )
                     .width(85.dp)
             ) {
-                Text(text = "Name:")
+                TextForCompareItem(text = "Name:")
                 VerticalStripe()
-                Text(text = stringResource(id = R.string.Roast))
-                Text(text = stringResource(id = R.string.Frag))
-                Text(text = stringResource(id = R.string.Dry))
-                Text(text = stringResource(id = R.string.Break))
-                Text(text = stringResource(id = R.string.Flavor))
-                Text(text = stringResource(id = R.string.Aftertaste))
-                Text(text = stringResource(id = R.string.Acidity))
-                Text(text = stringResource(id = R.string.Intensity))
-                Text(text = stringResource(id = R.string.Body))
-                Text(text = stringResource(id = R.string.Level))
-                Text(text = stringResource(id = R.string.Balance))
-                Text(text = stringResource(id = R.string.Uniformity))
-                Text(text = stringResource(id = R.string.CleanCup))
-                Text(text = stringResource(id = R.string.Sweetness))
-                Text(text = stringResource(id = R.string.Defects))
-                Text(text = stringResource(id = R.string.Overall))
-                Text(text = stringResource(id = R.string.FinalScore))
+                TextForCompareItem(text = stringResource(id = R.string.Roast))
+                VerticalStripe()
+                TextForCompareItem(text = stringResource(id = R.string.Frag))
+                VerticalStripe()
+                TextForCompareItem(text = stringResource(id = R.string.Dry))
+                VerticalStripe()
+                TextForCompareItem(text = stringResource(id = R.string.Break))
+                VerticalStripe()
+                TextForCompareItem(text = stringResource(id = R.string.Flavor))
+                VerticalStripe()
+                TextForCompareItem(text = stringResource(id = R.string.Aftertaste))
+                VerticalStripe()
+                TextForCompareItem(text = stringResource(id = R.string.Acidity))
+                VerticalStripe()
+                TextForCompareItem(text = stringResource(id = R.string.Intensity))
+                VerticalStripe()
+                TextForCompareItem(text = stringResource(id = R.string.Body))
+                VerticalStripe()
+                TextForCompareItem(text = stringResource(id = R.string.Level))
+                VerticalStripe()
+                TextForCompareItem(text = stringResource(id = R.string.Balance))
+                VerticalStripe()
+                TextForCompareItem(text = stringResource(id = R.string.Uniformity))
+                VerticalStripe()
+                TextForCompareItem(text = stringResource(id = R.string.CleanCup))
+                VerticalStripe()
+                TextForCompareItem(text = stringResource(id = R.string.Sweetness))
+                VerticalStripe()
+                TextForCompareItem(text = stringResource(id = R.string.Defects))
+                VerticalStripe()
+                TextForCompareItem(text = stringResource(id = R.string.Overall))
+                VerticalStripe()
+                TextForCompareItem(text = stringResource(id = R.string.FinalScore))
             }
+            HorizontalStripe()
             LazyRow(modifier = modifier) {
                 cupList.forEachIndexed { index, cup ->
                     item {
                         CompareItem(cup = cup, scrollState = scrollState)
+                        HorizontalStripe()
                     }
                 }
             }
@@ -101,4 +120,16 @@ fun VerticalStripe(modifier: Modifier = Modifier) {
         Spacer(modifier = modifier.fillMaxWidth())
     }
 }
+
+@Composable
+fun HorizontalStripe(modifier: Modifier = Modifier) {
+    Surface(
+        color = MaterialTheme.colors.primary,
+        modifier = modifier
+            .width(1.dp)
+    ) {
+            Spacer(modifier = modifier.fillMaxHeight())
+    }
+}
+
 
