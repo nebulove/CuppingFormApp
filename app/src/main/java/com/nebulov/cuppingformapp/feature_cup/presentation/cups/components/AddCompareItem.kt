@@ -1,7 +1,6 @@
 package com.nebulov.cuppingformapp.feature_cup.presentation.cups.components
 
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -36,7 +35,7 @@ import com.nebulov.cuppingformapp.feature_cup.domain.model.Cup
 
 
 @Composable
-fun CompareItem(
+fun AddCompareItem(
     cup: Cup,
     modifier: Modifier = Modifier,
     icon: Int,
@@ -96,7 +95,7 @@ fun CompareItem(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 DeleteIcon(
-                    modifier = modifier.clickable(onClick = { }),
+                    modifier = modifier,
                     icon = icon,
                     tint = changeIconColor(iconColor),
                     text = R.string.favorite,

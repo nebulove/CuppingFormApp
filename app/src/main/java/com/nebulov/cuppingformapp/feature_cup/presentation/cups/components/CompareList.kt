@@ -9,6 +9,9 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -25,6 +28,7 @@ fun CompareList(
     scrollState: LazyListState,
     paddingValues: PaddingValues,
     cupList: List<Cup>,
+    route: MutableState<MutableSet<String>>,
 ) {
 
     LazyColumn(
@@ -44,7 +48,7 @@ fun CompareList(
             val lastItem =
                 index == cupList.size - 1 || cup.timestamp != cupList[index + 1].timestamp
 
-            val firstItem =  index == 0 || cup.timestamp != cupList[index - 1].timestamp
+            val firstItem = index == 0 || cup.timestamp != cupList[index - 1].timestamp
 
             if (showDate) {
                 item {
@@ -58,11 +62,21 @@ fun CompareList(
                 }
             }
             item {
-                CompareItem(
+
+
+                val checkBoxValue = rememberSaveable() { mutableStateOf(false) }
+                val routeItem = if (checkBoxValue.value) {
+                    cup.id.toString()
+                } else ""
+                if (checkBoxValue.value) route.value.add(routeItem) else route.value.remove(cup.id.toString())
+
+                //Text(text = route.value.joinToString(""))
+
+                AddCompareItem(
                     roundedCornerShape = RoundedCornerShape(
                         bottomEnd = if (lastItem) 8.dp else 0.dp,
                         bottomStart = if (lastItem) 8.dp else 0.dp,
-                        topEnd = if (showDate || firstItem ) 8.dp else 0.dp,
+                        topEnd = if (showDate || firstItem) 8.dp else 0.dp,
                         topStart = if (showDate || firstItem) 8.dp else 0.dp,
                     ),
                     top = if (showDate) 8.dp else 0.dp,
@@ -73,9 +87,12 @@ fun CompareList(
                     icon = if (cup.favorite)
                         R.drawable.baseline_water_drop_24
                     else
-                        R.drawable.outline_water_drop_black_24dp
+                        R.drawable.outline_water_drop_black_24dp,
+                    checkBoxValue = checkBoxValue
                 )
             }
+
+
         }
     }
 }

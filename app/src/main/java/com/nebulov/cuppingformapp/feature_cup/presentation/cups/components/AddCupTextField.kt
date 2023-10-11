@@ -136,6 +136,7 @@ fun DefaultFloatingActionButton(
 @Composable
 fun CompareButton(
     modifier: Modifier = Modifier,
+    onClick: () -> Unit
 ) {
 
     val gradientBrush = Brush.verticalGradient(
@@ -148,7 +149,7 @@ fun CompareButton(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clickable { }
+            .clickable { onClick() }
             .padding(bottom = 10.dp, top = 9.dp),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically

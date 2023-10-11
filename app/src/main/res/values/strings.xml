@@ -14,6 +14,8 @@
     <string name="VeryDarkRoast">"Very Dark Roast"</string>
 
     <string name="Fragrance">"Fragrance/Aroma "</string>
+    <string name="Frag">"Fragr/Arom "</string>
+
     <string name="Flavor">"Flavor "</string>
     <string name="Aftertaste">"Aftertaste "</string>
     <string name="Acidity">"Acidity "</string>

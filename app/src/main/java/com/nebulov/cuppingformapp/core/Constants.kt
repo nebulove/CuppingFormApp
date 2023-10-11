@@ -12,6 +12,7 @@ class Constants {
         const val TEN = 10
 
         const val CUP_ID = "cupId"
+        const val ROUTE = "route"
 
         const val LIST_OF_CUP = "list_of_cup"
         const val CUP_SCREEN = "cups_screen"

@@ -10,7 +10,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.nebulov.cuppingformapp.core.Constants.Companion.CUP_ID
+import com.nebulov.cuppingformapp.core.Constants.Companion.ROUTE
 import com.nebulov.cuppingformapp.feature_cup.presentation.add_edit_cup.AddEditCupScreen
+import com.nebulov.cuppingformapp.feature_cup.presentation.compare.CompareScreen
 import com.nebulov.cuppingformapp.feature_cup.presentation.cups.CupsScreen
 import com.nebulov.cuppingformapp.feature_cup.presentation.util.Screen
 
@@ -40,6 +42,19 @@ fun NavScreen(
                     }
                 )) {
                 AddEditCupScreen(navController = navController)
+            }
+            composable(
+                route = Screen.CompareScreen.route + "?$ROUTE={$ROUTE}",
+                arguments = listOf(
+                    navArgument(
+                        name = ROUTE
+                    ) {
+                        type = NavType.StringType
+                        defaultValue = ""
+                    })
+            ) {
+                val route = it.arguments?.getString(ROUTE) ?: ""
+                CompareScreen(navController = navController, route = route)
             }
         }
 
