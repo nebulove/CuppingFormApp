@@ -10,6 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nebulov.cuppingformapp.feature_cup.domain.model.Cup
@@ -32,7 +33,7 @@ fun CompareItem(
                 bottom = 3.dp
             )
     ) {
-        TextForCompareItem(text = cup.name)
+        TextForCompareItem(text = cup.name, fontSize = 12.sp)
         VerticalStripe()
         TextForCompareItem(text = cup.levelOfRoast.toString())
         VerticalStripe()
@@ -73,14 +74,21 @@ fun CompareItem(
 }
 
 @Composable
-fun TextForCompareItem(text: String, modifier: Modifier = Modifier) {
-    Text(
-        text = text,
-        textAlign = TextAlign.Center,
-        fontSize = 16.sp,
-        maxLines = 1,
-        modifier = modifier
-            .heightIn(22.dp)
-            .width(80.dp)
-    )
+fun TextForCompareItem(
+    text: String,
+    modifier: Modifier = Modifier,
+    fontSize: TextUnit = 16.sp,
+    visibility: Boolean = true
+) {
+    if (visibility) {
+        Text(
+            text = text,
+            textAlign = TextAlign.Center,
+            fontSize = fontSize,
+            maxLines = 1,
+            modifier = modifier
+                .heightIn(22.dp)
+                .width(90.dp)
+        )
+    }
 }

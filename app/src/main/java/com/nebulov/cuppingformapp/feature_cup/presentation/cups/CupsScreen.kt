@@ -107,7 +107,7 @@ fun CupsScreen(
 
     val route: MutableState<MutableSet<String>> =
         rememberSaveable { mutableStateOf(mutableSetOf("")) }
-    val showRoute = remember { mutableStateOf(false) }
+
 
     LaunchedEffect(key1 = true) {
         delay(500)
@@ -239,15 +239,16 @@ fun CupsScreen(
                         })
                 }
                 if (selectedItemPosition.value == 2) {
-                    CompareButton(onClick = {
-                        navController.navigate(
-                            Screen.CompareScreen.route +
-                                    "?route=${route.value.joinToString(" ")}"
-                        )
-                    })
-                    if (showRoute.value) {
-                        Text(text = route.value.joinToString(" "))
-                    }
+                    CompareButton(
+                        onClick = {
+                            if (route.value.size != 1 && route.value.size != 2) {
+                                navController.navigate(
+                                    Screen.CompareScreen.route +
+                                            "?route=${route.value.joinToString(" ")}"
+                                )
+                            }
+                        },
+                    )
                 }
                 CupListIconNavigation(selectedItemPosition = selectedItemPosition,
                     changeOrder = {
@@ -295,7 +296,7 @@ fun CupsScreen(
                         scrollState = compareScrollState,
                         paddingValues = it,
                         cupList = state.cups,
-                        route = route
+                        route = route,
                     )
                 }
             }

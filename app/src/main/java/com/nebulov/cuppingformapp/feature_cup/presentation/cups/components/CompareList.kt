@@ -50,6 +50,7 @@ fun CompareList(
 
             val firstItem = index == 0 || cup.timestamp != cupList[index - 1].timestamp
 
+
             if (showDate) {
                 item {
                     Text(

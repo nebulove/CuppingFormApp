@@ -111,13 +111,15 @@ fun CompareScreen(
 }
 
 @Composable
-fun VerticalStripe(modifier: Modifier = Modifier) {
-    Surface(
-        color = MaterialTheme.colors.primary,
-        modifier = modifier
-            .height(1.dp)
-    ) {
-        Spacer(modifier = modifier.fillMaxWidth())
+fun VerticalStripe(modifier: Modifier = Modifier, visibility: Boolean = true) {
+    if (visibility) {
+        Surface(
+            color = MaterialTheme.colors.primary,
+            modifier = modifier
+                .height(1.dp)
+        ) {
+            Spacer(modifier = modifier.fillMaxWidth())
+        }
     }
 }
 
@@ -128,7 +130,7 @@ fun HorizontalStripe(modifier: Modifier = Modifier) {
         modifier = modifier
             .width(1.dp)
     ) {
-            Spacer(modifier = modifier.fillMaxHeight())
+        Spacer(modifier = modifier.fillMaxHeight())
     }
 }
 

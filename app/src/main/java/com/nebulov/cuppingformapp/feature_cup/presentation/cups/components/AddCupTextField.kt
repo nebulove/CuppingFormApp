@@ -136,7 +136,7 @@ fun DefaultFloatingActionButton(
 @Composable
 fun CompareButton(
     modifier: Modifier = Modifier,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
 
     val gradientBrush = Brush.verticalGradient(
