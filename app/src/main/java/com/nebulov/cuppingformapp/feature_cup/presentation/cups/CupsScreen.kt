@@ -89,7 +89,10 @@ fun CupsScreen(
     val fabVisible = remember { mutableStateOf(false) }
 
     val shownOrderIconBar = rememberSaveable() { mutableStateOf(false) }
-    shownOrderIconBar.value = state.cups.size >= 3
+    shownOrderIconBar.value = cupList.size >= 3
+
+    val shownSetOrderIconBar = rememberSaveable() { mutableStateOf(false) }
+    shownSetOrderIconBar.value = filteredCups.size >= 3
 
     val addEditCupViewModel: AddEditCupViewModel = hiltViewModel()
 
@@ -195,7 +198,7 @@ fun CupsScreen(
                 IconOrderSection(
                     onOrderChange = { viewModel.onEvent(CupEvent.Order(it)) },
                     cupOrder = state.cupOrder,
-                    shown = shownOrderIconBar,
+                    shown = shownSetOrderIconBar,
                     visible = false
                 )
             }
