@@ -3,7 +3,6 @@ package com.nebulov.cuppingformapp.feature_cup.presentation.compare.components
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
@@ -14,7 +13,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nebulov.cuppingformapp.feature_cup.domain.model.Cup
-import com.nebulov.cuppingformapp.feature_cup.presentation.compare.VerticalStripe
+import com.nebulov.cuppingformapp.feature_cup.presentation.compare.HorizonStripe
 
 @Composable
 fun CompareItem(
@@ -28,45 +27,41 @@ fun CompareItem(
         modifier = modifier
             .verticalScroll(scrollState)
             .width(80.dp)
-            .padding(
-                top = 3.dp,
-                bottom = 3.dp
-            )
     ) {
         TextForCompareItem(text = cup.name, fontSize = 12.sp)
-        VerticalStripe()
+        HorizonStripe()
         TextForCompareItem(text = cup.levelOfRoast.toString())
-        VerticalStripe()
+        HorizonStripe()
         TextForCompareItem(text = cup.fragrance.toString())
-        VerticalStripe()
+        HorizonStripe()
         TextForCompareItem(text = cup.dry.toString())
-        VerticalStripe()
+        HorizonStripe()
         TextForCompareItem(text = cup.breakAroma.toString())
-        VerticalStripe()
+        HorizonStripe()
         TextForCompareItem(text = cup.flavor.toString())
-        VerticalStripe()
+        HorizonStripe()
         TextForCompareItem(text = cup.aftertaste.toString())
-        VerticalStripe()
+        HorizonStripe()
         TextForCompareItem(text = cup.acidity.toString())
-        VerticalStripe()
+        HorizonStripe()
         TextForCompareItem(text = cup.intensity.toString())
-        VerticalStripe()
+        HorizonStripe()
         TextForCompareItem(text = cup.body.toString())
-        VerticalStripe()
+        HorizonStripe()
         TextForCompareItem(text = cup.levelOfBody.toString())
-        VerticalStripe()
+        HorizonStripe()
         TextForCompareItem(text = cup.balance.toString())
-        VerticalStripe()
+        HorizonStripe()
         TextForCompareItem(text = cup.uniformity.toString())
-        VerticalStripe()
+        HorizonStripe()
         TextForCompareItem(text = cup.cleanCup.toString())
-        VerticalStripe()
+        HorizonStripe()
         TextForCompareItem(text = cup.sweetness.toString())
-        VerticalStripe()
+        HorizonStripe()
         TextForCompareItem(text = cup.defects.toString())
-        VerticalStripe()
+        HorizonStripe()
         TextForCompareItem(text = cup.overall.toString())
-        VerticalStripe()
+        HorizonStripe()
         TextForCompareItem(text = cup.finalScore.toString())
     }
 
