@@ -85,4 +85,6 @@
     <string name="set">Set</string>
     <string name="custom">Custom</string>
     <string name="compare">Compare</string>
+    <string name="back">Back</string>
+    <string name="select_two_or_more_samples_and_click_here_to">select two or more samples and click here to</string>
 </resources>

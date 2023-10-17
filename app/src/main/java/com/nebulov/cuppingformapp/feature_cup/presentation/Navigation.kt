@@ -57,7 +57,5 @@ fun NavScreen(
                 CompareScreen(navController = navController, route = route)
             }
         }
-
     }
-
 }

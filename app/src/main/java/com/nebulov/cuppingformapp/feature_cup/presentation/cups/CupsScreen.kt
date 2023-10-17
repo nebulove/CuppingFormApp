@@ -27,7 +27,6 @@ import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -86,6 +85,8 @@ fun CupsScreen(
     val sessionScrollState = rememberLazyListState()
     val compareScrollState = rememberLazyListState()
 
+    val route  = mutableSetOf<String>()
+
     val fabVisible = remember { mutableStateOf(false) }
 
     val shownOrderIconBar = rememberSaveable() { mutableStateOf(false) }
@@ -108,14 +109,11 @@ fun CupsScreen(
 
     val selectedItemPosition = rememberSaveable { mutableStateOf(0) }
 
-    val route: MutableState<MutableSet<String>> =
-        rememberSaveable { mutableStateOf(mutableSetOf("")) }
-
-
     LaunchedEffect(key1 = true) {
         delay(500)
         currentOnTimeout.value = true
     }
+
 
     LaunchedEffect(singleScrollState) {
         var prev = 0
@@ -132,6 +130,15 @@ fun CupsScreen(
             .collect { index ->
                 fabVisible.value = sessionScrollState.firstVisibleItemIndex <= prev && index > 0
                 prev = sessionScrollState.firstVisibleItemIndex
+            }
+    }
+
+    LaunchedEffect(compareScrollState) {
+        var prev = 0
+        snapshotFlow { compareScrollState.firstVisibleItemIndex }
+            .collect { index ->
+                fabVisible.value = compareScrollState.firstVisibleItemIndex <= prev && index > 0
+                prev = compareScrollState.firstVisibleItemIndex
             }
     }
 
@@ -183,6 +190,25 @@ fun CupsScreen(
                                     .size(36.dp)
                             )
                         }
+                        if (selectedItemPosition.value == 2) {
+                            FloatingActionButton(
+                                onClick = {
+                                    scope.launch { compareScrollState.animateScrollToItem(0) }
+                                },
+                                backgroundColor = MaterialTheme.colors.onPrimary,
+                                modifier = modifier.size(38.dp)
+                            ) {
+                                Icon(
+                                    Icons.Filled.KeyboardArrowUp,
+                                    contentDescription = stringResource(R.string.backtothetopofthelist),
+                                    tint = MaterialTheme.colors.primary,
+                                    modifier = modifier
+                                        .wrapContentSize()
+                                        .fillMaxSize()
+                                        .size(36.dp)
+                                )
+                            }
+                        }
                     }
                 }
             }
@@ -207,7 +233,7 @@ fun CupsScreen(
                     modifier = modifier
                         .fillMaxWidth()
                         .offset(y = 52.dp),
-                    text = "click the button to",
+                    text = stringResource(R.string.select_two_or_more_samples_and_click_here_to),
                     textAlign = TextAlign.Center,
                     fontSize = 12.sp,
                     fontWeight = W200
@@ -244,14 +270,15 @@ fun CupsScreen(
                 if (selectedItemPosition.value == 2) {
                     CompareButton(
                         onClick = {
-                            if (route.value.size != 1 && route.value.size != 2) {
+                            if (route.size != 0 && route.size != 1) {
                                 navController.navigate(
                                     Screen.CompareScreen.route +
-                                            "?route=${route.value.joinToString(" ")}"
+                                            "?route=${route.joinToString(" ")}"
                                 )
                             }
                         },
                     )
+
                 }
                 CupListIconNavigation(selectedItemPosition = selectedItemPosition,
                     changeOrder = {

@@ -13,9 +13,9 @@ android {
     defaultConfig {
         applicationId = "com.nebulov.cuppingformapp"
         minSdk = 26
-        targetSdk = 33
-        versionCode = 3
-        versionName = "1.11"
+        targetSdk = 34
+        versionCode = 4
+        versionName = "1.20"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true

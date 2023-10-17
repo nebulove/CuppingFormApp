@@ -9,7 +9,6 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
@@ -28,7 +27,7 @@ fun CompareList(
     scrollState: LazyListState,
     paddingValues: PaddingValues,
     cupList: List<Cup>,
-    route: MutableState<MutableSet<String>>,
+    route: MutableSet<String>,
 ) {
 
     LazyColumn(
@@ -64,14 +63,11 @@ fun CompareList(
             }
             item {
 
-
                 val checkBoxValue = rememberSaveable() { mutableStateOf(false) }
                 val routeItem = if (checkBoxValue.value) {
                     cup.id.toString()
                 } else ""
-                if (checkBoxValue.value) route.value.add(routeItem) else route.value.remove(cup.id.toString())
-
-                //Text(text = route.value.joinToString(""))
+                if (checkBoxValue.value) route.add(routeItem) else route.remove(cup.id.toString())
 
                 AddCompareItem(
                     roundedCornerShape = RoundedCornerShape(
