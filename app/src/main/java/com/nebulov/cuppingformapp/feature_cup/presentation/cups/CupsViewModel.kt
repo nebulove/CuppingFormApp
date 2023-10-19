@@ -63,6 +63,7 @@ class CupsViewModel @Inject constructor(
                     cupUseCases.addCup(newItem)
                 }
             }
+
             is CupEvent.DeleteSession -> {
                 viewModelScope.launch {
                     cupUseCases.deleteSession(event.timestamp)
@@ -81,5 +82,192 @@ class CupsViewModel @Inject constructor(
                 )
             }
             .launchIn(viewModelScope)
+    }
+
+    fun compareRL(cupList: List<Cup>): Boolean {
+        cupList.forEach { i ->
+            cupList.forEach { j ->
+                if (i.levelOfRoast != j.levelOfRoast) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    fun compareFR(cupList: List<Cup>): Boolean {
+        cupList.forEach { i ->
+            cupList.forEach { j ->
+                if (i.fragrance != j.fragrance) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    fun compareDry(cupList: List<Cup>): Boolean {
+        cupList.forEach { i ->
+            cupList.forEach { j ->
+                if (i.dry != j.dry) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    fun compareBreak(cupList: List<Cup>): Boolean {
+        cupList.forEach { i ->
+            cupList.forEach { j ->
+                if (i.breakAroma != j.breakAroma) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    fun compareFlavor(cupList: List<Cup>): Boolean {
+        cupList.forEach { i ->
+            cupList.forEach { j ->
+                if (i.flavor != j.flavor) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    fun compareAc(cupList: List<Cup>): Boolean {
+        cupList.forEach { i ->
+            cupList.forEach { j ->
+                if (i.acidity != j.acidity) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    fun compareAf(cupList: List<Cup>): Boolean {
+        cupList.forEach { i ->
+            cupList.forEach { j ->
+                if (i.aftertaste != j.aftertaste) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    fun compareInt(cupList: List<Cup>): Boolean {
+        cupList.forEach { i ->
+            cupList.forEach { j ->
+                if (i.intensity != j.intensity) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    fun compareBody(cupList: List<Cup>): Boolean {
+        cupList.forEach { i ->
+            cupList.forEach { j ->
+                if (i.body != j.body) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    fun compareLvl(cupList: List<Cup>): Boolean {
+        cupList.forEach { i ->
+            cupList.forEach { j ->
+                if (i.levelOfBody != j.levelOfBody) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    fun compareBalance(cupList: List<Cup>): Boolean {
+        cupList.forEach { i ->
+            cupList.forEach { j ->
+                if (i.balance != j.balance) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    fun compareUn(cupList: List<Cup>): Boolean {
+        cupList.forEach { i ->
+            cupList.forEach { j ->
+                if (i.uniformity != j.uniformity) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    fun compareCC(cupList: List<Cup>): Boolean {
+        cupList.forEach { i ->
+            cupList.forEach { j ->
+                if (i.cleanCup != j.cleanCup) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    fun compareSw(cupList: List<Cup>): Boolean {
+        cupList.forEach { i ->
+            cupList.forEach { j ->
+                if (i.sweetness != j.sweetness) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    fun compareDefects(cupList: List<Cup>): Boolean {
+        cupList.forEach { i ->
+            cupList.forEach { j ->
+                if (i.defects != j.defects) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    fun compareOverall(cupList: List<Cup>): Boolean {
+        cupList.forEach { i ->
+            cupList.forEach { j ->
+                if (i.overall != j.overall) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    fun compareFS(cupList: List<Cup>): Boolean {
+        cupList.forEach { i ->
+            cupList.forEach { j ->
+                if (i.finalScore != j.finalScore) {
+                    return true
+                }
+            }
+        }
+        return false
     }
 }
