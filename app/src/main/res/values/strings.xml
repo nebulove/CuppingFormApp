@@ -13,15 +13,15 @@
     <string name="DarkRoast">"Dark Roast"</string>
     <string name="VeryDarkRoast">"Very Dark Roast"</string>
 
-    <string name="Fragrance">"Fragrance/Aroma "</string>
-    <string name="Frag">"Fragr/Arom "</string>
+    <string name="Fragrance">"Fragrance/Aroma"</string>
+    <string name="Frag">"Fragr/Arom"</string>
 
-    <string name="Flavor">"Flavor "</string>
-    <string name="Aftertaste">"Aftertaste "</string>
-    <string name="Acidity">"Acidity "</string>
-    <string name="Body">"Body "</string>
-    <string name="Balance">"Balance "</string>
-    <string name="Overall">"Overall "</string>
+    <string name="Flavor">"Flavor"</string>
+    <string name="Aftertaste">"Aftertaste"</string>
+    <string name="Acidity">"Acidity"</string>
+    <string name="Body">"Body"</string>
+    <string name="Balance">"Balance"</string>
+    <string name="Overall">"Overall"</string>
     <string name="CleanCup">"Clean Cup"</string>
     <string name="Sweetness">"Sweetness"</string>
     <string name="Uniformity">"Uniformity"</string>
