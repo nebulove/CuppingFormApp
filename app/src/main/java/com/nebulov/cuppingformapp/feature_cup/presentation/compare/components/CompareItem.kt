@@ -212,7 +212,7 @@ fun TextForCompareItem(
 
     val bgColor: Color by animateColorAsState(
         if (state) MaterialTheme.colors.background else darkColorChange,
-        animationSpec = tween(1000, easing = LinearEasing)
+        animationSpec = tween(400, easing = LinearEasing)
     )
 
     if (visibility) {

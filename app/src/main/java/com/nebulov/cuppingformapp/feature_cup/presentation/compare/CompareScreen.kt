@@ -23,7 +23,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -34,6 +33,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.nebulov.cuppingformapp.R
 import com.nebulov.cuppingformapp.feature_cup.presentation.compare.components.CompareItem
+import com.nebulov.cuppingformapp.feature_cup.presentation.compare.components.GradientButton
 import com.nebulov.cuppingformapp.feature_cup.presentation.compare.components.TextForCompareItem
 import com.nebulov.cuppingformapp.feature_cup.presentation.cups.CupsViewModel
 import com.nebulov.cuppingformapp.feature_cup.presentation.cups.components.DefaultFloatingActionButton
@@ -88,7 +88,216 @@ fun CompareScreen(
     val colorOverall = rememberSaveable { mutableStateOf(true) }
     val colorFS = rememberSaveable { mutableStateOf(true) }
 
+    val gradientList = listOf(MaterialTheme.colors.primary, MaterialTheme.colors.secondary)
 
+    fun colorChange() {
+        if (!colorRL.value) {
+            colorRL.value = !colorRL.value
+        } else {
+            colorRL.value = (viewModel.compareRL(cupList))
+        }
+
+        if (!colorFR.value) {
+            colorFR.value = !colorFR.value
+        } else {
+            colorFR.value = (viewModel.compareFR(cupList))
+        }
+
+        if (!colorDry.value) {
+            colorDry.value = !colorDry.value
+        } else {
+            colorDry.value = (viewModel.compareDry(cupList))
+        }
+
+        if (!colorBreak.value) {
+            colorBreak.value = !colorBreak.value
+        } else {
+            colorBreak.value = (viewModel.compareBreak(cupList))
+        }
+
+        if (!colorFlavor.value) {
+            colorFlavor.value = !colorFlavor.value
+        } else {
+            colorFlavor.value = (viewModel.compareFlavor(cupList))
+        }
+
+        if (!colorAc.value) {
+            colorAc.value = !colorAc.value
+        } else {
+            colorAc.value = (viewModel.compareAc(cupList))
+        }
+
+        if (!colorAf.value) {
+            colorAf.value = !colorAf.value
+        } else {
+            colorAf.value = (viewModel.compareAf(cupList))
+        }
+
+        if (!colorInt.value) {
+            colorInt.value = !colorInt.value
+        } else {
+            colorInt.value = (viewModel.compareInt(cupList))
+        }
+
+        if (!colorBody.value) {
+            colorBody.value = !colorBody.value
+        } else {
+            colorBody.value = (viewModel.compareBody(cupList))
+        }
+
+        if (!colorLvl.value) {
+            colorLvl.value = !colorLvl.value
+        } else {
+            colorLvl.value = (viewModel.compareLvl(cupList))
+        }
+
+        if (!colorBalance.value) {
+            colorBalance.value = !colorBalance.value
+        } else {
+            colorBalance.value = (viewModel.compareBalance(cupList))
+        }
+
+        if (!colorUn.value) {
+            colorUn.value = !colorUn.value
+        } else {
+            colorUn.value = (viewModel.compareUn(cupList))
+        }
+
+        if (!colorCC.value) {
+            colorCC.value = !colorCC.value
+        } else {
+            colorCC.value = (viewModel.compareCC(cupList))
+        }
+
+        if (!colorSw.value) {
+            colorSw.value = !colorSw.value
+        } else {
+            colorSw.value = (viewModel.compareSw(cupList))
+        }
+
+        if (!colorDefects.value) {
+            colorDefects.value = !colorDefects.value
+        } else {
+            colorDefects.value = (viewModel.compareDefects(cupList))
+        }
+
+        if (!colorOverall.value) {
+            colorOverall.value = !colorOverall.value
+        } else {
+            colorOverall.value = (viewModel.compareOverall(cupList))
+        }
+
+        if (!colorFS.value) {
+            colorFS.value = !colorFS.value
+        } else {
+            colorFS.value = (viewModel.compareFS(cupList))
+        }
+    }
+
+    fun visibleChange() {
+        if (!visibilityRL.value) {
+            visibilityRL.value = !visibilityRL.value
+        } else {
+            visibilityRL.value = (viewModel.compareRL(cupList))
+        }
+
+        if (!visibilityFR.value) {
+            visibilityFR.value = !visibilityFR.value
+        } else {
+            visibilityFR.value = (viewModel.compareFR(cupList))
+        }
+
+        if (!visibilityDry.value) {
+            visibilityDry.value = !visibilityDry.value
+        } else {
+            visibilityDry.value = (viewModel.compareDry(cupList))
+        }
+
+        if (!visibilityBreak.value) {
+            visibilityBreak.value = !visibilityBreak.value
+        } else {
+            visibilityBreak.value = (viewModel.compareBreak(cupList))
+        }
+
+        if (!visibilityFlavor.value) {
+            visibilityFlavor.value = !visibilityFlavor.value
+        } else {
+            visibilityFlavor.value = (viewModel.compareFlavor(cupList))
+        }
+
+        if (!visibilityAc.value) {
+            visibilityAc.value = !visibilityAc.value
+        } else {
+            visibilityAc.value = (viewModel.compareAc(cupList))
+        }
+
+        if (!visibilityAf.value) {
+            visibilityAf.value = !visibilityAf.value
+        } else {
+            visibilityAf.value = (viewModel.compareAf(cupList))
+        }
+
+        if (!visibilityInt.value) {
+            visibilityInt.value = !visibilityInt.value
+        } else {
+            visibilityInt.value = (viewModel.compareInt(cupList))
+        }
+
+        if (!visibilityBody.value) {
+            visibilityBody.value = !visibilityBody.value
+        } else {
+            visibilityBody.value = (viewModel.compareBody(cupList))
+        }
+
+        if (!visibilityLvl.value) {
+            visibilityLvl.value = !visibilityLvl.value
+        } else {
+            visibilityLvl.value = (viewModel.compareLvl(cupList))
+        }
+
+        if (!visibilityBalance.value) {
+            visibilityBalance.value = !visibilityBalance.value
+        } else {
+            visibilityBalance.value = (viewModel.compareBalance(cupList))
+        }
+
+        if (!visibilityUn.value) {
+            visibilityUn.value = !visibilityUn.value
+        } else {
+            visibilityUn.value = (viewModel.compareUn(cupList))
+        }
+
+        if (!visibilityCC.value) {
+            visibilityCC.value = !visibilityCC.value
+        } else {
+            visibilityCC.value = (viewModel.compareCC(cupList))
+        }
+
+        if (!visibilitySw.value) {
+            visibilitySw.value = !visibilitySw.value
+        } else {
+            visibilitySw.value = (viewModel.compareSw(cupList))
+        }
+
+        if (!visibilityDefects.value) {
+            visibilityDefects.value = !visibilityDefects.value
+        } else {
+            visibilityDefects.value = (viewModel.compareDefects(cupList))
+        }
+
+        if (!visibilityOverall.value) {
+            visibilityOverall.value = !visibilityOverall.value
+        } else {
+            visibilityOverall.value = (viewModel.compareOverall(cupList))
+        }
+
+        if (!visibilityFS.value) {
+            visibilityFS.value = !visibilityFS.value
+        } else {
+            visibilityFS.value = (viewModel.compareFS(cupList))
+        }
+
+    }
 
     Column(
         modifier = modifier
@@ -302,231 +511,24 @@ fun CompareScreen(
             }
         }
         Column {
-            Row(modifier = modifier.clickable {
-                if (!colorRL.value) {
-                    colorRL.value = !colorRL.value
-                } else {
-                    colorRL.value = (viewModel.compareRL(cupList))
+            Row(modifier = modifier) {
+                GradientButton(
+                    gradientColors = gradientList,
+                    text = "Change the color of repeating values"
+                ) {
+                    colorChange()
                 }
-
-                if (!colorFR.value) {
-                    colorFR.value = !colorFR.value
-                } else {
-                    colorFR.value = (viewModel.compareFR(cupList))
-                }
-
-                if (!colorDry.value) {
-                    colorDry.value = !colorDry.value
-                } else {
-                    colorDry.value = (viewModel.compareDry(cupList))
-                }
-
-                if (!colorBreak.value) {
-                    colorBreak.value = !colorBreak.value
-                } else {
-                    colorBreak.value = (viewModel.compareBreak(cupList))
-                }
-
-                if (!colorFlavor.value) {
-                    colorFlavor.value = !colorFlavor.value
-                } else {
-                    colorFlavor.value = (viewModel.compareFlavor(cupList))
-                }
-
-                if (!colorAc.value) {
-                    colorAc.value = !colorAc.value
-                } else {
-                    colorAc.value = (viewModel.compareAc(cupList))
-                }
-
-                if (!colorAf.value) {
-                    colorAf.value = !colorAf.value
-                } else {
-                    colorAf.value = (viewModel.compareAf(cupList))
-                }
-
-                if (!colorInt.value) {
-                    colorInt.value = !colorInt.value
-                } else {
-                    colorInt.value = (viewModel.compareInt(cupList))
-                }
-
-                if (!colorBody.value) {
-                    colorBody.value = !colorBody.value
-                } else {
-                    colorBody.value = (viewModel.compareBody(cupList))
-                }
-
-                if (!colorLvl.value) {
-                    colorLvl.value = !colorLvl.value
-                } else {
-                    colorLvl.value = (viewModel.compareLvl(cupList))
-                }
-
-                if (!colorBalance.value) {
-                    colorBalance.value = !colorBalance.value
-                } else {
-                    colorBalance.value = (viewModel.compareBalance(cupList))
-                }
-
-                if (!colorUn.value) {
-                    colorUn.value = !colorUn.value
-                } else {
-                    colorUn.value = (viewModel.compareUn(cupList))
-                }
-
-                if (!colorCC.value) {
-                    colorCC.value = !colorCC.value
-                } else {
-                    colorCC.value = (viewModel.compareCC(cupList))
-                }
-
-                if (!colorSw.value) {
-                    colorSw.value = !colorSw.value
-                } else {
-                    colorSw.value = (viewModel.compareSw(cupList))
-                }
-
-                if (!colorDefects.value) {
-                    colorDefects.value = !colorDefects.value
-                } else {
-                    colorDefects.value = (viewModel.compareDefects(cupList))
-                }
-
-                if (!colorOverall.value) {
-                    colorOverall.value = !colorOverall.value
-                } else {
-                    colorOverall.value = (viewModel.compareOverall(cupList))
-                }
-
-                if (!colorFS.value) {
-                    colorFS.value = !colorFS.value
-                } else {
-                    colorFS.value = (viewModel.compareFS(cupList))
-                }
-            }) {
-                DefaultFloatingActionButton(
-                    icon = R.drawable.baseline_visibility_off_24,
-                    actionOn = {},
-                    contentDescription = stringResource(R.string.back),
-                    shape = RoundedCornerShape(50)
-                )
-                Text(text = "Change the color of repeating values")
-
             }
             Spacer(modifier = modifier.height(8.dp))
             Row(modifier = modifier.clickable {
-                if (!visibilityRL.value) {
-                    visibilityRL.value = !visibilityRL.value
-                } else {
-                    visibilityRL.value = (viewModel.compareRL(cupList))
-                }
-
-                if (!visibilityFR.value) {
-                    visibilityFR.value = !visibilityFR.value
-                } else {
-                    visibilityFR.value = (viewModel.compareFR(cupList))
-                }
-
-                if (!visibilityDry.value) {
-                    visibilityDry.value = !visibilityDry.value
-                } else {
-                    visibilityDry.value = (viewModel.compareDry(cupList))
-                }
-
-                if (!visibilityBreak.value) {
-                    visibilityBreak.value = !visibilityBreak.value
-                } else {
-                    visibilityBreak.value = (viewModel.compareBreak(cupList))
-                }
-
-                if (!visibilityFlavor.value) {
-                    visibilityFlavor.value = !visibilityFlavor.value
-                } else {
-                    visibilityFlavor.value = (viewModel.compareFlavor(cupList))
-                }
-
-                if (!visibilityAc.value) {
-                    visibilityAc.value = !visibilityAc.value
-                } else {
-                    visibilityAc.value = (viewModel.compareAc(cupList))
-                }
-
-                if (!visibilityAf.value) {
-                    visibilityAf.value = !visibilityAf.value
-                } else {
-                    visibilityAf.value = (viewModel.compareAf(cupList))
-                }
-
-                if (!visibilityInt.value) {
-                    visibilityInt.value = !visibilityInt.value
-                } else {
-                    visibilityInt.value = (viewModel.compareInt(cupList))
-                }
-
-                if (!visibilityBody.value) {
-                    visibilityBody.value = !visibilityBody.value
-                } else {
-                    visibilityBody.value = (viewModel.compareBody(cupList))
-                }
-
-                if (!visibilityLvl.value) {
-                    visibilityLvl.value = !visibilityLvl.value
-                } else {
-                    visibilityLvl.value = (viewModel.compareLvl(cupList))
-                }
-
-                if (!visibilityBalance.value) {
-                    visibilityBalance.value = !visibilityBalance.value
-                } else {
-                    visibilityBalance.value = (viewModel.compareBalance(cupList))
-                }
-
-                if (!visibilityUn.value) {
-                    visibilityUn.value = !visibilityUn.value
-                } else {
-                    visibilityUn.value = (viewModel.compareUn(cupList))
-                }
-
-                if (!visibilityCC.value) {
-                    visibilityCC.value = !visibilityCC.value
-                } else {
-                    visibilityCC.value = (viewModel.compareCC(cupList))
-                }
-
-                if (!visibilitySw.value) {
-                    visibilitySw.value = !visibilitySw.value
-                } else {
-                    visibilitySw.value = (viewModel.compareSw(cupList))
-                }
-
-                if (!visibilityDefects.value) {
-                    visibilityDefects.value = !visibilityDefects.value
-                } else {
-                    visibilityDefects.value = (viewModel.compareDefects(cupList))
-                }
-
-                if (!visibilityOverall.value) {
-                    visibilityOverall.value = !visibilityOverall.value
-                } else {
-                    visibilityOverall.value = (viewModel.compareOverall(cupList))
-                }
-
-                if (!visibilityFS.value) {
-                    visibilityFS.value = !visibilityFS.value
-                } else {
-                    visibilityFS.value = (viewModel.compareFS(cupList))
-                }
-
+                visibleChange()
             }) {
-                DefaultFloatingActionButton(
-                    icon = R.drawable.baseline_visibility_off_24,
-                    actionOn = {},
-                    contentDescription = stringResource(R.string.back),
-                    shape = RoundedCornerShape(50)
-                )
-                Text(text = "Hide duplicate values")
-
+                GradientButton(
+                    gradientColors = gradientList,
+                    text = "Hide duplicate values"
+                ) {
+                    visibleChange()
+                }
             }
             Spacer(modifier = modifier.height(8.dp))
             DefaultFloatingActionButton(
