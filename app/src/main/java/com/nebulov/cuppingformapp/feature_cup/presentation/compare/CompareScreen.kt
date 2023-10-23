@@ -1,10 +1,10 @@
 package com.nebulov.cuppingformapp.feature_cup.presentation.compare
 
+import android.content.res.Configuration
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -23,12 +23,16 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.nebulov.cuppingformapp.R
@@ -299,248 +303,516 @@ fun CompareScreen(
 
     }
 
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(
-                top = 3.dp,
-                start = 6.dp,
-                end = 6.dp,
-                bottom = 3.dp
-            ),
-        verticalArrangement = Arrangement.SpaceBetween
-    ) {
-        Surface(
-            shape = RoundedCornerShape(8.dp),
-            modifier = modifier
 
-        ) {
+    val configuration = LocalConfiguration.current
+    when (configuration.orientation) {
+        Configuration.ORIENTATION_LANDSCAPE -> {
             Row(
-                modifier = modifier.animateContentSize(
-                    animationSpec = tween(
-                        durationMillis = 150,
-                        easing = LinearOutSlowInEasing
-                    )
-                )
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(
+                        top = 3.dp,
+                        start = 6.dp,
+                        end = 6.dp,
+                        bottom = 3.dp
+                    ),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Row(
+                Surface(
+                    shape = RoundedCornerShape(8.dp),
                     modifier = modifier
-                        .height(IntrinsicSize.Min)
+
                 ) {
-                    Column(
+                    Row(
                         modifier = modifier
-                            .width(85.dp)
-                            .verticalScroll(scrollState)
-                    ) {
-                        TextForCompareItem(
-                            text = "Name:",
-                        )
-                        HorizonStripe()
-                        if (visibilityRL.value) {
-                            TextForCompareItem(
-                                text = stringResource(id = R.string.Roast),
-                                state = colorRL.value
-                            )
-                            HorizonStripe()
-                        }
-                        if (visibilityFR.value) {
-                            TextForCompareItem(
-                                text = stringResource(id = R.string.Frag),
-                                state = colorFR.value
-                            )
-                            HorizonStripe()
-                        }
-                        if (visibilityDry.value) {
-                            TextForCompareItem(
-                                text = stringResource(id = R.string.Dry),
-                                state = colorDry.value
-                            )
-                            HorizonStripe()
-                        }
-                        if (visibilityBreak.value) {
-                            TextForCompareItem(
-                                text = stringResource(id = R.string.Break),
-                                state = colorBreak.value
-                            )
-                            HorizonStripe()
-                        }
-                        if (visibilityFlavor.value) {
-                            TextForCompareItem(
-                                text = stringResource(id = R.string.Flavor),
-                                state = colorFlavor.value
-                            )
-                            HorizonStripe()
-                        }
-                        if (visibilityAf.value) {
-                            TextForCompareItem(
-                                text = stringResource(id = R.string.Aftertaste),
-                                state = colorAf.value
-                            )
-                            HorizonStripe()
-                        }
-                        if (visibilityAc.value) {
-                            TextForCompareItem(
-                                text = stringResource(id = R.string.Acidity),
-                                state = colorAc.value
-                            )
-                            HorizonStripe()
-                        }
-                        if (visibilityInt.value) {
-                            TextForCompareItem(
-                                text = stringResource(id = R.string.Intensity),
-                                state = colorInt.value
-                            )
-                            HorizonStripe()
-                        }
-                        if (visibilityBody.value) {
-                            TextForCompareItem(
-                                text = stringResource(id = R.string.Body),
-                                state = colorBody.value
-                            )
-                            HorizonStripe()
-                        }
-                        if (visibilityLvl.value) {
-                            TextForCompareItem(
-                                text = stringResource(id = R.string.Level),
-                                state = colorLvl.value
-                            )
-                            HorizonStripe()
-                        }
-                        if (visibilityBalance.value) {
-                            TextForCompareItem(
-                                text = stringResource(id = R.string.Balance),
-                                state = colorBalance.value
-                            )
-                            HorizonStripe()
-                        }
-                        if (visibilityUn.value) {
-                            TextForCompareItem(
-                                text = stringResource(id = R.string.Uniformity),
-                                state = colorUn.value
-                            )
-                            HorizonStripe()
-                        }
-                        if (visibilityCC.value) {
-                            TextForCompareItem(
-                                text = stringResource(id = R.string.CleanCup),
-                                state = colorCC.value
-                            )
-                            HorizonStripe()
-                        }
-                        if (visibilitySw.value) {
-                            TextForCompareItem(
-                                text = stringResource(id = R.string.Sweetness),
-                                state = colorSw.value
-                            )
-                            HorizonStripe()
-                        }
-                        if (visibilityDefects.value) {
-                            TextForCompareItem(
-                                text = stringResource(id = R.string.Defects),
-                                state = colorDefects.value
-                            )
-                            HorizonStripe()
-                        }
-                        if (visibilityOverall.value) {
-                            TextForCompareItem(
-                                text = stringResource(id = R.string.Overall),
-                                state = colorOverall.value
-                            )
-                            HorizonStripe()
-                        }
-                        if (visibilityFS.value) {
-                            TextForCompareItem(
-                                text = stringResource(id = R.string.FinalScore),
-                                state = colorFS.value
-                            )
-                        }
-                    }
-                    VerticalStripe()
-                }
-                LazyRow(modifier = modifier) {
-                    cupList.forEachIndexed { index, cup ->
-                        item {
-                            Row(
-                                modifier = modifier
-                                    .height(IntrinsicSize.Min)
-                                    .animateItemPlacement()
-                            ) {
-                                CompareItem(
-                                    cup = cup,
-                                    scrollState = scrollState,
-                                    visibilityRL = visibilityRL,
-                                    visibilityFR = visibilityFR,
-                                    visibilityDry = visibilityDry,
-                                    visibilityBreak = visibilityBreak,
-                                    visibilityFlavor = visibilityFlavor,
-                                    visibilityAc = visibilityAc,
-                                    visibilityAf = visibilityAf,
-                                    visibilityInt = visibilityInt,
-                                    visibilityBody = visibilityBody,
-                                    visibilityLvl = visibilityLvl,
-                                    visibilityBalance = visibilityBalance,
-                                    visibilityUn = visibilityUn,
-                                    visibilityCC = visibilityCC,
-                                    visibilitySw = visibilitySw,
-                                    visibilityDefects = visibilityDefects,
-                                    visibilityOverall = visibilityOverall,
-                                    visibilityFS = visibilityFS,
-                                    colorRL = colorRL,
-                                    colorFR = colorFR,
-                                    colorDry = colorDry,
-                                    colorBreak = colorBreak,
-                                    colorFlavor = colorFlavor,
-                                    colorAc = colorAc,
-                                    colorAf = colorAf,
-                                    colorInt = colorInt,
-                                    colorBody = colorBody,
-                                    colorLvl = colorLvl,
-                                    colorBalance = colorBalance,
-                                    colorUn = colorUn,
-                                    colorCC = colorCC,
-                                    colorSw = colorSw,
-                                    colorDefects = colorDefects,
-                                    colorOverall = colorOverall,
-                                    colorFS = colorFS,
+                            .animateContentSize(
+                                animationSpec = tween(
+                                    durationMillis = 150,
+                                    easing = LinearOutSlowInEasing
                                 )
-                                VerticalStripe()
+                            )
+                    ) {
+                        Row(
+                            modifier = modifier
+                                .height(IntrinsicSize.Min)
+                        ) {
+                            Column(
+                                modifier = modifier
+                                    .width(85.dp)
+                                    .verticalScroll(scrollState)
+                            ) {
+                                TextForCompareItem(
+                                    text = "Name:",
+                                )
+                                HorizonStripe()
+                                if (visibilityRL.value) {
+                                    TextForCompareItem(
+                                        text = stringResource(id = R.string.Roast),
+                                        state = colorRL.value
+                                    )
+                                    HorizonStripe()
+                                }
+                                if (visibilityFR.value) {
+                                    TextForCompareItem(
+                                        text = stringResource(id = R.string.Frag),
+                                        state = colorFR.value
+                                    )
+                                    HorizonStripe()
+                                }
+                                if (visibilityDry.value) {
+                                    TextForCompareItem(
+                                        text = stringResource(id = R.string.Dry),
+                                        state = colorDry.value
+                                    )
+                                    HorizonStripe()
+                                }
+                                if (visibilityBreak.value) {
+                                    TextForCompareItem(
+                                        text = stringResource(id = R.string.Break),
+                                        state = colorBreak.value
+                                    )
+                                    HorizonStripe()
+                                }
+                                if (visibilityFlavor.value) {
+                                    TextForCompareItem(
+                                        text = stringResource(id = R.string.Flavor),
+                                        state = colorFlavor.value
+                                    )
+                                    HorizonStripe()
+                                }
+                                if (visibilityAf.value) {
+                                    TextForCompareItem(
+                                        text = stringResource(id = R.string.Aftertaste),
+                                        state = colorAf.value
+                                    )
+                                    HorizonStripe()
+                                }
+                                if (visibilityAc.value) {
+                                    TextForCompareItem(
+                                        text = stringResource(id = R.string.Acidity),
+                                        state = colorAc.value
+                                    )
+                                    HorizonStripe()
+                                }
+                                if (visibilityInt.value) {
+                                    TextForCompareItem(
+                                        text = stringResource(id = R.string.Intensity),
+                                        state = colorInt.value
+                                    )
+                                    HorizonStripe()
+                                }
+                                if (visibilityBody.value) {
+                                    TextForCompareItem(
+                                        text = stringResource(id = R.string.Body),
+                                        state = colorBody.value
+                                    )
+                                    HorizonStripe()
+                                }
+                                if (visibilityLvl.value) {
+                                    TextForCompareItem(
+                                        text = stringResource(id = R.string.Level),
+                                        state = colorLvl.value
+                                    )
+                                    HorizonStripe()
+                                }
+                                if (visibilityBalance.value) {
+                                    TextForCompareItem(
+                                        text = stringResource(id = R.string.Balance),
+                                        state = colorBalance.value
+                                    )
+                                    HorizonStripe()
+                                }
+                                if (visibilityUn.value) {
+                                    TextForCompareItem(
+                                        text = stringResource(id = R.string.Uniformity),
+                                        state = colorUn.value
+                                    )
+                                    HorizonStripe()
+                                }
+                                if (visibilityCC.value) {
+                                    TextForCompareItem(
+                                        text = stringResource(id = R.string.CleanCup),
+                                        state = colorCC.value
+                                    )
+                                    HorizonStripe()
+                                }
+                                if (visibilitySw.value) {
+                                    TextForCompareItem(
+                                        text = stringResource(id = R.string.Sweetness),
+                                        state = colorSw.value
+                                    )
+                                    HorizonStripe()
+                                }
+                                if (visibilityDefects.value) {
+                                    TextForCompareItem(
+                                        text = stringResource(id = R.string.Defects),
+                                        state = colorDefects.value
+                                    )
+                                    HorizonStripe()
+                                }
+                                if (visibilityOverall.value) {
+                                    TextForCompareItem(
+                                        text = stringResource(id = R.string.Overall),
+                                        state = colorOverall.value
+                                    )
+                                    HorizonStripe()
+                                }
+                                if (visibilityFS.value) {
+                                    TextForCompareItem(
+                                        text = stringResource(id = R.string.FinalScore),
+                                        state = colorFS.value
+                                    )
+                                }
+                            }
+                            VerticalStripe()
+                        }
+                        LazyRow(modifier = modifier.fillMaxWidth(0.7f)) {
+                            cupList.forEachIndexed { index, cup ->
+                                item {
+                                    Row(
+                                        modifier = modifier
+                                            .height(IntrinsicSize.Min)
+                                            .animateItemPlacement()
+                                    ) {
+                                        CompareItem(
+                                            cup = cup,
+                                            scrollState = scrollState,
+                                            visibilityRL = visibilityRL,
+                                            visibilityFR = visibilityFR,
+                                            visibilityDry = visibilityDry,
+                                            visibilityBreak = visibilityBreak,
+                                            visibilityFlavor = visibilityFlavor,
+                                            visibilityAc = visibilityAc,
+                                            visibilityAf = visibilityAf,
+                                            visibilityInt = visibilityInt,
+                                            visibilityBody = visibilityBody,
+                                            visibilityLvl = visibilityLvl,
+                                            visibilityBalance = visibilityBalance,
+                                            visibilityUn = visibilityUn,
+                                            visibilityCC = visibilityCC,
+                                            visibilitySw = visibilitySw,
+                                            visibilityDefects = visibilityDefects,
+                                            visibilityOverall = visibilityOverall,
+                                            visibilityFS = visibilityFS,
+                                            colorRL = colorRL,
+                                            colorFR = colorFR,
+                                            colorDry = colorDry,
+                                            colorBreak = colorBreak,
+                                            colorFlavor = colorFlavor,
+                                            colorAc = colorAc,
+                                            colorAf = colorAf,
+                                            colorInt = colorInt,
+                                            colorBody = colorBody,
+                                            colorLvl = colorLvl,
+                                            colorBalance = colorBalance,
+                                            colorUn = colorUn,
+                                            colorCC = colorCC,
+                                            colorSw = colorSw,
+                                            colorDefects = colorDefects,
+                                            colorOverall = colorOverall,
+                                            colorFS = colorFS,
+                                        )
+                                        VerticalStripe()
+                                    }
+                                }
                             }
                         }
                     }
                 }
+                Column(
+                    modifier = modifier.fillMaxWidth(0.3f),
+                    verticalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column {
+                        Column(
+                            modifier = modifier,
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center
+                        ) {
+                            DefaultFloatingActionButton(
+                                icon = R.drawable.baseline_visibility_off_24,
+                                actionOn = {
+                                    colorChange()
+                                },
+                                contentDescription = stringResource(R.string.back),
+                                shape = RoundedCornerShape(50)
+                            )
+                            Text(text = "COLOR", fontSize = 8.sp)
+                        }
+                        Spacer(modifier = modifier.height(8.dp))
+                        Column(
+                            modifier = modifier,
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center
+                        ) {
+                            DefaultFloatingActionButton(
+                                icon = R.drawable.baseline_visibility_off_24,
+                                actionOn = {
+                                    visibleChange()
+                                },
+                                contentDescription = stringResource(R.string.back),
+                                shape = RoundedCornerShape(50)
+                            )
+                            Text(text = "HIDE", fontSize = 8.sp)
+                        }
+                    }
+                    Spacer(modifier = modifier.height(8.dp))
+                    DefaultFloatingActionButton(
+                        icon = R.drawable.outline_west_24,
+                        actionOn = {
+                            navController.navigateUp()
+                        },
+                        contentDescription = stringResource(R.string.back),
+                        shape = RoundedCornerShape(50)
+                    )
+                }
             }
         }
-        Column {
-            Row(modifier = modifier) {
-                GradientButton(
-                    gradientColors = gradientList,
-                    text = "Change the color of repeating values"
+
+        else -> {
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(
+                        top = 3.dp,
+                        start = 6.dp,
+                        end = 6.dp,
+                        bottom = 3.dp
+                    ),
+                verticalArrangement = Arrangement.SpaceBetween
+            ) {
+                Surface(
+                    shape = RoundedCornerShape(8.dp),
+                    modifier = modifier
+
                 ) {
-                    colorChange()
+                    Row(
+                        modifier = modifier.animateContentSize(
+                            animationSpec = tween(
+                                durationMillis = 150,
+                                easing = LinearOutSlowInEasing
+                            )
+                        )
+                    ) {
+                        Row(
+                            modifier = modifier
+                                .height(IntrinsicSize.Min)
+                        ) {
+                            Column(
+                                modifier = modifier
+                                    .width(85.dp)
+                                    .verticalScroll(scrollState)
+                            ) {
+                                TextForCompareItem(
+                                    text = "Name:",
+                                )
+                                HorizonStripe()
+                                if (visibilityRL.value) {
+                                    TextForCompareItem(
+                                        text = stringResource(id = R.string.Roast),
+                                        state = colorRL.value
+                                    )
+                                    HorizonStripe()
+                                }
+                                if (visibilityFR.value) {
+                                    TextForCompareItem(
+                                        text = stringResource(id = R.string.Frag),
+                                        state = colorFR.value
+                                    )
+                                    HorizonStripe()
+                                }
+                                if (visibilityDry.value) {
+                                    TextForCompareItem(
+                                        text = stringResource(id = R.string.Dry),
+                                        state = colorDry.value
+                                    )
+                                    HorizonStripe()
+                                }
+                                if (visibilityBreak.value) {
+                                    TextForCompareItem(
+                                        text = stringResource(id = R.string.Break),
+                                        state = colorBreak.value
+                                    )
+                                    HorizonStripe()
+                                }
+                                if (visibilityFlavor.value) {
+                                    TextForCompareItem(
+                                        text = stringResource(id = R.string.Flavor),
+                                        state = colorFlavor.value
+                                    )
+                                    HorizonStripe()
+                                }
+                                if (visibilityAf.value) {
+                                    TextForCompareItem(
+                                        text = stringResource(id = R.string.Aftertaste),
+                                        state = colorAf.value
+                                    )
+                                    HorizonStripe()
+                                }
+                                if (visibilityAc.value) {
+                                    TextForCompareItem(
+                                        text = stringResource(id = R.string.Acidity),
+                                        state = colorAc.value
+                                    )
+                                    HorizonStripe()
+                                }
+                                if (visibilityInt.value) {
+                                    TextForCompareItem(
+                                        text = stringResource(id = R.string.Intensity),
+                                        state = colorInt.value
+                                    )
+                                    HorizonStripe()
+                                }
+                                if (visibilityBody.value) {
+                                    TextForCompareItem(
+                                        text = stringResource(id = R.string.Body),
+                                        state = colorBody.value
+                                    )
+                                    HorizonStripe()
+                                }
+                                if (visibilityLvl.value) {
+                                    TextForCompareItem(
+                                        text = stringResource(id = R.string.Level),
+                                        state = colorLvl.value
+                                    )
+                                    HorizonStripe()
+                                }
+                                if (visibilityBalance.value) {
+                                    TextForCompareItem(
+                                        text = stringResource(id = R.string.Balance),
+                                        state = colorBalance.value
+                                    )
+                                    HorizonStripe()
+                                }
+                                if (visibilityUn.value) {
+                                    TextForCompareItem(
+                                        text = stringResource(id = R.string.Uniformity),
+                                        state = colorUn.value
+                                    )
+                                    HorizonStripe()
+                                }
+                                if (visibilityCC.value) {
+                                    TextForCompareItem(
+                                        text = stringResource(id = R.string.CleanCup),
+                                        state = colorCC.value
+                                    )
+                                    HorizonStripe()
+                                }
+                                if (visibilitySw.value) {
+                                    TextForCompareItem(
+                                        text = stringResource(id = R.string.Sweetness),
+                                        state = colorSw.value
+                                    )
+                                    HorizonStripe()
+                                }
+                                if (visibilityDefects.value) {
+                                    TextForCompareItem(
+                                        text = stringResource(id = R.string.Defects),
+                                        state = colorDefects.value
+                                    )
+                                    HorizonStripe()
+                                }
+                                if (visibilityOverall.value) {
+                                    TextForCompareItem(
+                                        text = stringResource(id = R.string.Overall),
+                                        state = colorOverall.value
+                                    )
+                                    HorizonStripe()
+                                }
+                                if (visibilityFS.value) {
+                                    TextForCompareItem(
+                                        text = stringResource(id = R.string.FinalScore),
+                                        state = colorFS.value
+                                    )
+                                }
+                            }
+                            VerticalStripe()
+                        }
+                        LazyRow(modifier = modifier) {
+                            cupList.forEachIndexed { index, cup ->
+                                item {
+                                    Row(
+                                        modifier = modifier
+                                            .height(IntrinsicSize.Min)
+                                            .animateItemPlacement()
+                                    ) {
+                                        CompareItem(
+                                            cup = cup,
+                                            scrollState = scrollState,
+                                            visibilityRL = visibilityRL,
+                                            visibilityFR = visibilityFR,
+                                            visibilityDry = visibilityDry,
+                                            visibilityBreak = visibilityBreak,
+                                            visibilityFlavor = visibilityFlavor,
+                                            visibilityAc = visibilityAc,
+                                            visibilityAf = visibilityAf,
+                                            visibilityInt = visibilityInt,
+                                            visibilityBody = visibilityBody,
+                                            visibilityLvl = visibilityLvl,
+                                            visibilityBalance = visibilityBalance,
+                                            visibilityUn = visibilityUn,
+                                            visibilityCC = visibilityCC,
+                                            visibilitySw = visibilitySw,
+                                            visibilityDefects = visibilityDefects,
+                                            visibilityOverall = visibilityOverall,
+                                            visibilityFS = visibilityFS,
+                                            colorRL = colorRL,
+                                            colorFR = colorFR,
+                                            colorDry = colorDry,
+                                            colorBreak = colorBreak,
+                                            colorFlavor = colorFlavor,
+                                            colorAc = colorAc,
+                                            colorAf = colorAf,
+                                            colorInt = colorInt,
+                                            colorBody = colorBody,
+                                            colorLvl = colorLvl,
+                                            colorBalance = colorBalance,
+                                            colorUn = colorUn,
+                                            colorCC = colorCC,
+                                            colorSw = colorSw,
+                                            colorDefects = colorDefects,
+                                            colorOverall = colorOverall,
+                                            colorFS = colorFS,
+                                        )
+                                        VerticalStripe()
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                Column(verticalArrangement = Arrangement.SpaceBetween) {
+                    Column {
+                        GradientButton(
+                            gradientColors = gradientList,
+                            text = "Change the color of repeating values"
+                        ) {
+                            colorChange()
+                        }
+                        Spacer(modifier = modifier.height(8.dp))
+                        GradientButton(
+                            gradientColors = gradientList,
+                            text = "Hide duplicate values"
+                        ) {
+                            visibleChange()
+                        }
+
+                    }
+                    Spacer(modifier = modifier.height(8.dp))
+                    DefaultFloatingActionButton(
+                        icon = R.drawable.outline_west_24,
+                        actionOn = {
+                            navController.navigateUp()
+                        },
+                        contentDescription = stringResource(R.string.back),
+                        shape = RoundedCornerShape(50)
+                    )
                 }
             }
-            Spacer(modifier = modifier.height(8.dp))
-            Row(modifier = modifier.clickable {
-                visibleChange()
-            }) {
-                GradientButton(
-                    gradientColors = gradientList,
-                    text = "Hide duplicate values"
-                ) {
-                    visibleChange()
-                }
-            }
-            Spacer(modifier = modifier.height(8.dp))
-            DefaultFloatingActionButton(
-                icon = R.drawable.outline_west_24,
-                actionOn = {
-                    navController.navigateUp()
-                },
-                contentDescription = stringResource(R.string.back),
-                shape = RoundedCornerShape(50)
-            )
         }
     }
+
+
 }
 
 @Composable
