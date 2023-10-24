@@ -15,24 +15,27 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.FloatingActionButtonDefaults
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.nebulov.cuppingformapp.R
@@ -40,7 +43,7 @@ import com.nebulov.cuppingformapp.feature_cup.presentation.compare.components.Co
 import com.nebulov.cuppingformapp.feature_cup.presentation.compare.components.GradientButton
 import com.nebulov.cuppingformapp.feature_cup.presentation.compare.components.TextForCompareItem
 import com.nebulov.cuppingformapp.feature_cup.presentation.cups.CupsViewModel
-import com.nebulov.cuppingformapp.feature_cup.presentation.cups.components.DefaultFloatingActionButton
+import com.nebulov.cuppingformapp.feature_cup.presentation.cups.components.GradientFloatingActionButton
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -93,6 +96,9 @@ fun CompareScreen(
     val colorFS = rememberSaveable { mutableStateOf(true) }
 
     val gradientList = listOf(MaterialTheme.colors.primary, MaterialTheme.colors.secondary)
+
+    val colorButtonState = rememberSaveable { mutableStateOf(true) }
+    val hideButtonState = rememberSaveable { mutableStateOf(true) }
 
     fun colorChange() {
         if (!colorRL.value) {
@@ -307,14 +313,14 @@ fun CompareScreen(
     val configuration = LocalConfiguration.current
     when (configuration.orientation) {
         Configuration.ORIENTATION_LANDSCAPE -> {
+
             Row(
                 modifier = modifier
                     .fillMaxSize()
                     .padding(
                         top = 3.dp,
-                        start = 6.dp,
-                        end = 6.dp,
-                        bottom = 3.dp
+                        start = 68.dp,
+                        end = 6.dp
                     ),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
@@ -466,7 +472,7 @@ fun CompareScreen(
                             }
                             VerticalStripe()
                         }
-                        LazyRow(modifier = modifier.fillMaxWidth(0.7f)) {
+                        LazyRow(modifier = modifier) {
                             cupList.forEachIndexed { index, cup ->
                                 item {
                                     Row(
@@ -519,55 +525,58 @@ fun CompareScreen(
                         }
                     }
                 }
-                Column(
-                    modifier = modifier.fillMaxWidth(0.3f),
-                    verticalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Column {
-                        Column(
-                            modifier = modifier,
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Center
-                        ) {
-                            DefaultFloatingActionButton(
-                                icon = R.drawable.baseline_visibility_off_24,
-                                actionOn = {
-                                    colorChange()
-                                },
-                                contentDescription = stringResource(R.string.back),
-                                shape = RoundedCornerShape(50)
-                            )
-                            Text(text = "COLOR", fontSize = 8.sp)
-                        }
-                        Spacer(modifier = modifier.height(8.dp))
-                        Column(
-                            modifier = modifier,
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Center
-                        ) {
-                            DefaultFloatingActionButton(
-                                icon = R.drawable.baseline_visibility_off_24,
-                                actionOn = {
-                                    visibleChange()
-                                },
-                                contentDescription = stringResource(R.string.back),
-                                shape = RoundedCornerShape(50)
-                            )
-                            Text(text = "HIDE", fontSize = 8.sp)
-                        }
-                    }
+            }
+            Column(
+                modifier = modifier
+                    .padding(start = 3.dp, top = 6.dp)
+                    .fillMaxHeight(),
+                verticalArrangement = Arrangement.SpaceBetween
+            ) {
+                Column(verticalArrangement = Arrangement.SpaceBetween) {
+                    GradientFloatingActionButton(
+                        text = "COLOR",
+                        actionOn = { colorChange() },
+                        iconOn = R.drawable.baseline_visibility_off_24,
+                        iconOff = R.drawable.outline_visibility_24,
+                        contentDescription = "",
+                        enabled = colorButtonState
+                    )
                     Spacer(modifier = modifier.height(8.dp))
-                    DefaultFloatingActionButton(
-                        icon = R.drawable.outline_west_24,
-                        actionOn = {
-                            navController.navigateUp()
-                        },
+                    GradientFloatingActionButton(
+                        text = "HIDE",
+                        actionOn = { visibleChange() },
+                        iconOn = R.drawable.baseline_visibility_off_24,
+                        iconOff = R.drawable.outline_visibility_24,
+                        contentDescription = "",
+                        enabled = hideButtonState
+                    )
+                }
+                Spacer(modifier = modifier.height(8.dp))
+                FloatingActionButton(
+                    modifier=modifier.padding(start = 3.dp),
+                    onClick = { navController.navigateUp() },
+                    shape = RoundedCornerShape(50),
+                    elevation = FloatingActionButtonDefaults.elevation(
+                        defaultElevation = 0.dp,
+                        pressedElevation = 0.dp,
+                        hoveredElevation = 0.dp,
+                        focusedElevation = 0.dp
+                    ),
+                    backgroundColor = Color.Transparent
+                ) {
+                    Icon(
+                        painterResource(
+                            R.drawable.outline_west_24
+                        ),
                         contentDescription = stringResource(R.string.back),
-                        shape = RoundedCornerShape(50)
+                        modifier = modifier
+                            .size(24.dp),
+                        tint = MaterialTheme.colors.onPrimary
                     )
                 }
             }
         }
+
 
         else -> {
             Column(
@@ -576,15 +585,13 @@ fun CompareScreen(
                     .padding(
                         top = 3.dp,
                         start = 6.dp,
-                        end = 6.dp,
-                        bottom = 3.dp
+                        end = 6.dp
                     ),
-                verticalArrangement = Arrangement.SpaceBetween
+                verticalArrangement = Arrangement.SpaceBetween,
             ) {
                 Surface(
                     shape = RoundedCornerShape(8.dp),
                     modifier = modifier
-
                 ) {
                     Row(
                         modifier = modifier.animateContentSize(
@@ -781,32 +788,50 @@ fun CompareScreen(
                         }
                     }
                 }
-                Column(verticalArrangement = Arrangement.SpaceBetween) {
-                    Column {
+                Column(
+                    verticalArrangement = Arrangement.SpaceBetween,
+                    modifier = modifier.fillMaxWidth()
+                ) {
+                    Column(modifier = modifier.fillMaxWidth()) {
                         GradientButton(
                             gradientColors = gradientList,
-                            text = "Change the color of repeating values"
-                        ) {
-                            colorChange()
-                        }
+                            text = "Change the color of repeating values",
+                            onClick = { colorChange() },
+                            enabled = colorButtonState
+                        )
                         Spacer(modifier = modifier.height(8.dp))
                         GradientButton(
                             gradientColors = gradientList,
-                            text = "Hide duplicate values"
-                        ) {
-                            visibleChange()
-                        }
+                            text = "Hide duplicate values",
+                            onClick = { visibleChange() },
+                            enabled = hideButtonState
+                        )
 
                     }
                     Spacer(modifier = modifier.height(8.dp))
-                    DefaultFloatingActionButton(
-                        icon = R.drawable.outline_west_24,
-                        actionOn = {
-                            navController.navigateUp()
-                        },
-                        contentDescription = stringResource(R.string.back),
-                        shape = RoundedCornerShape(50)
-                    )
+
+                    FloatingActionButton(
+                        modifier=  modifier.padding(start = 2.dp),
+                        onClick = { navController.navigateUp() },
+                        shape = RoundedCornerShape(50),
+                        elevation = FloatingActionButtonDefaults.elevation(
+                            defaultElevation = 0.dp,
+                            pressedElevation = 0.dp,
+                            hoveredElevation = 0.dp,
+                            focusedElevation = 0.dp
+                        ),
+                        backgroundColor = Color.Transparent
+                    ) {
+                        Icon(
+                            painterResource(
+                                R.drawable.outline_west_24
+                            ),
+                            contentDescription = stringResource(R.string.back),
+                            modifier = modifier
+                                .size(24.dp),
+                            tint = MaterialTheme.colors.onPrimary
+                        )
+                    }
                 }
             }
         }

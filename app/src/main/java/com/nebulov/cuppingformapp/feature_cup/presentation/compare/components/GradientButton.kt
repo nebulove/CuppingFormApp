@@ -14,10 +14,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -36,19 +33,19 @@ fun GradientButton(
     ),
     text: String,
     onClick: () -> Unit,
+    enabled: MutableState<Boolean>
 
     ) {
 
-    var enabled by rememberSaveable { mutableStateOf(true) }
     val onPrimary = MaterialTheme.colors.onPrimary
     val primary = MaterialTheme.colors.primary
 
     Button(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 32.dp, end = 32.dp),
+            .padding(start = 3.dp, end = 3.dp),
         onClick = {
-            enabled = !enabled
+            enabled.value = !enabled.value
             onClick()
         },
         contentPadding = PaddingValues(),
@@ -62,7 +59,7 @@ fun GradientButton(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(
-                    brush = Brush.linearGradient(colors = if (enabled) disabledColors else gradientColors),
+                    brush = Brush.linearGradient(colors = if (enabled.value) disabledColors else gradientColors),
                     shape = RoundedCornerShape(8.dp)
                 )
                 .padding(horizontal = 16.dp, vertical = 8.dp),
@@ -74,15 +71,15 @@ fun GradientButton(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    painter = if (enabled) painterResource(R.drawable.baseline_visibility_off_24) else painterResource(
+                    painter = if (enabled.value) painterResource(R.drawable.baseline_visibility_off_24) else painterResource(
                         R.drawable.outline_visibility_24
                     ), contentDescription = null,
-                    tint = if (enabled) primary else onPrimary
+                    tint = if (enabled.value) primary else onPrimary
                 )
                 Text(
                     text = text,
                     fontSize = 13.sp,
-                    color = if (enabled) primary else onPrimary
+                    color = if (enabled.value) primary else onPrimary
                 )
             }
         }

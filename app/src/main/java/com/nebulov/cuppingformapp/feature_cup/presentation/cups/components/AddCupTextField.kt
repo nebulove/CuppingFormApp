@@ -1,9 +1,13 @@
 package com.nebulov.cuppingformapp.feature_cup.presentation.cups.components
 
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,6 +16,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.FloatingActionButtonDefaults
 import androidx.compose.material.Icon
@@ -21,10 +27,13 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -130,6 +139,72 @@ fun DefaultFloatingActionButton(
         ),
 
         )
+}
+
+@Composable
+fun GradientFloatingActionButton(
+    modifier: Modifier = Modifier,
+    gradientColors: List<Color> = listOf(
+        MaterialTheme.colors.primary,
+        MaterialTheme.colors.secondary
+    ),
+    disabledColors: List<Color> = listOf(
+        MaterialTheme.colors.primary,
+        MaterialTheme.colors.primary
+    ),
+    @DrawableRes iconOn: Int,
+    @DrawableRes iconOff: Int,
+    actionOn: () -> Unit,
+    contentDescription: String,
+    text: String,
+    enabled: MutableState<Boolean>
+) {
+    val onPrimary = MaterialTheme.colors.onPrimary
+    val primary = MaterialTheme.colors.primary
+
+    Button(
+        onClick = {
+            enabled.value = !enabled.value
+            actionOn()
+        },
+        contentPadding = PaddingValues(),
+        colors = ButtonDefaults.buttonColors(
+            backgroundColor = Color.Transparent
+        ),
+        shape = RoundedCornerShape(50),
+       elevation = ButtonDefaults.elevation(0.dp,0.dp,0.dp,0.dp,0.dp,)
+    ) {
+        Box(
+            modifier = modifier
+                .size(56.dp)
+                .background(
+                    brush = Brush.linearGradient(colors = if (enabled.value) disabledColors else gradientColors),
+                    shape = RoundedCornerShape(50)
+                ),
+            contentAlignment = Alignment.Center
+        ) {
+            Column(
+                modifier = modifier,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Icon(
+                    if (enabled.value) painterResource(iconOn) else painterResource(iconOff),
+                    contentDescription = contentDescription,
+                    modifier = modifier
+                        .size(24.dp),
+                    tint = if (enabled.value) onPrimary else onPrimary
+                )
+                Text(
+                    text = text,
+                    fontSize = 9.sp,
+                    color = if (enabled.value) onPrimary else onPrimary
+                )
+            }
+        }
+    }
+
+
 }
 
 @Composable
