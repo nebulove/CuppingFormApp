@@ -85,9 +85,11 @@ fun CupsScreen(
     val sessionScrollState = rememberLazyListState()
     val compareScrollState = rememberLazyListState()
 
-    val route  = mutableSetOf<String>()
+    val route = mutableSetOf<String>()
 
-    val fabVisible = remember { mutableStateOf(false) }
+    val singleFabVisible = remember { mutableStateOf(false) }
+    val setFabVisible = remember { mutableStateOf(false) }
+    val compareFabVisible = remember { mutableStateOf(false) }
 
     val shownOrderIconBar = rememberSaveable() { mutableStateOf(false) }
     shownOrderIconBar.value = cupList.size >= 3
@@ -119,7 +121,7 @@ fun CupsScreen(
         var prev = 0
         snapshotFlow { singleScrollState.firstVisibleItemIndex }
             .collect { index ->
-                fabVisible.value = singleScrollState.firstVisibleItemIndex <= prev && index > 0
+                singleFabVisible.value = singleScrollState.firstVisibleItemIndex <= prev && index > 0
                 prev = singleScrollState.firstVisibleItemIndex
             }
     }
@@ -128,7 +130,7 @@ fun CupsScreen(
         var prev = 0
         snapshotFlow { sessionScrollState.firstVisibleItemIndex }
             .collect { index ->
-                fabVisible.value = sessionScrollState.firstVisibleItemIndex <= prev && index > 0
+                setFabVisible.value = sessionScrollState.firstVisibleItemIndex <= prev && index > 0
                 prev = sessionScrollState.firstVisibleItemIndex
             }
     }
@@ -137,7 +139,7 @@ fun CupsScreen(
         var prev = 0
         snapshotFlow { compareScrollState.firstVisibleItemIndex }
             .collect { index ->
-                fabVisible.value = compareScrollState.firstVisibleItemIndex <= prev && index > 0
+                compareFabVisible.value = compareScrollState.firstVisibleItemIndex <= prev && index > 0
                 prev = compareScrollState.firstVisibleItemIndex
             }
     }
@@ -148,12 +150,12 @@ fun CupsScreen(
             scaffoldState = scaffoldState,
             backgroundColor = MaterialTheme.colors.primary,
             floatingActionButton = {
-                AnimatedVisibility(
-                    visible = fabVisible.value,
-                    enter = slideInVertically(initialOffsetY = { it / 2 }),
-                    exit = slideOutVertically() + fadeOut()
-                ) {
-                    if (selectedItemPosition.value == 0) {
+                if (selectedItemPosition.value == 0) {
+                    AnimatedVisibility(
+                        visible = singleFabVisible.value,
+                        enter = slideInVertically(initialOffsetY = { it / 2 }),
+                        exit = slideOutVertically() + fadeOut()
+                    ) {
                         FloatingActionButton(
                             onClick = {
                                 scope.launch { singleScrollState.animateScrollToItem(0) }
@@ -172,7 +174,14 @@ fun CupsScreen(
                             )
                         }
                     }
-                    if (selectedItemPosition.value == 1) {
+                }
+
+                if (selectedItemPosition.value == 1) {
+                    AnimatedVisibility(
+                        visible = setFabVisible.value,
+                        enter = slideInVertically(initialOffsetY = { it / 2 }),
+                        exit = slideOutVertically() + fadeOut()
+                    ) {
                         FloatingActionButton(
                             onClick = {
                                 scope.launch { sessionScrollState.animateScrollToItem(0) }
@@ -190,27 +199,35 @@ fun CupsScreen(
                                     .size(36.dp)
                             )
                         }
-                        if (selectedItemPosition.value == 2) {
-                            FloatingActionButton(
-                                onClick = {
-                                    scope.launch { compareScrollState.animateScrollToItem(0) }
-                                },
-                                backgroundColor = MaterialTheme.colors.onPrimary,
-                                modifier = modifier.size(38.dp)
-                            ) {
-                                Icon(
-                                    Icons.Filled.KeyboardArrowUp,
-                                    contentDescription = stringResource(R.string.backtothetopofthelist),
-                                    tint = MaterialTheme.colors.primary,
-                                    modifier = modifier
-                                        .wrapContentSize()
-                                        .fillMaxSize()
-                                        .size(36.dp)
-                                )
-                            }
+                    }
+                }
+                if (selectedItemPosition.value == 2) {
+                    AnimatedVisibility(
+                        visible = compareFabVisible.value,
+                        enter = slideInVertically(initialOffsetY = { it / 2 }),
+                        exit = slideOutVertically() + fadeOut()
+                    ) {
+                        FloatingActionButton(
+                            onClick = {
+                                scope.launch { compareScrollState.animateScrollToItem(0) }
+                            },
+                            backgroundColor = MaterialTheme.colors.onPrimary,
+                            modifier = modifier.size(38.dp)
+                        ) {
+                            Icon(
+                                Icons.Filled.KeyboardArrowUp,
+                                contentDescription = stringResource(R.string.backtothetopofthelist),
+                                tint = MaterialTheme.colors.primary,
+                                modifier = modifier
+                                    .wrapContentSize()
+                                    .fillMaxSize()
+                                    .size(36.dp)
+                            )
                         }
                     }
                 }
+
+
             }
         ) {
             if (selectedItemPosition.value == 0) {
