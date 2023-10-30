@@ -6,6 +6,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.width
@@ -15,6 +16,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
@@ -71,7 +73,7 @@ fun CompareItem(
             .width(80.dp)
     ) {
 
-        TextForCompareItem(text = cup.name, fontSize = 12.sp)
+        TextForNameCompareItem(text = cup.name, fontSize = 12.sp)
         HorizonStripe()
         if (visibilityRL.value) {
             TextForCompareItem(
@@ -223,8 +225,49 @@ fun TextForCompareItem(
             maxLines = 1,
             modifier = modifier
                 .heightIn(22.dp)
-                .width(90.dp)
+                .width(104.dp)
                 .background(bgColor)
         )
+    }
+}
+
+@Composable
+fun TextForNameCompareItem(
+    text: String,
+    modifier: Modifier = Modifier,
+    fontSize: TextUnit = 16.sp,
+    visibility: Boolean = true,
+    state: Boolean = true
+) {
+
+    val darkColorChange =
+        if (isSystemInDarkTheme()) MaterialTheme.colors.primary.copy(0.7f)
+        else
+            MaterialTheme.colors.primary.copy(0.3f)
+
+    val bgColor: Color by animateColorAsState(
+        if (state) MaterialTheme.colors.background else darkColorChange,
+        animationSpec = tween(400, easing = LinearEasing)
+    )
+
+    if (visibility) {
+        Box(
+            modifier = modifier
+                .heightIn(44.dp)
+                .width(104.dp)
+                .background(bgColor),
+            contentAlignment = Alignment.Center
+        )
+        {
+            Text(
+                text = text,
+                textAlign = TextAlign.Center,
+                fontSize = fontSize,
+                maxLines = 3,
+                modifier = modifier
+
+                    .background(bgColor)
+            )
+        }
     }
 }

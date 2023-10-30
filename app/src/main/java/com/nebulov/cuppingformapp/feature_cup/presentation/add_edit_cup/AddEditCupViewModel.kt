@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.nebulov.cuppingformapp.core.Constants.Companion.EIGHT_F
+import com.nebulov.cuppingformapp.core.Constants.Companion.SIX_F
 import com.nebulov.cuppingformapp.core.Constants.Companion.EMPTY_STRING
 import com.nebulov.cuppingformapp.core.Constants.Companion.TEN
 import com.nebulov.cuppingformapp.core.Constants.Companion.ZERO_F
@@ -30,7 +30,7 @@ class AddEditCupViewModel @Inject constructor(
     private val _levelOfRoast = mutableStateOf(ZERO_F)
     val levelOfRoast: State<Float> = _levelOfRoast
 
-    private val _fragrance = mutableStateOf(EIGHT_F)
+    private val _fragrance = mutableStateOf(SIX_F)
     val fragrance: State<Float> = _fragrance
 
     private val _dry = mutableStateOf(ZERO_F)
@@ -39,25 +39,25 @@ class AddEditCupViewModel @Inject constructor(
     private val _breakAroma = mutableStateOf(ZERO_F)
     val breakAroma: State<Float> = _breakAroma
 
-    private val _flavor = mutableStateOf(EIGHT_F)
+    private val _flavor = mutableStateOf(SIX_F)
     val flavor: State<Float> = _flavor
 
-    private val _aftertaste = mutableStateOf(EIGHT_F)
+    private val _aftertaste = mutableStateOf(SIX_F)
     val aftertaste: State<Float> = _aftertaste
 
-    private val _acidity = mutableStateOf(EIGHT_F)
+    private val _acidity = mutableStateOf(SIX_F)
     val acidity: State<Float> = _acidity
 
     private val _intensity = mutableStateOf(ZERO_F)
     val intensity: State<Float> = _intensity
 
-    private val _body = mutableStateOf(EIGHT_F)
+    private val _body = mutableStateOf(SIX_F)
     val body: State<Float> = _body
 
     private val _levelOfBody = mutableStateOf(ZERO_F)
     val levelOfBody: State<Float> = _levelOfBody
 
-    private val _balance = mutableStateOf(EIGHT_F)
+    private val _balance = mutableStateOf(SIX_F)
     val balance: State<Float> = _balance
 
     private val _uniformity = mutableStateOf(TEN)
@@ -123,10 +123,10 @@ class AddEditCupViewModel @Inject constructor(
     private val _faultDefects = mutableStateOf(0)
     val faultDefects: State<Int> = _faultDefects
 
-    private val _overall = mutableStateOf(EIGHT_F)
+    private val _overall = mutableStateOf(SIX_F)
     val overall: State<Float> = _overall
 
-    private val _finalScore = mutableStateOf(86f)
+    private val _finalScore = mutableStateOf(72f)
     val finalScore: State<Float> = _finalScore
 
     private val _notesFragrance = mutableStateOf(EMPTY_STRING)

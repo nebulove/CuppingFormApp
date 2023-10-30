@@ -6,7 +6,7 @@ class Constants {
         const val UNDEFINED_ID = 0
 
         const val EMPTY_STRING = ""
-        const val EIGHT_F = 8F
+        const val SIX_F = 6F
         const val EIGHTY_SIX_F = 86F
         const val ZERO_F = 0F
         const val TEN = 10

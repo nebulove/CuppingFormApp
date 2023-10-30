@@ -16,8 +16,12 @@ import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -41,7 +45,7 @@ fun AnimatedTextField(
         ),
         exit = slideOutVertically(
             // Exits by sliding out from offset 0 to -fullHeight.
-            targetOffsetY = { fullHeight -> -fullHeight  },
+            targetOffsetY = { fullHeight -> -fullHeight },
             animationSpec = tween(durationMillis = 350, easing = FastOutLinearInEasing)
         )
     ) {
@@ -50,27 +54,50 @@ fun AnimatedTextField(
             elevation = 0.dp,
             shape = RoundedCornerShape(bottomEnd = 8.dp, bottomStart = 8.dp)
         ) {
-            TextField(
-                modifier = modifier,
-                shape = RoundedCornerShape(8.dp),
-                value = sampleName.value,
-                colors = TextFieldDefaults.textFieldColors(
-                    backgroundColor = MaterialTheme.colors.primary.copy(alpha = 0.1f)
-                ),
-                singleLine = true,
-                maxLines = 1,
-                onValueChange = { onTextEdit(it) },
-                trailingIcon = {
-                    Icon(
-                        painter = painterResource(id = R.drawable.send_48),
-                        contentDescription = stringResource(id = R.string.save),
-                        tint = MaterialTheme.colors.primary,
-                        modifier = modifier
-                            .clickable(onClick = showOff)
-                            .size(25.dp)
-                    )
-                }
-            )
+            NameTextField(
+                sampleName = sampleName,
+                onTextEdit = { onTextEdit(it) },
+                showOff = { showOff() })
         }
     }
+}
+
+@Composable
+fun NameTextField(
+    modifier: Modifier = Modifier,
+    sampleName: State<String>,
+    onTextEdit: (String) -> Unit,
+    showOff: () -> Unit,
+) {
+    val focusRequester = remember { FocusRequester() }
+
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
+
+
+
+    TextField(
+        modifier = modifier
+            .focusRequester(focusRequester),
+        shape = RoundedCornerShape(8.dp),
+        value = sampleName.value,
+        colors = TextFieldDefaults.textFieldColors(
+            backgroundColor = MaterialTheme.colors.primary.copy(alpha = 0.1f)
+        ),
+        singleLine = true,
+        maxLines = 1,
+        onValueChange = { onTextEdit(it) },
+        trailingIcon = {
+            Icon(
+                painter = painterResource(id = R.drawable.send_48),
+                contentDescription = stringResource(id = R.string.save),
+                tint = MaterialTheme.colors.primary,
+                modifier = modifier
+                    .clickable(onClick = showOff)
+                    .size(25.dp)
+            )
+        }
+    )
+
 }

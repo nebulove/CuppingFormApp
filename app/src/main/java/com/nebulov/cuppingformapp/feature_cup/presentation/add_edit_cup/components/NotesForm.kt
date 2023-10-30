@@ -18,11 +18,15 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -60,9 +64,12 @@ fun NotesForm(
                 onClick = {
                     expanded.value = !expanded.value
                 },
-                enabled = lock.value) {
+                enabled = lock.value
+            ) {
                 Icon(
-                    tint = if(lock.value) MaterialTheme.colors.primary else MaterialTheme.colors.primary.copy(alpha = 0.24f) ,
+                    tint = if (lock.value) MaterialTheme.colors.primary else MaterialTheme.colors.primary.copy(
+                        alpha = 0.24f
+                    ),
                     painter = if (textDescriptors.value == EMPTY_STRING) {
                         painterResource(R.drawable.add_notes48)
                     } else painterResource(R.drawable.edit_note48),
@@ -90,26 +97,51 @@ fun NotesForm(
             )
     }
     if (expanded.value) {
-        TextField(
-            value = textDescriptors.value,
-            trailingIcon = {
-                IconButton(onClick = { expanded.value = !expanded.value }, enabled = lock.value) {
-                    Icon(
-                        painterResource(
-                            R.drawable.send_48
-                        ),
-                        modifier = modifier.size(24.dp),
-                        contentDescription = stringResource(R.string.show_more),
-                        tint = MaterialTheme.colors.primary
-                    )
-                }
-            },
-            colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = MaterialTheme.colors.primary.copy(alpha = 0.1f)
-            ),
+        NotesTextField(
+            textDescriptors = textDescriptors,
+            onClick = { expanded.value = !expanded.value },
             onValueChange = { onValueChange(it) },
-            modifier = modifier
-                .fillMaxWidth()
+            lock = lock
         )
     }
+}
+
+@Composable
+fun NotesTextField(
+    modifier: Modifier = Modifier,
+    textDescriptors: State<String>,
+    onClick: () -> Unit,
+    onValueChange: (String) -> Unit,
+    lock: State<Boolean>
+) {
+
+    val focusRequester = remember { FocusRequester() }
+
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
+
+    TextField(
+        value = textDescriptors.value,
+        trailingIcon = {
+            IconButton(onClick = { onClick() }, enabled = lock.value) {
+                Icon(
+                    painterResource(
+                        R.drawable.send_48
+                    ),
+                    modifier = modifier.size(24.dp),
+                    contentDescription = stringResource(R.string.show_more),
+                    tint = MaterialTheme.colors.primary
+                )
+            }
+        },
+        colors = TextFieldDefaults.textFieldColors(
+            backgroundColor = MaterialTheme.colors.primary.copy(alpha = 0.1f)
+        ),
+        onValueChange = { onValueChange(it) },
+        modifier = modifier
+            .fillMaxWidth()
+            .focusRequester(focusRequester)
+    )
+
 }

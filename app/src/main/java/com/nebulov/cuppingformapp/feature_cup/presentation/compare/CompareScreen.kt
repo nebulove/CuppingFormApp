@@ -42,6 +42,7 @@ import com.nebulov.cuppingformapp.R
 import com.nebulov.cuppingformapp.feature_cup.presentation.compare.components.CompareItem
 import com.nebulov.cuppingformapp.feature_cup.presentation.compare.components.GradientButton
 import com.nebulov.cuppingformapp.feature_cup.presentation.compare.components.TextForCompareItem
+import com.nebulov.cuppingformapp.feature_cup.presentation.compare.components.TextForNameCompareItem
 import com.nebulov.cuppingformapp.feature_cup.presentation.cups.CupsViewModel
 import com.nebulov.cuppingformapp.feature_cup.presentation.cups.components.GradientFloatingActionButton
 
@@ -347,7 +348,7 @@ fun CompareScreen(
                                     .width(85.dp)
                                     .verticalScroll(scrollState)
                             ) {
-                                TextForCompareItem(
+                                TextForNameCompareItem(
                                     text = "Name:",
                                 )
                                 HorizonStripe()
@@ -608,9 +609,9 @@ fun CompareScreen(
                             Column(
                                 modifier = modifier
                                     .width(85.dp)
-                                    .verticalScroll(scrollState)
+                                    .verticalScroll(scrollState),
                             ) {
-                                TextForCompareItem(
+                                TextForNameCompareItem(
                                     text = "Name:",
                                 )
                                 HorizonStripe()
