@@ -253,8 +253,8 @@ fun TextForNameCompareItem(
     if (visibility) {
         Box(
             modifier = modifier
-                .heightIn(44.dp)
-                .width(104.dp)
+                .heightIn(64.dp)
+                .width(112.dp)
                 .background(bgColor),
             contentAlignment = Alignment.Center
         )
@@ -263,9 +263,8 @@ fun TextForNameCompareItem(
                 text = text,
                 textAlign = TextAlign.Center,
                 fontSize = fontSize,
-                maxLines = 3,
+                maxLines = 4,
                 modifier = modifier
-
                     .background(bgColor)
             )
         }
