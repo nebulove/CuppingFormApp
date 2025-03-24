@@ -8,14 +8,14 @@ plugins {
 
 android {
     namespace = "com.nebulov.cuppingformapp"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.nebulov.cuppingformapp"
         minSdk = 26
-        targetSdk = 34
-        versionCode = 7
-        versionName = "1.23"
+        targetSdk = 35
+        versionCode = 8
+        versionName = "1.24"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -45,7 +45,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.15"
     }
 
 }

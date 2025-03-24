@@ -3,12 +3,16 @@ package com.nebulov.cuppingformapp.feature_cup.presentation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.safeContentPadding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.node.ModifierNodeElement
 import com.nebulov.cuppingformapp.feature_cup.presentation.cups.LandingScreen
 import com.nebulov.cuppingformapp.ui.theme.CuppingFormTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -16,6 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContent {
             CuppingFormTheme {
@@ -33,7 +38,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 private fun MainScreen() {
-    Surface(color = MaterialTheme.colors.primary) {
+    Surface(color = MaterialTheme.colors.primary, modifier = Modifier.systemBarsPadding()) {
         val showLandingScreen = rememberSaveable{
             mutableStateOf(true)
         }

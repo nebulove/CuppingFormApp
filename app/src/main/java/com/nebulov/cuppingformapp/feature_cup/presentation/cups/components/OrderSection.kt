@@ -14,6 +14,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -60,56 +62,59 @@ fun IconOrderSection(
         )
     )
     {
-        Row(
-            modifier = modifier.fillMaxWidth().padding(horizontal = 6.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            DefaultIcon(
-                icon = R.drawable.outline_south_24,
-                text = stringResource(R.string.descend),
-                checked = cupOrder.orderType is OrderType.Descending,
-                onClick = { onOrderChange(cupOrder.copy(OrderType.Descending)) },
-                contentDescription = stringResource(R.string.descend)
-            )
-            DefaultIcon(
-                icon = R.drawable.outline_diamond_24,
-                onClick = { onOrderChange(CupOrder.Value(cupOrder.orderType)) },
-                checked = cupOrder is CupOrder.Value,
-                text = stringResource(R.string.score),
-                contentDescription = stringResource(R.string.score),
-                visible = visible
-            )
-            DefaultIcon(
-                icon = R.drawable.outline_water_drop_black_24dp,
-                onClick = { onOrderChange(CupOrder.Favorite(cupOrder.orderType)) },
-                checked = cupOrder is CupOrder.Favorite,
-                text = stringResource(R.string.like),
-                contentDescription = stringResource(R.string.favorite),
-                visible = visible
-            )
-            DefaultIcon(
-                icon = R.drawable.outline_history_24,
-                onClick = { onOrderChange(CupOrder.Date(cupOrder.orderType)) },
-                checked = cupOrder is CupOrder.Date,
-                text = stringResource(R.string.date),
-                contentDescription = stringResource(R.string.date)
-            )
-            DefaultIcon(
-                icon = R.drawable.outline_sort_by_alpha_24,
-                onClick = { onOrderChange(CupOrder.Title(cupOrder.orderType)) },
-                checked = cupOrder is CupOrder.Title,
-                text = stringResource(R.string.name),
-                contentDescription = stringResource(R.string.name),
-                visible = visible
-            )
-            DefaultIcon(
-                icon = R.drawable.outline_north_24,
-                text = stringResource(R.string.ascend),
-                checked = cupOrder.orderType is OrderType.Ascending,
-                onClick = { onOrderChange(cupOrder.copy(OrderType.Ascending)) },
-                contentDescription = stringResource(R.string.ascend)
-            )
+        Column(modifier = modifier){
+            Row(
+                modifier = modifier.fillMaxWidth().padding(horizontal = 6.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                DefaultIcon(
+                    icon = R.drawable.outline_south_24,
+                    text = stringResource(R.string.descend),
+                    checked = cupOrder.orderType is OrderType.Descending,
+                    onClick = { onOrderChange(cupOrder.copy(OrderType.Descending)) },
+                    contentDescription = stringResource(R.string.descend)
+                )
+                DefaultIcon(
+                    icon = R.drawable.outline_diamond_24,
+                    onClick = { onOrderChange(CupOrder.Value(cupOrder.orderType)) },
+                    checked = cupOrder is CupOrder.Value,
+                    text = stringResource(R.string.score),
+                    contentDescription = stringResource(R.string.score),
+                    visible = visible
+                )
+                DefaultIcon(
+                    icon = R.drawable.outline_water_drop_black_24dp,
+                    onClick = { onOrderChange(CupOrder.Favorite(cupOrder.orderType)) },
+                    checked = cupOrder is CupOrder.Favorite,
+                    text = stringResource(R.string.like),
+                    contentDescription = stringResource(R.string.favorite),
+                    visible = visible
+                )
+                DefaultIcon(
+                    icon = R.drawable.outline_history_24,
+                    onClick = { onOrderChange(CupOrder.Date(cupOrder.orderType)) },
+                    checked = cupOrder is CupOrder.Date,
+                    text = stringResource(R.string.date),
+                    contentDescription = stringResource(R.string.date)
+                )
+                DefaultIcon(
+                    icon = R.drawable.outline_sort_by_alpha_24,
+                    onClick = { onOrderChange(CupOrder.Title(cupOrder.orderType)) },
+                    checked = cupOrder is CupOrder.Title,
+                    text = stringResource(R.string.name),
+                    contentDescription = stringResource(R.string.name),
+                    visible = visible
+                )
+                DefaultIcon(
+                    icon = R.drawable.outline_north_24,
+                    text = stringResource(R.string.ascend),
+                    checked = cupOrder.orderType is OrderType.Ascending,
+                    onClick = { onOrderChange(cupOrder.copy(OrderType.Ascending)) },
+                    contentDescription = stringResource(R.string.ascend)
+                )
+            }
         }
+
     }
 
 }

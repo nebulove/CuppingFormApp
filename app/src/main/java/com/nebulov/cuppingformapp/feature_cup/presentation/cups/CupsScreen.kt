@@ -1,6 +1,8 @@
 package com.nebulov.cuppingformapp.feature_cup.presentation.cups
 
 import android.annotation.SuppressLint
+import android.os.Build
+import android.os.Build.VERSION.SDK_INT
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.tween
@@ -111,6 +113,7 @@ fun CupsScreen(
 
     val selectedItemPosition = rememberSaveable { mutableStateOf(0) }
 
+
     LaunchedEffect(key1 = true) {
         delay(500)
         currentOnTimeout.value = true
@@ -121,7 +124,8 @@ fun CupsScreen(
         var prev = 0
         snapshotFlow { singleScrollState.firstVisibleItemIndex }
             .collect { index ->
-                singleFabVisible.value = singleScrollState.firstVisibleItemIndex <= prev && index > 0
+                singleFabVisible.value =
+                    singleScrollState.firstVisibleItemIndex <= prev && index > 0
                 prev = singleScrollState.firstVisibleItemIndex
             }
     }
@@ -139,7 +143,8 @@ fun CupsScreen(
         var prev = 0
         snapshotFlow { compareScrollState.firstVisibleItemIndex }
             .collect { index ->
-                compareFabVisible.value = compareScrollState.firstVisibleItemIndex <= prev && index > 0
+                compareFabVisible.value =
+                    compareScrollState.firstVisibleItemIndex <= prev && index > 0
                 prev = compareScrollState.firstVisibleItemIndex
             }
     }
@@ -297,7 +302,8 @@ fun CupsScreen(
                     )
 
                 }
-                CupListIconNavigation(selectedItemPosition = selectedItemPosition,
+                CupListIconNavigation(
+                    selectedItemPosition = selectedItemPosition,
                     changeOrder = {
                         viewModel.onEvent(CupEvent.Order(CupOrder.Date(state.cupOrder.orderType)))
                     })
@@ -350,7 +356,9 @@ fun CupsScreen(
         }
         Spacer(modifier = Modifier.height(16.dp))
     }
+
 }
+
 
 
 
